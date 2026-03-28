@@ -21,7 +21,7 @@ class SecurityBanner extends StatelessWidget {
           const SizedBox(width: 16),
           Expanded(
             child: Text(
-              "Your wealth, meticulously protected.",
+              'Your wealth, meticulously protected.',
               style: AppTypography.label.copyWith(
                 fontWeight: FontWeight.bold,
                 color: AppColors.textPrimary,
@@ -30,7 +30,7 @@ class SecurityBanner extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {},
-            child: const Text("Security Center"),
+            child: const Text('Security Center'),
           ),
         ],
       ),

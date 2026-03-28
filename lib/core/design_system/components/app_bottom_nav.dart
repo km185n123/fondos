@@ -21,13 +21,13 @@ class AppBottomNav extends StatelessWidget {
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.dashboard),
-          label: "Dashboard",
+          label: 'Dashboard',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.show_chart),
-          label: "Investments",
+          label: 'Investments',
         ),
-        BottomNavigationBarItem(icon: Icon(Icons.history), label: "History"),
+        BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
       ],
     );
   }

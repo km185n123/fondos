@@ -22,14 +22,14 @@ class FundsGrid extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
-              "Available Investment Funds",
+              'Available Investment Funds',
               style: AppTypography.headlineMedium.copyWith(
                 fontSize: 18,
                 color: AppColors.textPrimary,
               ),
             ),
             Text(
-              "See analytics",
+              'See analytics',
               style: AppTypography.label.copyWith(
                 color: AppColors.primaryContainer,
                 fontWeight: FontWeight.w700,

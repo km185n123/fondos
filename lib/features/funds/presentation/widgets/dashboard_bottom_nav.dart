@@ -9,19 +9,21 @@ class DashboardBottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: 0,
-      selectedLabelStyle: AppTypography.label.copyWith(fontWeight: FontWeight.bold),
+      selectedLabelStyle: AppTypography.label.copyWith(
+        fontWeight: FontWeight.bold,
+      ),
       unselectedLabelStyle: AppTypography.label,
       selectedItemColor: AppColors.primary,
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.dashboard),
-          label: "Dashboard",
+          label: 'Dashboard',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.show_chart),
-          label: "Investments",
+          label: 'Investments',
         ),
-        BottomNavigationBarItem(icon: Icon(Icons.history), label: "History"),
+        BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
       ],
     );
   }

@@ -27,7 +27,12 @@ void main() {
     );
 
     registerFallbackValue(
-      FundDb(id: 'dummy', nombre: 'dummy', montoMinimo: 0, categoria: 'dummy'),
+      const FundDb(
+        id: 'dummy',
+        nombre: 'dummy',
+        montoMinimo: 0,
+        categoria: 'dummy',
+      ),
     );
   });
 
@@ -42,7 +47,7 @@ void main() {
     ];
 
     final tFundDbList = [
-      FundDb(
+      const FundDb(
         id: '1',
         nombre: 'Fondo Test',
         montoMinimo: 100.0,
