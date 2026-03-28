@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:funds/core/database/app_database.dart';
+import 'package:fondos/core/database/app_database.dart';
 
 import 'funds_table.dart';
 

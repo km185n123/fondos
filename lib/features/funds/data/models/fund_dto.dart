@@ -1,4 +1,4 @@
-import 'package:funds/features/funds/domain/entities/fund.dart';
+import 'package:fondos/features/funds/domain/entities/fund.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'fund_dto.freezed.dart';

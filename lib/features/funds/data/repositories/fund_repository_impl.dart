@@ -1,8 +1,8 @@
-import 'package:funds/core/database/app_database.dart';
-import 'package:funds/features/funds/data/datasources/fund_api_service.dart';
-import 'package:funds/features/funds/data/datasources/fund_dao.dart';
-import 'package:funds/features/funds/domain/entities/fund.dart';
-import 'package:funds/features/funds/domain/repositories/fund_repository.dart';
+import 'package:fondos/core/database/app_database.dart';
+import 'package:fondos/features/funds/data/datasources/fund_api_service.dart';
+import 'package:fondos/features/funds/data/datasources/fund_dao.dart';
+import 'package:fondos/features/funds/domain/entities/fund.dart';
+import 'package:fondos/features/funds/domain/repositories/fund_repository.dart';
 
 class FundRepositoryImpl implements FundRepository {
   final FundApiService apiService;
@@ -34,9 +34,7 @@ class FundRepositoryImpl implements FundRepository {
     final fundsLocales = await fundDao.obtenerFunds();
 
     if (fundsLocales.isEmpty) {
-      throw Exception(
-        'No se pudieron cargar los funds. Verifica tu conexión.',
-      );
+      throw Exception('No se pudieron cargar los funds. Verifica tu conexión.');
     }
 
     return fundsLocales

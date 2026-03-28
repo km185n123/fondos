@@ -1,5 +1,5 @@
-import 'package:funds/features/funds/domain/entities/fund.dart';
-import 'package:funds/features/funds/domain/repositories/fund_repository.dart';
+import 'package:fondos/features/funds/domain/entities/fund.dart';
+import 'package:fondos/features/funds/domain/repositories/fund_repository.dart';
 
 class GetFundsUseCase {
   final FundRepository repository;
