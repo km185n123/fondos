@@ -9,20 +9,16 @@ part 'fund_dao.g.dart';
 class FundDao extends DatabaseAccessor<AppDatabase> with _$FundDaoMixin {
   FundDao(super.db);
 
-  Future<List<FundDb>> obtenerFunds() => select(fundsTable).get();
+  Future<List<FundDb>> getFunds() => select(fundsTable).get();
 
-  Future<int> insertarFund(FundDb fund) {
+  Future<int> insertFund(FundDb fund) {
     return into(fundsTable).insert(fund, mode: InsertMode.insertOrReplace);
   }
 
-  Future<void> sincronizarFunds(List<FundDb> fundsNuevos) async {
+  Future<void> synchronizeFunds(List<FundDb> fundsNews) async {
     await batch((batch) {
       batch.deleteAll(fundsTable);
-      batch.insertAll(
-        fundsTable,
-        fundsNuevos,
-        mode: InsertMode.insertOrReplace,
-      );
+      batch.insertAll(fundsTable, fundsNews, mode: InsertMode.insertOrReplace);
     });
   }
 }

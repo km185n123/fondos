@@ -45,6 +45,8 @@ dependencies:
   flutter_secure_storage: ^10.0.0
   path_provider: ^2.1.5
   path: ^1.9.1
+  fpdart: ^1.2.0
+  equatable: ^2.0.8
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,10 @@
 import 'package:dio/dio.dart';
-import '../models/fund_dto.dart';
+import 'package:fondos/core/errors/error_messages.dart';
+import 'package:fondos/core/errors/exceptions.dart';
+import 'package:fondos/features/funds/data/models/fund_dto.dart';
+import 'package:injectable/injectable.dart';
 
+@LazySingleton()
 class FundApiService {
   final Dio _dio;
 
@@ -15,9 +19,13 @@ class FundApiService {
           .map((json) => FundDTO.fromJson(json as Map<String, dynamic>))
           .toList();
     } on DioException catch (e) {
-      throw Exception('Error de red al obtener los funds: ${e.message}');
+      if (e.type == DioExceptionType.connectionTimeout ||
+          e.type == DioExceptionType.receiveTimeout) {
+        throw ServerException(ErrorMessages.timeoutError);
+      }
+      throw ServerException(ErrorMessages.networkError);
     } catch (e) {
-      throw Exception('Error inesperado: $e');
+      throw ServerException(ErrorMessages.unexpectedError);
     }
   }
 }

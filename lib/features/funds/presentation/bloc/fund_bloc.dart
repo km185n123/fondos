@@ -13,16 +13,11 @@ class FundBloc extends Bloc<FundEvent, FundState> {
   Future<void> _onGetFunds(FundEvent event, Emitter<FundState> emit) async {
     emit(const FundState.loading());
 
-    try {
-      final funds = await getFundsUseCase.call();
+    final failureOrFunds = await getFundsUseCase.call();
 
-      emit(FundState.success(funds: funds));
-    } catch (e) {
-      emit(
-        FundState.error(
-          'Ocurrió un error al cargar los funds. Verifica tu conexión.',
-        ),
-      );
-    }
+    failureOrFunds.fold(
+      (failure) => emit(FundState.error(failure.message)),
+      (funds) => emit(FundState.success(funds: funds)),
+    );
   }
 }
