@@ -1,3 +1,5 @@
+import 'package:fpdart/fpdart.dart';
+import 'package:fondos/core/errors/failures.dart';
 import 'package:fondos/features/funds/domain/entities/fund.dart';
 import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
 import 'package:fondos/features/transactions/domain/repositories/transaction_repository.dart';
@@ -14,18 +16,18 @@ class SubscribeFundUseCase {
     required this.transactionRepository,
   });
 
-  Future<void> call({
+  Future<Either<Failure, Unit>> call({
     required Fund fund,
     required double amount,
     required NotificationMethod notificationMethod,
   }) async {
     if (amount < fund.montoMinimo) {
-      throw Exception('El monto debe ser al menos COP ${fund.montoMinimo}');
+      return Left(ServerFailure('El monto debe ser al menos COP ${fund.montoMinimo}'));
     }
 
     final currentBalance = await userRepository.getCurrentBalance();
     if (currentBalance < amount) {
-      throw Exception('Saldo insuficiente');
+      return const Left(ServerFailure('Saldo insuficiente'));
     }
 
     final newBalance = currentBalance - amount;
@@ -38,8 +40,15 @@ class SubscribeFundUseCase {
       fundId: fund.id,
       date: DateTime.now(),
     );
-    await transactionRepository.registerTransaction(transaction);
-
-    await userRepository.saveNotificationPreference(notificationMethod);
+    
+    final result = await transactionRepository.registerTransaction(transaction);
+    
+    return result.fold(
+      (failure) => Left(failure),
+      (_) async {
+        await userRepository.saveNotificationPreference(notificationMethod);
+        return const Right(unit);
+      },
+    );
   }
 }
