@@ -1,7 +1,7 @@
 import 'package:fondos/core/errors/error_messages.dart';
 import 'package:fondos/core/errors/exceptions.dart';
 import 'package:fondos/core/errors/failures.dart';
-import 'package:fondos/core/utils/safe_call';
+import 'package:fondos/core/utils/safe_call.dart';
 import 'package:fondos/features/funds/data/datasources/fund_api_service.dart';
 import 'package:fondos/features/funds/data/datasources/fund_dao.dart';
 import 'package:fondos/features/funds/data/models/mappers/fund_db_mapper.dart';
