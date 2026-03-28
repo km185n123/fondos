@@ -21,9 +21,15 @@ class DashboardBottomNav extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.show_chart),
+<<<<<<< Updated upstream
           label: 'Investments',
         ),
         BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
+=======
+          label: 'Inversiones',
+        ),
+        BottomNavigationBarItem(icon: Icon(Icons.history), label: 'Historial'),
+>>>>>>> Stashed changes
       ],
     );
   }

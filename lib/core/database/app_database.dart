@@ -8,10 +8,15 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:fondos/features/funds/data/datasources/funds_table.dart';
 import 'package:fondos/features/funds/data/datasources/fund_dao.dart';
+import 'package:fondos/features/transactions/data/datasources/transactions_table.dart';
+import 'package:fondos/features/user/data/datasources/user_table.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [FundsTable], daos: [FundDao])
+@DriftDatabase(
+  tables: [FundsTable, TransactionsTable, UserTable],
+  daos: [FundDao],
+)
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
   AppDatabase.forTesting(super.e);
