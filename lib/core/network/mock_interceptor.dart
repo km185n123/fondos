@@ -28,9 +28,6 @@ class MockInterceptor extends Interceptor {
         Response(requestOptions: options, data: result, statusCode: 200),
       );
     } catch (e) {
-      print(
-        'MockInterceptor: No se pudo cargar el mock para ${options.path} -> $e',
-      );
       return handler.next(options);
     }
   }

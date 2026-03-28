@@ -1,4 +1,4 @@
-import 'error_messages.dart';
+import 'package:fondos/core/errors/error_messages.dart';
 
 class ServerException implements Exception {
   final String message;
