@@ -16,9 +16,8 @@ abstract class FondoDTO with _$FondoDTO {
   factory FondoDTO.fromJson(Map<String, dynamic> json) =>
       _$FondoDTOFromJson(json);
 
-  const FondoDTO._(); // Constructor privado necesario para definir métodos personalizados
+  const FondoDTO._();
 
-  // Método para mapear el DTO a la Entidad de Dominio
   Fondo toDomain() {
     return Fondo(
       id: id,

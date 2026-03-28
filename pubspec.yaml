@@ -42,6 +42,9 @@ dependencies:
   json_annotation: ^4.11.0
   drift: ^2.32.1
   sqlcipher_flutter_libs: ^0.7.0+eol
+  flutter_secure_storage: ^10.0.0
+  path_provider: ^2.1.5
+  path: ^1.9.1
 
 dev_dependencies:
   flutter_test:
