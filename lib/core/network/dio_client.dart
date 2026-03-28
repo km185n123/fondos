@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'mock_interceptor.dart';
+import 'package:fondos/core/network/mock_interceptor.dart';
 
 class DioClient {
   late final Dio dio;

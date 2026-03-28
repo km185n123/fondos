@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'app_colors.dart';
+import 'package:fondos/core/design_system/tokens/app_colors.dart';
 
 class AppTypography {
   static const headlineLarge = TextStyle(
