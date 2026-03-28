@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:fondos/core/di/injection.dart';
 import 'package:fondos/core/design_system/theme/app_theme.dart';
-import 'package:fondos/features/funds/presentation/pages/dashboard_screen.dart';
+import 'package:fondos/core/router/app_router.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized(); // needed for DI
@@ -15,14 +15,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'The Digital Mint',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),
       themeMode: ThemeMode.system,
-      initialRoute: '/',
-      routes: {'/': (_) => const DashboardScreen()},
+      routerConfig: appRouter,
       builder: (context, child) {
         return MediaQuery(
           data: MediaQuery.of(

@@ -4,6 +4,7 @@ import 'package:fondos/core/design_system/components/app_chip.dart';
 import 'package:fondos/core/design_system/tokens/app_colors.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
 import 'package:fondos/features/funds/domain/entities/fund.dart';
+import 'package:go_router/go_router.dart';
 
 class FundCard extends StatelessWidget {
   final Fund fund;
@@ -75,7 +76,9 @@ class FundCard extends StatelessWidget {
                 ],
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.go('/subscription');
+                },
                 icon: const Icon(Icons.add, color: Colors.white),
                 style: IconButton.styleFrom(
                   backgroundColor: AppColors.primary,
