@@ -17,7 +17,7 @@ void main() {
   });
 
   group('FundDao', () {
-    final tFundDb = FundDb(
+    final tFundDb = const FundDb(
       id: '1',
       nombre: 'Fondo Test DB',
       montoMinimo: 1500.0,
@@ -45,34 +45,39 @@ void main() {
       expect(result.first, equals(tFundDb));
     });
 
-    test('should synchronize funds correctly (delete old and insert new)', () async {
-      // arrange
-      await dao.insertFund(FundDb(
-        id: 'old_1',
-        nombre: 'Old 1',
-        montoMinimo: 0.0,
-        categoria: 'C',
-      ));
+    test(
+      'should synchronize funds correctly (delete old and insert new)',
+      () async {
+        // arrange
+        await dao.insertFund(
+          const FundDb(
+            id: 'old_1',
+            nombre: 'Old 1',
+            montoMinimo: 0.0,
+            categoria: 'C',
+          ),
+        );
 
-      final newFunds = [
-        tFundDb,
-        FundDb(
-          id: '2',
-          nombre: 'Fondo Nuevo 2',
-          montoMinimo: 2000.0,
-          categoria: 'Fijo',
-        ),
-      ];
+        final newFunds = [
+          tFundDb,
+          const FundDb(
+            id: '2',
+            nombre: 'Fondo Nuevo 2',
+            montoMinimo: 2000.0,
+            categoria: 'Fijo',
+          ),
+        ];
 
-      // act
-      await dao.synchronizeFunds(newFunds);
-      final result = await dao.getFunds();
+        // act
+        await dao.synchronizeFunds(newFunds);
+        final result = await dao.getFunds();
 
-      // assert
-      expect(result.length, 2);
-      expect(result.any((f) => f.id == 'old_1'), isFalse);
-      expect(result.any((f) => f.id == '1'), isTrue);
-      expect(result.any((f) => f.id == '2'), isTrue);
-    });
+        // assert
+        expect(result.length, 2);
+        expect(result.any((f) => f.id == 'old_1'), isFalse);
+        expect(result.any((f) => f.id == '1'), isTrue);
+        expect(result.any((f) => f.id == '2'), isTrue);
+      },
+    );
   });
 }
