@@ -4,15 +4,15 @@ import 'package:fondos/core/di/injection.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
 import 'package:fondos/features/funds/presentation/bloc/fund_bloc.dart';
 import 'package:fondos/features/funds/presentation/bloc/fund_event.dart';
-import 'package:fondos/features/funds/presentation/widgets/dashboard_bottom_nav.dart';
-import 'package:fondos/features/funds/presentation/widgets/dashboard_fab.dart';
-import 'package:fondos/features/funds/presentation/widgets/funds_grid.dart';
-import 'package:fondos/features/funds/presentation/widgets/hero_balance.dart';
-import 'package:fondos/features/funds/presentation/widgets/security_banner.dart';
+import 'package:fondos/features/funds/presentation/widgets/navigation_bottom_view.dart';
+import 'package:fondos/core/design_system/components/app_fab.dart';
+import 'package:fondos/features/funds/presentation/widgets/funds_grid_view.dart';
+import 'package:fondos/features/funds/presentation/widgets/hero_balance_view.dart';
+import 'package:fondos/features/funds/presentation/widgets/security_banner_view.dart';
 import 'package:fondos/features/funds/presentation/widgets/top_bar.dart';
 
-class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
+class DashboardPage extends StatelessWidget {
+  const DashboardPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,19 +23,19 @@ class DashboardScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const HeroBalance(),
+            const HeroBalanceView(),
             const SizedBox(height: 32),
             BlocProvider(
               create: (_) => getIt<FundBloc>()..add(const FundEvent.getFunds()),
-              child: const FundsGrid(),
+              child: const FundsGridView(),
             ),
             const SizedBox(height: 40),
-            const SecurityBanner(),
+            const SecurityBannerView(),
           ],
         ),
       ),
-      bottomNavigationBar: const DashboardBottomNav(),
-      floatingActionButton: const DashboardFab(),
+      bottomNavigationBar: const NavigationBottomView(),
+      floatingActionButton: AppFab(onPressed: () {}, icon: Icons.add_card),
     );
   }
 }

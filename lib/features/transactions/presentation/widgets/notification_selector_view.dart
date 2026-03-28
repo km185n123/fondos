@@ -2,13 +2,13 @@ import 'package:flutter/widgets.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
 import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
-import 'package:fondos/features/transactions/presentation/widgets/app_radio_card.dart';
+import 'package:fondos/core/design_system/components/app_radio_card.dart';
 
-class NotificationSelector extends StatelessWidget {
+class NotificationSelectorView extends StatelessWidget {
   final NotificationMethod selected;
   final ValueChanged<NotificationMethod> onChanged;
 
-  const NotificationSelector({
+  const NotificationSelectorView({
     super.key,
     required this.selected,
     required this.onChanged,

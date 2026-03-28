@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:fondos/features/funds/presentation/pages/dashboard_screen.dart';
+import 'package:fondos/features/funds/domain/entities/fund.dart';
+import 'package:fondos/features/funds/presentation/pages/dashboard_page.dart';
 import 'package:fondos/features/transactions/presentation/pages/subscription_page.dart.dart';
 
 class BottomSheetPage<T> extends Page<T> {
@@ -25,14 +26,17 @@ final appRouter = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const DashboardScreen(),
+      builder: (context, state) => const DashboardPage(),
       routes: [
         GoRoute(
           path: 'subscription',
-          pageBuilder: (context, state) => BottomSheetPage(
-            key: state.pageKey,
-            child: const SubscriptionPage(),
-          ),
+          pageBuilder: (context, state) {
+            final fund = state.extra as Fund;
+            return BottomSheetPage(
+              key: state.pageKey,
+              child: SubscriptionPage(fund: fund),
+            );
+          },
         ),
       ],
     ),

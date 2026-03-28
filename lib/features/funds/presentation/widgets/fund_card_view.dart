@@ -6,10 +6,10 @@ import 'package:fondos/core/design_system/tokens/app_typography.dart';
 import 'package:fondos/features/funds/domain/entities/fund.dart';
 import 'package:go_router/go_router.dart';
 
-class FundCard extends StatelessWidget {
+class FundCardView extends StatelessWidget {
   final Fund fund;
 
-  const FundCard(this.fund, {super.key});
+  const FundCardView(this.fund, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +77,7 @@ class FundCard extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  context.go('/subscription');
+                  context.go('/subscription', extra: fund);
                 },
                 icon: const Icon(Icons.add, color: Colors.white),
                 style: IconButton.styleFrom(

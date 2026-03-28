@@ -30,6 +30,11 @@ import '../../features/transactions/domain/repositories/transaction_repository.d
     as _i421;
 import '../../features/transactions/domain/usecases/subscribe_fund_usecase.dart'
     as _i219;
+import '../../features/transactions/presentation/bloc/subscription_bloc.dart'
+    as _i433;
+import '../../features/user/data/datasources/user_dao.dart' as _i126;
+import '../../features/user/data/repositories/user_repository_impl.dart'
+    as _i664;
 import '../../features/user/domain/repositories/user_repository.dart' as _i237;
 import '../database/app_database.dart' as _i982;
 import '../network/dio_client.dart' as _i667;
@@ -48,6 +53,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i982.AppDatabase>(() => appModule.appDatabase);
     gh.lazySingleton<_i481.FundDao>(
       () => appModule.getFundDao(gh<_i982.AppDatabase>()),
+    );
+    gh.lazySingleton<_i514.TransactionDao>(
+      () => appModule.getTransactionDao(gh<_i982.AppDatabase>()),
+    );
+    gh.lazySingleton<_i126.UserDao>(
+      () => appModule.getUserDao(gh<_i982.AppDatabase>()),
+    );
+    gh.factory<_i237.UserRepository>(
+      () => _i664.UserRepositoryImpl(gh<_i126.UserDao>()),
     );
     gh.lazySingleton<_i890.FundApiService>(
       () => _i890.FundApiService(gh<_i361.Dio>()),
@@ -74,6 +88,11 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i219.SubscribeFundUseCase(
         userRepository: gh<_i237.UserRepository>(),
         transactionRepository: gh<_i421.TransactionRepository>(),
+      ),
+    );
+    gh.factory<_i433.SubscriptionBloc>(
+      () => _i433.SubscriptionBloc(
+        subscribeFundUseCase: gh<_i219.SubscribeFundUseCase>(),
       ),
     );
     gh.factory<_i979.FundBloc>(
