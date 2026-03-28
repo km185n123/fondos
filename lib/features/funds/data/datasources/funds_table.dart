@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 
-@DataClassName('FondoDb')
-class FondosTable extends Table {
+@DataClassName('FundDb')
+class FundsTable extends Table {
   TextColumn get id => text()();
   TextColumn get nombre => text()();
   RealColumn get montoMinimo => real()();

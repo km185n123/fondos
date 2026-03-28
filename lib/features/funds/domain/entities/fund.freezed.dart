@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'fondo_dto.dart';
+part of 'fund.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -11,44 +11,41 @@ part of 'fondo_dto.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-
 /// @nodoc
-mixin _$FondoDTO {
+mixin _$Fund {
 
- String get id; String get nombre;@JsonKey(name: 'monto_minimo') double get montoMinimo; String get categoria;
-/// Create a copy of FondoDTO
+ String get id; String get nombre; double get montoMinimo; String get categoria;
+/// Create a copy of Fund
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$FondoDTOCopyWith<FondoDTO> get copyWith => _$FondoDTOCopyWithImpl<FondoDTO>(this as FondoDTO, _$identity);
+$FundCopyWith<Fund> get copyWith => _$FundCopyWithImpl<Fund>(this as Fund, _$identity);
 
-  /// Serializes this FondoDTO to a JSON map.
-  Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FondoDTO&&(identical(other.id, id) || other.id == id)&&(identical(other.nombre, nombre) || other.nombre == nombre)&&(identical(other.montoMinimo, montoMinimo) || other.montoMinimo == montoMinimo)&&(identical(other.categoria, categoria) || other.categoria == categoria));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Fund&&(identical(other.id, id) || other.id == id)&&(identical(other.nombre, nombre) || other.nombre == nombre)&&(identical(other.montoMinimo, montoMinimo) || other.montoMinimo == montoMinimo)&&(identical(other.categoria, categoria) || other.categoria == categoria));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
 int get hashCode => Object.hash(runtimeType,id,nombre,montoMinimo,categoria);
 
 @override
 String toString() {
-  return 'FondoDTO(id: $id, nombre: $nombre, montoMinimo: $montoMinimo, categoria: $categoria)';
+  return 'Fund(id: $id, nombre: $nombre, montoMinimo: $montoMinimo, categoria: $categoria)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $FondoDTOCopyWith<$Res>  {
-  factory $FondoDTOCopyWith(FondoDTO value, $Res Function(FondoDTO) _then) = _$FondoDTOCopyWithImpl;
+abstract mixin class $FundCopyWith<$Res>  {
+  factory $FundCopyWith(Fund value, $Res Function(Fund) _then) = _$FundCopyWithImpl;
 @useResult
 $Res call({
- String id, String nombre,@JsonKey(name: 'monto_minimo') double montoMinimo, String categoria
+ String id, String nombre, double montoMinimo, String categoria
 });
 
 
@@ -56,14 +53,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$FondoDTOCopyWithImpl<$Res>
-    implements $FondoDTOCopyWith<$Res> {
-  _$FondoDTOCopyWithImpl(this._self, this._then);
+class _$FundCopyWithImpl<$Res>
+    implements $FundCopyWith<$Res> {
+  _$FundCopyWithImpl(this._self, this._then);
 
-  final FondoDTO _self;
-  final $Res Function(FondoDTO) _then;
+  final Fund _self;
+  final $Res Function(Fund) _then;
 
-/// Create a copy of FondoDTO
+/// Create a copy of Fund
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? nombre = null,Object? montoMinimo = null,Object? categoria = null,}) {
   return _then(_self.copyWith(
@@ -78,8 +75,8 @@ as String,
 }
 
 
-/// Adds pattern-matching-related methods to [FondoDTO].
-extension FondoDTOPatterns on FondoDTO {
+/// Adds pattern-matching-related methods to [Fund].
+extension FundPatterns on Fund {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -92,10 +89,10 @@ extension FondoDTOPatterns on FondoDTO {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _FondoDTO value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _Fund value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _FondoDTO() when $default != null:
+case _Fund() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -114,10 +111,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _FondoDTO value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _Fund value)  $default,){
 final _that = this;
 switch (_that) {
-case _FondoDTO():
+case _Fund():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -135,10 +132,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _FondoDTO value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _Fund value)?  $default,){
 final _that = this;
 switch (_that) {
-case _FondoDTO() when $default != null:
+case _Fund() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -156,9 +153,9 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String nombre, @JsonKey(name: 'monto_minimo')  double montoMinimo,  String categoria)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String nombre,  double montoMinimo,  String categoria)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _FondoDTO() when $default != null:
+case _Fund() when $default != null:
 return $default(_that.id,_that.nombre,_that.montoMinimo,_that.categoria);case _:
   return orElse();
 
@@ -177,9 +174,9 @@ return $default(_that.id,_that.nombre,_that.montoMinimo,_that.categoria);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String nombre, @JsonKey(name: 'monto_minimo')  double montoMinimo,  String categoria)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String nombre,  double montoMinimo,  String categoria)  $default,) {final _that = this;
 switch (_that) {
-case _FondoDTO():
+case _Fund():
 return $default(_that.id,_that.nombre,_that.montoMinimo,_that.categoria);case _:
   throw StateError('Unexpected subclass');
 
@@ -197,9 +194,9 @@ return $default(_that.id,_that.nombre,_that.montoMinimo,_that.categoria);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String nombre, @JsonKey(name: 'monto_minimo')  double montoMinimo,  String categoria)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String nombre,  double montoMinimo,  String categoria)?  $default,) {final _that = this;
 switch (_that) {
-case _FondoDTO() when $default != null:
+case _Fund() when $default != null:
 return $default(_that.id,_that.nombre,_that.montoMinimo,_that.categoria);case _:
   return null;
 
@@ -209,51 +206,48 @@ return $default(_that.id,_that.nombre,_that.montoMinimo,_that.categoria);case _:
 }
 
 /// @nodoc
-@JsonSerializable()
 
-class _FondoDTO extends FondoDTO {
-  const _FondoDTO({required this.id, required this.nombre, @JsonKey(name: 'monto_minimo') required this.montoMinimo, required this.categoria}): super._();
-  factory _FondoDTO.fromJson(Map<String, dynamic> json) => _$FondoDTOFromJson(json);
+
+class _Fund implements Fund {
+  const _Fund({required this.id, required this.nombre, required this.montoMinimo, required this.categoria});
+  
 
 @override final  String id;
 @override final  String nombre;
-@override@JsonKey(name: 'monto_minimo') final  double montoMinimo;
+@override final  double montoMinimo;
 @override final  String categoria;
 
-/// Create a copy of FondoDTO
+/// Create a copy of Fund
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$FondoDTOCopyWith<_FondoDTO> get copyWith => __$FondoDTOCopyWithImpl<_FondoDTO>(this, _$identity);
+_$FundCopyWith<_Fund> get copyWith => __$FundCopyWithImpl<_Fund>(this, _$identity);
 
-@override
-Map<String, dynamic> toJson() {
-  return _$FondoDTOToJson(this, );
-}
+
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FondoDTO&&(identical(other.id, id) || other.id == id)&&(identical(other.nombre, nombre) || other.nombre == nombre)&&(identical(other.montoMinimo, montoMinimo) || other.montoMinimo == montoMinimo)&&(identical(other.categoria, categoria) || other.categoria == categoria));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Fund&&(identical(other.id, id) || other.id == id)&&(identical(other.nombre, nombre) || other.nombre == nombre)&&(identical(other.montoMinimo, montoMinimo) || other.montoMinimo == montoMinimo)&&(identical(other.categoria, categoria) || other.categoria == categoria));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
 int get hashCode => Object.hash(runtimeType,id,nombre,montoMinimo,categoria);
 
 @override
 String toString() {
-  return 'FondoDTO(id: $id, nombre: $nombre, montoMinimo: $montoMinimo, categoria: $categoria)';
+  return 'Fund(id: $id, nombre: $nombre, montoMinimo: $montoMinimo, categoria: $categoria)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$FondoDTOCopyWith<$Res> implements $FondoDTOCopyWith<$Res> {
-  factory _$FondoDTOCopyWith(_FondoDTO value, $Res Function(_FondoDTO) _then) = __$FondoDTOCopyWithImpl;
+abstract mixin class _$FundCopyWith<$Res> implements $FundCopyWith<$Res> {
+  factory _$FundCopyWith(_Fund value, $Res Function(_Fund) _then) = __$FundCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String nombre,@JsonKey(name: 'monto_minimo') double montoMinimo, String categoria
+ String id, String nombre, double montoMinimo, String categoria
 });
 
 
@@ -261,17 +255,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$FondoDTOCopyWithImpl<$Res>
-    implements _$FondoDTOCopyWith<$Res> {
-  __$FondoDTOCopyWithImpl(this._self, this._then);
+class __$FundCopyWithImpl<$Res>
+    implements _$FundCopyWith<$Res> {
+  __$FundCopyWithImpl(this._self, this._then);
 
-  final _FondoDTO _self;
-  final $Res Function(_FondoDTO) _then;
+  final _Fund _self;
+  final $Res Function(_Fund) _then;
 
-/// Create a copy of FondoDTO
+/// Create a copy of Fund
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? nombre = null,Object? montoMinimo = null,Object? categoria = null,}) {
-  return _then(_FondoDTO(
+  return _then(_Fund(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,nombre: null == nombre ? _self.nombre : nombre // ignore: cast_nullable_to_non_nullable
 as String,montoMinimo: null == montoMinimo ? _self.montoMinimo : montoMinimo // ignore: cast_nullable_to_non_nullable

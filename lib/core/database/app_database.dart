@@ -8,12 +8,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
 // Importamos la tabla y el DAO creados/por crear
-import '../../features/fondos/data/datasources/fondos_table.dart';
-import '../../features/fondos/data/datasources/fondo_dao.dart';
+import '../../features/funds/data/datasources/funds_table.dart';
+import '../../features/funds/data/datasources/fund_dao.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [FondosTable], daos: [FondoDao])
+@DriftDatabase(tables: [FundsTable], daos: [FundDao])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
