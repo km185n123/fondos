@@ -1,0 +1,38 @@
+name: Flutter CI
+
+on:
+  pull_request:
+    branches: [develop]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Setup Flutter
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.35.6
+          channel: stable
+          cache: true
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: flutter pub get
+
+      # 4. Generate code (freezed, json_serializable, drift)
+      - name: Generate code
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      # 5. Analyze
+      - name: Analyze project
+        run: flutter analyze --fatal-infos
+
+      # 6. Run tests
+      - name: Run tests with coverage
+        run: flutter test --coverage
