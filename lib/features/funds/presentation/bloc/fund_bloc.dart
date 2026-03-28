@@ -1,8 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:fondos/features/funds/domain/usecases/get_funds_usecase.dart';
 import 'fund_event.dart';
 import 'fund_state.dart';
 
+@injectable
 class FundBloc extends Bloc<FundEvent, FundState> {
   final GetFundsUseCase getFundsUseCase;
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fondos/core/design_system/tokens/app_colors.dart';
+import 'package:fondos/core/design_system/tokens/app_typography.dart';
 
 class TopBar extends StatelessWidget implements PreferredSizeWidget {
   const TopBar({super.key});
@@ -9,26 +10,29 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.white.withOpacity(0.9),
       elevation: 0,
-      title: const Row(
+      title: Row(
         children: [
-          Icon(Icons.account_balance_wallet, color: AppColors.primary),
-          SizedBox(width: 8),
+          const Icon(Icons.account_balance_wallet, color: AppColors.primary),
+          const SizedBox(width: 8),
           Text(
             "The Digital Mint",
-            style: TextStyle(
+            style: AppTypography.label.copyWith(
               color: AppColors.textPrimary,
               fontWeight: FontWeight.bold,
             ),
           ),
         ],
       ),
-      actions: const [
+      actions: [
         Padding(
-          padding: EdgeInsets.only(right: 16),
+          padding: const EdgeInsets.only(right: 16),
           child: Center(
             child: Text(
               "\$12,450.00",
-              style: TextStyle(color: AppColors.textPrimary),
+              style: AppTypography.label.copyWith(
+                color: AppColors.textPrimary,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),

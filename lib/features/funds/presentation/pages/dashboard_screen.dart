@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fondos/core/di/injection.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
+import 'package:fondos/features/funds/presentation/bloc/fund_bloc.dart';
+import 'package:fondos/features/funds/presentation/bloc/fund_event.dart';
 import 'package:fondos/features/funds/presentation/widgets/dashboard_bottom_nav.dart';
 import 'package:fondos/features/funds/presentation/widgets/dashboard_fab.dart';
 import 'package:fondos/features/funds/presentation/widgets/funds_grid.dart';
@@ -12,23 +16,26 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: TopBar(),
+    return Scaffold(
+      appBar: const TopBar(),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(AppSpacing.lg),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            HeroBalance(),
-            SizedBox(height: 32),
-            FundsGrid(),
-            SizedBox(height: 40),
-            SecurityBanner(),
+            const HeroBalance(),
+            const SizedBox(height: 32),
+            BlocProvider(
+              create: (_) => getIt<FundBloc>()..add(const FundEvent.getFunds()),
+              child: const FundsGrid(),
+            ),
+            const SizedBox(height: 40),
+            const SecurityBanner(),
           ],
         ),
       ),
-      bottomNavigationBar: DashboardBottomNav(),
-      floatingActionButton: DashboardFab(),
+      bottomNavigationBar: const DashboardBottomNav(),
+      floatingActionButton: const DashboardFab(),
     );
   }
 }

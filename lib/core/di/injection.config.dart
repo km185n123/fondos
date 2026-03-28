@@ -13,7 +13,13 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../features/funds/data/datasources/fund_api_service.dart' as _i890;
 import '../../features/funds/data/datasources/fund_dao.dart' as _i481;
+import '../../features/funds/data/repositories/fund_repository_impl.dart'
+    as _i985;
+import '../../features/funds/domain/repositories/fund_repository.dart' as _i650;
+import '../../features/funds/domain/usecases/get_funds_usecase.dart' as _i98;
+import '../../features/funds/presentation/bloc/fund_bloc.dart' as _i979;
 import '../database/app_database.dart' as _i982;
 import '../network/dio_client.dart' as _i667;
 import 'app_module.dart' as _i460;
@@ -31,6 +37,21 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i982.AppDatabase>(() => appModule.appDatabase);
     gh.lazySingleton<_i481.FundDao>(
       () => appModule.getFundDao(gh<_i982.AppDatabase>()),
+    );
+    gh.lazySingleton<_i890.FundApiService>(
+      () => _i890.FundApiService(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i650.FundRepository>(
+      () => _i985.FundRepositoryImpl(
+        apiService: gh<_i890.FundApiService>(),
+        fundDao: gh<_i481.FundDao>(),
+      ),
+    );
+    gh.lazySingleton<_i98.GetFundsUseCase>(
+      () => _i98.GetFundsUseCase(gh<_i650.FundRepository>()),
+    );
+    gh.factory<_i979.FundBloc>(
+      () => _i979.FundBloc(getFundsUseCase: gh<_i98.GetFundsUseCase>()),
     );
     return this;
   }
