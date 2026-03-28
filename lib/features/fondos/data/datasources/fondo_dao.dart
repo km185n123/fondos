@@ -1,7 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:fondos/core/database/app_database.dart';
-
-import 'fondos_table.dart';
+import 'package:fondos/features/fondos/data/datasources/fondos_table.dart';
 
 part 'fondo_dao.g.dart';
 

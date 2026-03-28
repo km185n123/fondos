@@ -4,12 +4,10 @@ import 'dart:math';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fondos/features/fondos/data/datasources/fondo_dao.dart';
+import 'package:fondos/features/fondos/data/datasources/fondos_table.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
-
-// Importamos la tabla y el DAO creados/por crear
-import '../../features/fondos/data/datasources/fondos_table.dart';
-import '../../features/fondos/data/datasources/fondo_dao.dart';
 
 part 'app_database.g.dart';
 
