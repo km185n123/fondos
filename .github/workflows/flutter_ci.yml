@@ -13,26 +13,29 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Setup Flutter
+      # 2. Setup Flutter (siempre compatible con Dart)
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 3.35.6
           channel: stable
           cache: true
 
-      # 3. Install dependencies
+      # 3. Verify versions (debug útil)
+      - name: Check Flutter version
+        run: flutter --version
+
+      # 4. Install dependencies
       - name: Install dependencies
         run: flutter pub get
 
-      # 4. Generate code (freezed, json_serializable, drift)
+      # 5. Generate code (freezed, drift, json_serializable)
       - name: Generate code
         run: flutter pub run build_runner build --delete-conflicting-outputs
 
-      # 5. Analyze
+      # 6. Analyze (estricto)
       - name: Analyze project
-        run: flutter analyze --fatal-infos
+        run: flutter analyze --fatal-infos --fatal-warnings
 
-      # 6. Run tests
-      - name: Run tests with coverage
+      # 7. Run tests with coverage
+      - name: Run tests
         run: flutter test --coverage
