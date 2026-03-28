@@ -4,16 +4,17 @@ import 'dart:math';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:fondos/features/fondos/data/datasources/fondo_dao.dart';
-import 'package:fondos/features/fondos/data/datasources/fondos_table.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
+import 'package:fondos/features/funds/data/datasources/funds_table.dart';
+import 'package:fondos/features/funds/data/datasources/fund_dao.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [FondosTable], daos: [FondoDao])
+@DriftDatabase(tables: [FundsTable], daos: [FundDao])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
+  AppDatabase.forTesting(super.e);
 
   @override
   int get schemaVersion => 1;

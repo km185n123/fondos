@@ -3,12 +3,12 @@
 part of 'app_database.dart';
 
 // ignore_for_file: type=lint
-class $FondosTableTable extends FondosTable
-    with TableInfo<$FondosTableTable, FondoDb> {
+class $FundsTableTable extends FundsTable
+    with TableInfo<$FundsTableTable, FundDb> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $FondosTableTable(this.attachedDatabase, [this._alias]);
+  $FundsTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<String> id = GeneratedColumn<String>(
@@ -55,10 +55,10 @@ class $FondosTableTable extends FondosTable
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'fondos_table';
+  static const String $name = 'funds_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<FondoDb> instance, {
+    Insertable<FundDb> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -101,9 +101,9 @@ class $FondosTableTable extends FondosTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  FondoDb map(Map<String, dynamic> data, {String? tablePrefix}) {
+  FundDb map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return FondoDb(
+    return FundDb(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}id'],
@@ -124,17 +124,17 @@ class $FondosTableTable extends FondosTable
   }
 
   @override
-  $FondosTableTable createAlias(String alias) {
-    return $FondosTableTable(attachedDatabase, alias);
+  $FundsTableTable createAlias(String alias) {
+    return $FundsTableTable(attachedDatabase, alias);
   }
 }
 
-class FondoDb extends DataClass implements Insertable<FondoDb> {
+class FundDb extends DataClass implements Insertable<FundDb> {
   final String id;
   final String nombre;
   final double montoMinimo;
   final String categoria;
-  const FondoDb({
+  const FundDb({
     required this.id,
     required this.nombre,
     required this.montoMinimo,
@@ -150,8 +150,8 @@ class FondoDb extends DataClass implements Insertable<FondoDb> {
     return map;
   }
 
-  FondosTableCompanion toCompanion(bool nullToAbsent) {
-    return FondosTableCompanion(
+  FundsTableCompanion toCompanion(bool nullToAbsent) {
+    return FundsTableCompanion(
       id: Value(id),
       nombre: Value(nombre),
       montoMinimo: Value(montoMinimo),
@@ -159,12 +159,12 @@ class FondoDb extends DataClass implements Insertable<FondoDb> {
     );
   }
 
-  factory FondoDb.fromJson(
+  factory FundDb.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return FondoDb(
+    return FundDb(
       id: serializer.fromJson<String>(json['id']),
       nombre: serializer.fromJson<String>(json['nombre']),
       montoMinimo: serializer.fromJson<double>(json['montoMinimo']),
@@ -182,19 +182,19 @@ class FondoDb extends DataClass implements Insertable<FondoDb> {
     };
   }
 
-  FondoDb copyWith({
+  FundDb copyWith({
     String? id,
     String? nombre,
     double? montoMinimo,
     String? categoria,
-  }) => FondoDb(
+  }) => FundDb(
     id: id ?? this.id,
     nombre: nombre ?? this.nombre,
     montoMinimo: montoMinimo ?? this.montoMinimo,
     categoria: categoria ?? this.categoria,
   );
-  FondoDb copyWithCompanion(FondosTableCompanion data) {
-    return FondoDb(
+  FundDb copyWithCompanion(FundsTableCompanion data) {
+    return FundDb(
       id: data.id.present ? data.id.value : this.id,
       nombre: data.nombre.present ? data.nombre.value : this.nombre,
       montoMinimo: data.montoMinimo.present
@@ -206,7 +206,7 @@ class FondoDb extends DataClass implements Insertable<FondoDb> {
 
   @override
   String toString() {
-    return (StringBuffer('FondoDb(')
+    return (StringBuffer('FundDb(')
           ..write('id: $id, ')
           ..write('nombre: $nombre, ')
           ..write('montoMinimo: $montoMinimo, ')
@@ -220,27 +220,27 @@ class FondoDb extends DataClass implements Insertable<FondoDb> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is FondoDb &&
+      (other is FundDb &&
           other.id == this.id &&
           other.nombre == this.nombre &&
           other.montoMinimo == this.montoMinimo &&
           other.categoria == this.categoria);
 }
 
-class FondosTableCompanion extends UpdateCompanion<FondoDb> {
+class FundsTableCompanion extends UpdateCompanion<FundDb> {
   final Value<String> id;
   final Value<String> nombre;
   final Value<double> montoMinimo;
   final Value<String> categoria;
   final Value<int> rowid;
-  const FondosTableCompanion({
+  const FundsTableCompanion({
     this.id = const Value.absent(),
     this.nombre = const Value.absent(),
     this.montoMinimo = const Value.absent(),
     this.categoria = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  FondosTableCompanion.insert({
+  FundsTableCompanion.insert({
     required String id,
     required String nombre,
     required double montoMinimo,
@@ -250,7 +250,7 @@ class FondosTableCompanion extends UpdateCompanion<FondoDb> {
        nombre = Value(nombre),
        montoMinimo = Value(montoMinimo),
        categoria = Value(categoria);
-  static Insertable<FondoDb> custom({
+  static Insertable<FundDb> custom({
     Expression<String>? id,
     Expression<String>? nombre,
     Expression<double>? montoMinimo,
@@ -266,14 +266,14 @@ class FondosTableCompanion extends UpdateCompanion<FondoDb> {
     });
   }
 
-  FondosTableCompanion copyWith({
+  FundsTableCompanion copyWith({
     Value<String>? id,
     Value<String>? nombre,
     Value<double>? montoMinimo,
     Value<String>? categoria,
     Value<int>? rowid,
   }) {
-    return FondosTableCompanion(
+    return FundsTableCompanion(
       id: id ?? this.id,
       nombre: nombre ?? this.nombre,
       montoMinimo: montoMinimo ?? this.montoMinimo,
@@ -305,7 +305,7 @@ class FondosTableCompanion extends UpdateCompanion<FondoDb> {
 
   @override
   String toString() {
-    return (StringBuffer('FondosTableCompanion(')
+    return (StringBuffer('FundsTableCompanion(')
           ..write('id: $id, ')
           ..write('nombre: $nombre, ')
           ..write('montoMinimo: $montoMinimo, ')
@@ -319,25 +319,25 @@ class FondosTableCompanion extends UpdateCompanion<FondoDb> {
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
-  late final $FondosTableTable fondosTable = $FondosTableTable(this);
-  late final FondoDao fondoDao = FondoDao(this as AppDatabase);
+  late final $FundsTableTable fundsTable = $FundsTableTable(this);
+  late final FundDao fundDao = FundDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [fondosTable];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [fundsTable];
 }
 
-typedef $$FondosTableTableCreateCompanionBuilder =
-    FondosTableCompanion Function({
+typedef $$FundsTableTableCreateCompanionBuilder =
+    FundsTableCompanion Function({
       required String id,
       required String nombre,
       required double montoMinimo,
       required String categoria,
       Value<int> rowid,
     });
-typedef $$FondosTableTableUpdateCompanionBuilder =
-    FondosTableCompanion Function({
+typedef $$FundsTableTableUpdateCompanionBuilder =
+    FundsTableCompanion Function({
       Value<String> id,
       Value<String> nombre,
       Value<double> montoMinimo,
@@ -345,9 +345,9 @@ typedef $$FondosTableTableUpdateCompanionBuilder =
       Value<int> rowid,
     });
 
-class $$FondosTableTableFilterComposer
-    extends Composer<_$AppDatabase, $FondosTableTable> {
-  $$FondosTableTableFilterComposer({
+class $$FundsTableTableFilterComposer
+    extends Composer<_$AppDatabase, $FundsTableTable> {
+  $$FundsTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -375,9 +375,9 @@ class $$FondosTableTableFilterComposer
   );
 }
 
-class $$FondosTableTableOrderingComposer
-    extends Composer<_$AppDatabase, $FondosTableTable> {
-  $$FondosTableTableOrderingComposer({
+class $$FundsTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $FundsTableTable> {
+  $$FundsTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -405,9 +405,9 @@ class $$FondosTableTableOrderingComposer
   );
 }
 
-class $$FondosTableTableAnnotationComposer
-    extends Composer<_$AppDatabase, $FondosTableTable> {
-  $$FondosTableTableAnnotationComposer({
+class $$FundsTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $FundsTableTable> {
+  $$FundsTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -429,32 +429,32 @@ class $$FondosTableTableAnnotationComposer
       $composableBuilder(column: $table.categoria, builder: (column) => column);
 }
 
-class $$FondosTableTableTableManager
+class $$FundsTableTableTableManager
     extends
         RootTableManager<
           _$AppDatabase,
-          $FondosTableTable,
-          FondoDb,
-          $$FondosTableTableFilterComposer,
-          $$FondosTableTableOrderingComposer,
-          $$FondosTableTableAnnotationComposer,
-          $$FondosTableTableCreateCompanionBuilder,
-          $$FondosTableTableUpdateCompanionBuilder,
-          (FondoDb, BaseReferences<_$AppDatabase, $FondosTableTable, FondoDb>),
-          FondoDb,
+          $FundsTableTable,
+          FundDb,
+          $$FundsTableTableFilterComposer,
+          $$FundsTableTableOrderingComposer,
+          $$FundsTableTableAnnotationComposer,
+          $$FundsTableTableCreateCompanionBuilder,
+          $$FundsTableTableUpdateCompanionBuilder,
+          (FundDb, BaseReferences<_$AppDatabase, $FundsTableTable, FundDb>),
+          FundDb,
           PrefetchHooks Function()
         > {
-  $$FondosTableTableTableManager(_$AppDatabase db, $FondosTableTable table)
+  $$FundsTableTableTableManager(_$AppDatabase db, $FundsTableTable table)
     : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$FondosTableTableFilterComposer($db: db, $table: table),
+              $$FundsTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$FondosTableTableOrderingComposer($db: db, $table: table),
+              $$FundsTableTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$FondosTableTableAnnotationComposer($db: db, $table: table),
+              $$FundsTableTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<String> id = const Value.absent(),
@@ -462,7 +462,7 @@ class $$FondosTableTableTableManager
                 Value<double> montoMinimo = const Value.absent(),
                 Value<String> categoria = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => FondosTableCompanion(
+              }) => FundsTableCompanion(
                 id: id,
                 nombre: nombre,
                 montoMinimo: montoMinimo,
@@ -476,7 +476,7 @@ class $$FondosTableTableTableManager
                 required double montoMinimo,
                 required String categoria,
                 Value<int> rowid = const Value.absent(),
-              }) => FondosTableCompanion.insert(
+              }) => FundsTableCompanion.insert(
                 id: id,
                 nombre: nombre,
                 montoMinimo: montoMinimo,
@@ -491,24 +491,24 @@ class $$FondosTableTableTableManager
       );
 }
 
-typedef $$FondosTableTableProcessedTableManager =
+typedef $$FundsTableTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
-      $FondosTableTable,
-      FondoDb,
-      $$FondosTableTableFilterComposer,
-      $$FondosTableTableOrderingComposer,
-      $$FondosTableTableAnnotationComposer,
-      $$FondosTableTableCreateCompanionBuilder,
-      $$FondosTableTableUpdateCompanionBuilder,
-      (FondoDb, BaseReferences<_$AppDatabase, $FondosTableTable, FondoDb>),
-      FondoDb,
+      $FundsTableTable,
+      FundDb,
+      $$FundsTableTableFilterComposer,
+      $$FundsTableTableOrderingComposer,
+      $$FundsTableTableAnnotationComposer,
+      $$FundsTableTableCreateCompanionBuilder,
+      $$FundsTableTableUpdateCompanionBuilder,
+      (FundDb, BaseReferences<_$AppDatabase, $FundsTableTable, FundDb>),
+      FundDb,
       PrefetchHooks Function()
     >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
-  $$FondosTableTableTableManager get fondosTable =>
-      $$FondosTableTableTableManager(_db, _db.fondosTable);
+  $$FundsTableTableTableManager get fundsTable =>
+      $$FundsTableTableTableManager(_db, _db.fundsTable);
 }
