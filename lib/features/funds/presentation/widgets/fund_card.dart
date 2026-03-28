@@ -27,7 +27,7 @@ class FundCard extends StatelessWidget {
                     Text(
                       fund.id,
                       style: AppTypography.label.copyWith(
-                        color: AppColors.textSecondary.withOpacity(0.5),
+                        color: AppColors.textSecondary.withValues(alpha: 0.5),
                         letterSpacing: 1.5,
                         fontSize: 10,
                       ),
@@ -58,15 +58,15 @@ class FundCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "Minimum Investment",
+                    'Minimum Investment',
                     style: AppTypography.label.copyWith(
-                      color: AppColors.textSecondary.withOpacity(0.5),
+                      color: AppColors.textSecondary.withValues(alpha: 0.5),
                       fontSize: 10,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    "COP ${fund.montoMinimo.toStringAsFixed(0)}",
+                    'COP ${fund.montoMinimo.toStringAsFixed(0)}',
                     style: AppTypography.headlineMedium.copyWith(
                       fontSize: 14,
                       color: AppColors.textPrimary,

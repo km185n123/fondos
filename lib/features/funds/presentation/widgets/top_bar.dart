@@ -8,14 +8,14 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white.withOpacity(0.9),
+      backgroundColor: Colors.white.withValues(alpha: 0.9),
       elevation: 0,
       title: Row(
         children: [
           const Icon(Icons.account_balance_wallet, color: AppColors.primary),
           const SizedBox(width: 8),
           Text(
-            "The Digital Mint",
+            'The Digital Mint',
             style: AppTypography.label.copyWith(
               color: AppColors.textPrimary,
               fontWeight: FontWeight.bold,
@@ -28,7 +28,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
           padding: const EdgeInsets.only(right: 16),
           child: Center(
             child: Text(
-              "\$12,450.00",
+              '\$12,450.00',
               style: AppTypography.label.copyWith(
                 color: AppColors.textPrimary,
                 fontWeight: FontWeight.bold,

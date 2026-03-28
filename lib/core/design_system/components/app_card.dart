@@ -17,9 +17,9 @@ class AppCard extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             blurRadius: 16,
-            color: AppColors.textPrimary.withOpacity(0.05),
+            color: AppColors.textPrimary.withValues(alpha: 0.05),
             offset: const Offset(0, 4),
-          )
+          ),
         ],
       ),
       clipBehavior: Clip.antiAlias,
