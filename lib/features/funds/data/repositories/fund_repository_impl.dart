@@ -3,7 +3,9 @@ import 'package:fondos/features/funds/data/datasources/fund_api_service.dart';
 import 'package:fondos/features/funds/data/datasources/fund_dao.dart';
 import 'package:fondos/features/funds/domain/entities/fund.dart';
 import 'package:fondos/features/funds/domain/repositories/fund_repository.dart';
+import 'package:injectable/injectable.dart';
 
+@LazySingleton(as: FundRepository)
 class FundRepositoryImpl implements FundRepository {
   final FundApiService apiService;
   final FundDao fundDao;
