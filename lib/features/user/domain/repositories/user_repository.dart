@@ -1,4 +1,4 @@
-import 'package:fondos/features/transactions/domain/entitie/transactions.dart';
+import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
 
 abstract class UserRepository {
   Future<double> getCurrentBalance();
