@@ -28,7 +28,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
           padding: const EdgeInsets.only(right: 16),
           child: Center(
             child: Text(
-              '\$12,450.00',
+              '\$12,450.000',
               style: AppTypography.label.copyWith(
                 color: AppColors.textPrimary,
                 fontWeight: FontWeight.bold,
