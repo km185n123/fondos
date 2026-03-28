@@ -24,12 +24,12 @@ import '../../features/transactions/data/datasources/transaction_api_service.dar
     as _i21;
 import '../../features/transactions/data/datasources/transaction_dao.dart'
     as _i514;
+import '../../features/transactions/data/repositories/transaction_repository_impl.dart'
+    as _i443;
 import '../../features/transactions/domain/repositories/transaction_repository.dart'
     as _i421;
-import '../../features/transactions/data/repositories/transaction_repository_impl.dart'
-    as _i530;
 import '../../features/transactions/domain/usecases/subscribe_fund_usecase.dart'
-    as _i457;
+    as _i219;
 import '../../features/user/domain/repositories/user_repository.dart' as _i237;
 import '../database/app_database.dart' as _i982;
 import '../network/dio_client.dart' as _i667;
@@ -65,13 +65,13 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i98.GetFundsUseCase(gh<_i650.FundRepository>()),
     );
     gh.lazySingleton<_i421.TransactionRepository>(
-      () => _i530.TransactionRepositoryImpl(
+      () => _i443.TransactionRepositoryImpl(
         transactionDao: gh<_i514.TransactionDao>(),
         apiService: gh<_i21.TransactionApiService>(),
       ),
     );
-    gh.lazySingleton<_i457.SubscribeFundUseCase>(
-      () => _i457.SubscribeFundUseCase(
+    gh.lazySingleton<_i219.SubscribeFundUseCase>(
+      () => _i219.SubscribeFundUseCase(
         userRepository: gh<_i237.UserRepository>(),
         transactionRepository: gh<_i421.TransactionRepository>(),
       ),
