@@ -17,11 +17,7 @@ void main() {
   });
 
   group('FundDao', () {
-<<<<<<< Updated upstream
-    final tFundDb = const FundDb(
-=======
     const tFundDb = FundDb(
->>>>>>> Stashed changes
       id: '1',
       nombre: 'Fondo Test DB',
       montoMinimo: 1500.0,
