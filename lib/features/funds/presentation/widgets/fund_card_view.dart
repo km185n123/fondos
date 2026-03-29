@@ -4,6 +4,7 @@ import 'package:fondos/core/design_system/components/app_chip.dart';
 import 'package:fondos/core/design_system/tokens/app_colors.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
 import 'package:fondos/features/funds/domain/entities/fund.dart';
+import 'package:fondos/features/transactions/presentation/botton_sheet/show_subscription_bottom_sheet.dart';
 import 'package:go_router/go_router.dart';
 
 class FundCardView extends StatelessWidget {
@@ -77,7 +78,7 @@ class FundCardView extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  context.go('/subscription', extra: fund);
+                  showSubscriptionBottomSheet(context, fund);
                 },
                 icon: const Icon(Icons.add, color: Colors.white),
                 style: IconButton.styleFrom(

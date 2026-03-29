@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fondos/core/design_system/tokens/app_colors.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
-import 'package:fondos/core/design_system/tokens/app_typography.dart';
 import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
 import 'package:fondos/features/transactions/presentation/bloc/subscription_bloc.dart';
 import 'package:fondos/features/transactions/presentation/bloc/subscription_event.dart';
@@ -12,7 +10,6 @@ import 'package:fondos/core/design_system/components/app_input.dart';
 import 'package:fondos/features/transactions/presentation/widgets/fund_header_view.dart';
 import 'package:fondos/features/transactions/presentation/widgets/notification_selector_view.dart';
 import 'package:intl/intl.dart';
-import 'package:go_router/go_router.dart';
 
 class SubscriptionView extends StatefulWidget {
   const SubscriptionView({super.key});
@@ -46,8 +43,8 @@ class _SubscriptionViewState extends State<SubscriptionView> {
         selection: TextSelection.collapsed(offset: 0),
       );
       context.read<SubscriptionBloc>().add(
-            const SubscriptionEvent.changeAmount(0),
-          );
+        const SubscriptionEvent.changeAmount(0),
+      );
       return;
     }
 
@@ -63,8 +60,8 @@ class _SubscriptionViewState extends State<SubscriptionView> {
 
     // Delegate ALL validation/business logic to the bloc
     context.read<SubscriptionBloc>().add(
-          SubscriptionEvent.changeAmount(amount),
-        );
+      SubscriptionEvent.changeAmount(amount),
+    );
   }
 
   void _onConfirm() {
@@ -77,68 +74,81 @@ class _SubscriptionViewState extends State<SubscriptionView> {
     _controller.dispose();
     super.dispose();
   }
+  // SOLO build() modificado
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: AppColors.surface,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
-          onPressed: () => context.pop(),
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: AppSpacing.lg,
+          right: AppSpacing.lg,
+          top: AppSpacing.lg,
+          bottom: MediaQuery.of(context).viewInsets.bottom, // 👈 teclado
         ),
-        title: const Text('Suscripción', style: AppTypography.headlineMedium),
-      ),
-      body: BlocConsumer<SubscriptionBloc, SubscriptionState>(
-        listener: (context, state) {
-          if (state.status == SubscriptionStatus.success) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Suscripción exitosa')),
-            );
-            context.pop();
-          } else if (state.status == SubscriptionStatus.error &&
-              state.errorMessage != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errorMessage!)),
-            );
-          }
-        },
-        builder: (context, state) {
-          return Padding(
-            padding: const EdgeInsets.all(AppSpacing.lg),
-            child: Column(
+        child: BlocConsumer<SubscriptionBloc, SubscriptionState>(
+          listener: (context, state) {
+            if (state.status == SubscriptionStatus.success) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Suscripción exitosa')),
+              );
+              Navigator.of(context).pop(); // 👈 cerrar bottomsheet
+            } else if (state.status == SubscriptionStatus.error &&
+                state.errorMessage != null) {
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(state.errorMessage!)));
+            }
+          },
+          builder: (context, state) {
+            return Column(
+              mainAxisSize: MainAxisSize.min, // 👈 clave
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                /// drag handle
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 4,
+                    margin: const EdgeInsets.only(bottom: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
+
                 if (state.selectedFund != null)
                   FundHeaderView(fund: state.selectedFund!),
+
                 const SizedBox(height: AppSpacing.lg),
+
                 AppInput(
                   controller: _controller,
                   label: 'Monto a invertir',
                   hint: '0',
                   prefixSymbol: '\$',
-                  // amountError comes from the bloc - no business logic in view
                   error: state.amountError,
                   onChanged: _onAmountChanged,
                   trailing: Text(
                     'Disponible: ${_currencyFormat.format(state.availableBalance)}',
-                    style: AppTypography.label.copyWith(
-                      color: AppColors.textSecondary,
-                    ),
                   ),
                 ),
+
                 const SizedBox(height: AppSpacing.lg),
+
                 NotificationSelectorView(
                   selected:
                       state.notificationMethod ?? NotificationMethod.email,
                   onChanged: (method) {
                     context.read<SubscriptionBloc>().add(
-                          SubscriptionEvent.changeNotificationMethod(method),
-                        );
+                      SubscriptionEvent.changeNotificationMethod(method),
+                    );
                   },
                 ),
-                const Spacer(),
+
+                const SizedBox(height: AppSpacing.lg),
+
                 AppButtonPrimary(
                   text: state.status == SubscriptionStatus.loading
                       ? 'Procesando...'
@@ -147,10 +157,12 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                       ? () {}
                       : _onConfirm,
                 ),
+
+                const SizedBox(height: 16),
               ],
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
