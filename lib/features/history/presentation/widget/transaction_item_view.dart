@@ -21,41 +21,64 @@ class TransactionItemView extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.xl),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: isPositive
-                      ? AppColors.secondary.withValues(alpha: 0.2)
-                      : AppColors.primaryContainer.withValues(alpha: 0.2),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  isPositive ? Icons.add_circle : Icons.remove_circle,
-                  color: isPositive ? AppColors.primary : Colors.red,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.md),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    transaction.title,
-                    style: AppTypography.headlineMedium.copyWith(
-                      color: AppColors.textPrimary,
-                    ),
+          /// LEFT SIDE (flexible)
+          Expanded(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: isPositive
+                        ? AppColors.secondary.withValues(alpha: 0.2)
+                        : AppColors.primaryContainer.withValues(alpha: 0.2),
+                    shape: BoxShape.circle,
                   ),
-                  Text(transaction.subtitle, style: AppTypography.body),
-                ],
-              ),
-            ],
+                  child: Icon(
+                    isPositive ? Icons.add : Icons.remove,
+                    color: isPositive ? AppColors.primary : Colors.red,
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.md),
+
+                /// TEXTS
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        transaction.title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTypography.headlineMedium.copyWith(
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        transaction.subtitle,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTypography.body.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
+
+          const SizedBox(width: AppSpacing.md),
+
+          /// RIGHT SIDE (fixed)
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
                 transaction.amount,
@@ -63,6 +86,7 @@ class TransactionItemView extends StatelessWidget {
                   color: isPositive ? AppColors.primary : Colors.red,
                 ),
               ),
+              const SizedBox(height: 4),
               Text(
                 'COMPLETADO',
                 style: AppTypography.label.copyWith(
