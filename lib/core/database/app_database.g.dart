@@ -367,8 +367,27 @@ class $TransactionsTableTable extends TransactionsTable
     type: DriftSqlType.dateTime,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _syncStatusMeta = const VerificationMeta(
+    'syncStatus',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, type, amount, fundId, date];
+  late final GeneratedColumn<String> syncStatus = GeneratedColumn<String>(
+    'sync_status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('pending'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    type,
+    amount,
+    fundId,
+    date,
+    syncStatus,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -418,6 +437,12 @@ class $TransactionsTableTable extends TransactionsTable
     } else if (isInserting) {
       context.missing(_dateMeta);
     }
+    if (data.containsKey('sync_status')) {
+      context.handle(
+        _syncStatusMeta,
+        syncStatus.isAcceptableOrUnknown(data['sync_status']!, _syncStatusMeta),
+      );
+    }
     return context;
   }
 
@@ -447,6 +472,10 @@ class $TransactionsTableTable extends TransactionsTable
         DriftSqlType.dateTime,
         data['${effectivePrefix}date'],
       )!,
+      syncStatus: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}sync_status'],
+      )!,
     );
   }
 
@@ -462,12 +491,14 @@ class TransactionDb extends DataClass implements Insertable<TransactionDb> {
   final double amount;
   final String fundId;
   final DateTime date;
+  final String syncStatus;
   const TransactionDb({
     required this.id,
     required this.type,
     required this.amount,
     required this.fundId,
     required this.date,
+    required this.syncStatus,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -477,6 +508,7 @@ class TransactionDb extends DataClass implements Insertable<TransactionDb> {
     map['amount'] = Variable<double>(amount);
     map['fund_id'] = Variable<String>(fundId);
     map['date'] = Variable<DateTime>(date);
+    map['sync_status'] = Variable<String>(syncStatus);
     return map;
   }
 
@@ -487,6 +519,7 @@ class TransactionDb extends DataClass implements Insertable<TransactionDb> {
       amount: Value(amount),
       fundId: Value(fundId),
       date: Value(date),
+      syncStatus: Value(syncStatus),
     );
   }
 
@@ -501,6 +534,7 @@ class TransactionDb extends DataClass implements Insertable<TransactionDb> {
       amount: serializer.fromJson<double>(json['amount']),
       fundId: serializer.fromJson<String>(json['fundId']),
       date: serializer.fromJson<DateTime>(json['date']),
+      syncStatus: serializer.fromJson<String>(json['syncStatus']),
     );
   }
   @override
@@ -512,6 +546,7 @@ class TransactionDb extends DataClass implements Insertable<TransactionDb> {
       'amount': serializer.toJson<double>(amount),
       'fundId': serializer.toJson<String>(fundId),
       'date': serializer.toJson<DateTime>(date),
+      'syncStatus': serializer.toJson<String>(syncStatus),
     };
   }
 
@@ -521,12 +556,14 @@ class TransactionDb extends DataClass implements Insertable<TransactionDb> {
     double? amount,
     String? fundId,
     DateTime? date,
+    String? syncStatus,
   }) => TransactionDb(
     id: id ?? this.id,
     type: type ?? this.type,
     amount: amount ?? this.amount,
     fundId: fundId ?? this.fundId,
     date: date ?? this.date,
+    syncStatus: syncStatus ?? this.syncStatus,
   );
   TransactionDb copyWithCompanion(TransactionsTableCompanion data) {
     return TransactionDb(
@@ -535,6 +572,9 @@ class TransactionDb extends DataClass implements Insertable<TransactionDb> {
       amount: data.amount.present ? data.amount.value : this.amount,
       fundId: data.fundId.present ? data.fundId.value : this.fundId,
       date: data.date.present ? data.date.value : this.date,
+      syncStatus: data.syncStatus.present
+          ? data.syncStatus.value
+          : this.syncStatus,
     );
   }
 
@@ -545,13 +585,14 @@ class TransactionDb extends DataClass implements Insertable<TransactionDb> {
           ..write('type: $type, ')
           ..write('amount: $amount, ')
           ..write('fundId: $fundId, ')
-          ..write('date: $date')
+          ..write('date: $date, ')
+          ..write('syncStatus: $syncStatus')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, type, amount, fundId, date);
+  int get hashCode => Object.hash(id, type, amount, fundId, date, syncStatus);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -560,7 +601,8 @@ class TransactionDb extends DataClass implements Insertable<TransactionDb> {
           other.type == this.type &&
           other.amount == this.amount &&
           other.fundId == this.fundId &&
-          other.date == this.date);
+          other.date == this.date &&
+          other.syncStatus == this.syncStatus);
 }
 
 class TransactionsTableCompanion extends UpdateCompanion<TransactionDb> {
@@ -569,6 +611,7 @@ class TransactionsTableCompanion extends UpdateCompanion<TransactionDb> {
   final Value<double> amount;
   final Value<String> fundId;
   final Value<DateTime> date;
+  final Value<String> syncStatus;
   final Value<int> rowid;
   const TransactionsTableCompanion({
     this.id = const Value.absent(),
@@ -576,6 +619,7 @@ class TransactionsTableCompanion extends UpdateCompanion<TransactionDb> {
     this.amount = const Value.absent(),
     this.fundId = const Value.absent(),
     this.date = const Value.absent(),
+    this.syncStatus = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   TransactionsTableCompanion.insert({
@@ -584,6 +628,7 @@ class TransactionsTableCompanion extends UpdateCompanion<TransactionDb> {
     required double amount,
     required String fundId,
     required DateTime date,
+    this.syncStatus = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        type = Value(type),
@@ -596,6 +641,7 @@ class TransactionsTableCompanion extends UpdateCompanion<TransactionDb> {
     Expression<double>? amount,
     Expression<String>? fundId,
     Expression<DateTime>? date,
+    Expression<String>? syncStatus,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -604,6 +650,7 @@ class TransactionsTableCompanion extends UpdateCompanion<TransactionDb> {
       if (amount != null) 'amount': amount,
       if (fundId != null) 'fund_id': fundId,
       if (date != null) 'date': date,
+      if (syncStatus != null) 'sync_status': syncStatus,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -614,6 +661,7 @@ class TransactionsTableCompanion extends UpdateCompanion<TransactionDb> {
     Value<double>? amount,
     Value<String>? fundId,
     Value<DateTime>? date,
+    Value<String>? syncStatus,
     Value<int>? rowid,
   }) {
     return TransactionsTableCompanion(
@@ -622,6 +670,7 @@ class TransactionsTableCompanion extends UpdateCompanion<TransactionDb> {
       amount: amount ?? this.amount,
       fundId: fundId ?? this.fundId,
       date: date ?? this.date,
+      syncStatus: syncStatus ?? this.syncStatus,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -644,6 +693,9 @@ class TransactionsTableCompanion extends UpdateCompanion<TransactionDb> {
     if (date.present) {
       map['date'] = Variable<DateTime>(date.value);
     }
+    if (syncStatus.present) {
+      map['sync_status'] = Variable<String>(syncStatus.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -658,6 +710,7 @@ class TransactionsTableCompanion extends UpdateCompanion<TransactionDb> {
           ..write('amount: $amount, ')
           ..write('fundId: $fundId, ')
           ..write('date: $date, ')
+          ..write('syncStatus: $syncStatus, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1142,6 +1195,7 @@ typedef $$TransactionsTableTableCreateCompanionBuilder =
       required double amount,
       required String fundId,
       required DateTime date,
+      Value<String> syncStatus,
       Value<int> rowid,
     });
 typedef $$TransactionsTableTableUpdateCompanionBuilder =
@@ -1151,6 +1205,7 @@ typedef $$TransactionsTableTableUpdateCompanionBuilder =
       Value<double> amount,
       Value<String> fundId,
       Value<DateTime> date,
+      Value<String> syncStatus,
       Value<int> rowid,
     });
 
@@ -1185,6 +1240,11 @@ class $$TransactionsTableTableFilterComposer
 
   ColumnFilters<DateTime> get date => $composableBuilder(
     column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get syncStatus => $composableBuilder(
+    column: $table.syncStatus,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -1222,6 +1282,11 @@ class $$TransactionsTableTableOrderingComposer
     column: $table.date,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get syncStatus => $composableBuilder(
+    column: $table.syncStatus,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$TransactionsTableTableAnnotationComposer
@@ -1247,6 +1312,11 @@ class $$TransactionsTableTableAnnotationComposer
 
   GeneratedColumn<DateTime> get date =>
       $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<String> get syncStatus => $composableBuilder(
+    column: $table.syncStatus,
+    builder: (column) => column,
+  );
 }
 
 class $$TransactionsTableTableTableManager
@@ -1294,6 +1364,7 @@ class $$TransactionsTableTableTableManager
                 Value<double> amount = const Value.absent(),
                 Value<String> fundId = const Value.absent(),
                 Value<DateTime> date = const Value.absent(),
+                Value<String> syncStatus = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => TransactionsTableCompanion(
                 id: id,
@@ -1301,6 +1372,7 @@ class $$TransactionsTableTableTableManager
                 amount: amount,
                 fundId: fundId,
                 date: date,
+                syncStatus: syncStatus,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -1310,6 +1382,7 @@ class $$TransactionsTableTableTableManager
                 required double amount,
                 required String fundId,
                 required DateTime date,
+                Value<String> syncStatus = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => TransactionsTableCompanion.insert(
                 id: id,
@@ -1317,6 +1390,7 @@ class $$TransactionsTableTableTableManager
                 amount: amount,
                 fundId: fundId,
                 date: date,
+                syncStatus: syncStatus,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

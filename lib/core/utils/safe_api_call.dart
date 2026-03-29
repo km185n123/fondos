@@ -9,25 +9,32 @@ class SafeApiCall {
     } on DioException catch (e) {
       throw _mapDioException(e);
     } catch (_) {
-      throw ServerException(ErrorMessages.unexpectedError);
+      throw NetworkException(ErrorMessages.unexpectedError);
     }
   }
 
-  static ServerException _mapDioException(DioException e) {
+  static Exception _mapDioException(DioException e) {
     switch (e.type) {
+      // Network/connectivity issues
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.receiveTimeout:
-        return ServerException(ErrorMessages.timeoutError);
-
-      case DioExceptionType.badResponse:
-        return ServerException(ErrorMessages.serverError);
+        return NetworkException(ErrorMessages.timeoutError);
 
       case DioExceptionType.cancel:
-        return ServerException(ErrorMessages.requestCancelled);
+        return NetworkException(ErrorMessages.requestCancelled);
 
+      // Server responded with 4xx / 5xx
+      case DioExceptionType.badResponse:
+        final statusCode = e.response?.statusCode ?? 0;
+        final msg = statusCode >= 500
+            ? ErrorMessages.serverError
+            : ErrorMessages.badRequest;
+        return ServerException(msg);
+
+      // Unknown (no internet, DNS fail, etc.)
       case DioExceptionType.unknown:
       default:
-        return ServerException(ErrorMessages.networkError);
+        return NetworkException(ErrorMessages.networkError);
     }
   }
 }

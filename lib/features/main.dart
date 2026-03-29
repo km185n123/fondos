@@ -1,4 +1,3 @@
-// lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:fondos/core/di/injection.dart';
 import 'package:fondos/core/design_system/theme/app_theme.dart';

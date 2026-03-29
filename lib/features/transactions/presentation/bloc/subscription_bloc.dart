@@ -34,9 +34,14 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
   }
 
   void _onChangeAmount(double amount, Emitter<SubscriptionState> emit) {
+    final String? amountError = amount > state.availableBalance
+        ? 'Saldo insuficiente'
+        : null;
+
     emit(
       state.copyWith(
         amount: amount,
+        amountError: amountError,
         status: SubscriptionStatus.initial,
         errorMessage: null,
       ),

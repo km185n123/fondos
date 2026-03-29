@@ -1,6 +1,7 @@
 class ErrorMessages {
   // Server & Network Errors
   static const String serverError = 'Ocurrió un error en el servidor.';
+  static const String badRequest = 'Solicitud inválida (error del cliente).';
   static const String networkError = 'Sin conexión a internet.';
   static const String timeoutError =
       'Tiempo de espera agotado. Verifica tu conexión.';

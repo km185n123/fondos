@@ -11,6 +11,9 @@ class AppInput extends StatelessWidget {
   final String? error;
   final Function(String) onChanged;
   final Widget? trailing;
+  /// Optional prefix symbol shown inside the field (e.g. '\$').
+  /// It lives in InputDecoration so it never becomes part of the text value.
+  final String? prefixSymbol;
 
   const AppInput({
     super.key,
@@ -20,6 +23,7 @@ class AppInput extends StatelessWidget {
     required this.onChanged,
     this.error,
     this.trailing,
+    this.prefixSymbol,
   });
 
   @override
@@ -39,6 +43,9 @@ class AppInput extends StatelessWidget {
             errorText: error,
             filled: true,
             fillColor: AppColors.surfaceHigh,
+            // $ is a static prefix — never moves with the cursor.
+            prefixText: prefixSymbol != null ? '$prefixSymbol ' : null,
+            prefixStyle: AppTypography.headlineMedium,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppRadius.md),
             ),

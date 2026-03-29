@@ -23,51 +23,58 @@ class SubscriptionView extends StatefulWidget {
 class _SubscriptionViewState extends State<SubscriptionView> {
   final _controller = TextEditingController();
 
-  final double available = 12450000;
+  // Only responsible for formatting: strips non-digits, formats thousands.
+  // Does NOT hold any business-rule logic.
+  final _numberFormat = NumberFormat('#,##0', 'es_CO');
 
-  final currency = NumberFormat.currency(
+  // Formatter used only for display labels (available balance, etc.)
+  final _currencyFormat = NumberFormat.currency(
     locale: 'es_CO',
     symbol: '\$',
     decimalDigits: 0,
   );
 
-  String? localError;
+  void _onAmountChanged(String raw) {
+    // Strip everything that is not a digit
+    final digitsOnly = raw.replaceAll(RegExp(r'[^0-9]'), '');
 
-  void onAmountChanged(String value) {
-    final numeric = value.replaceAll(RegExp(r'[^0-9]'), '');
-    final amount = double.tryParse(numeric) ?? 0;
+    if (digitsOnly.isEmpty) {
+      // Keep controller cleared without triggering another onChanged
+      _controller.value = const TextEditingValue(
+        text: '',
+        selection: TextSelection.collapsed(offset: 0),
+      );
+      context.read<SubscriptionBloc>().add(
+            const SubscriptionEvent.changeAmount(0),
+          );
+      return;
+    }
 
-    final formatted = currency.format(amount);
+    final amount = double.parse(digitsOnly);
+    // Format with thousands separator, but NO currency symbol –
+    // the $ lives in InputDecoration.prefixText so it never moves.
+    final formatted = _numberFormat.format(amount);
 
     _controller.value = TextEditingValue(
       text: formatted,
       selection: TextSelection.collapsed(offset: formatted.length),
     );
 
-    if (amount > available) {
-      setState(() {
-        localError = 'Saldo insuficiente';
-      });
-    } else {
-      setState(() {
-        localError = null;
-      });
-    }
-
+    // Delegate ALL validation/business logic to the bloc
     context.read<SubscriptionBloc>().add(
-      SubscriptionEvent.changeAmount(amount),
-    );
+          SubscriptionEvent.changeAmount(amount),
+        );
   }
 
-  void onConfirm() {
-    if (localError != null || _controller.text.isEmpty) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Corrige los errores')));
-      return;
-    }
-
+  void _onConfirm() {
+    // The bloc holds all guards; view just fires the event.
     context.read<SubscriptionBloc>().add(const SubscriptionEvent.confirm());
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -84,12 +91,12 @@ class _SubscriptionViewState extends State<SubscriptionView> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Suscripción exitosa')),
             );
-            Navigator.of(context).pop(); // Close the bottom sheet
+            Navigator.of(context).pop();
           } else if (state.status == SubscriptionStatus.error &&
               state.errorMessage != null) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.errorMessage!)));
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.errorMessage!)),
+            );
           }
         },
         builder: (context, state) {
@@ -104,12 +111,13 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                 AppInput(
                   controller: _controller,
                   label: 'Monto a invertir',
-                  hint: '\$ 0',
-                  error:
-                      localError, // Prioritize local error for "Saldo insuficiente"
-                  onChanged: onAmountChanged,
+                  hint: '0',
+                  prefixSymbol: '\$',
+                  // amountError comes from the bloc - no business logic in view
+                  error: state.amountError,
+                  onChanged: _onAmountChanged,
                   trailing: Text(
-                    'Disponible: ${currency.format(available)}',
+                    'Disponible: ${_currencyFormat.format(state.availableBalance)}',
                     style: AppTypography.label.copyWith(
                       color: AppColors.textSecondary,
                     ),
@@ -119,10 +127,10 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                 NotificationSelectorView(
                   selected:
                       state.notificationMethod ?? NotificationMethod.email,
-                  onChanged: (v) {
+                  onChanged: (method) {
                     context.read<SubscriptionBloc>().add(
-                      SubscriptionEvent.changeNotificationMethod(v),
-                    );
+                          SubscriptionEvent.changeNotificationMethod(method),
+                        );
                   },
                 ),
                 const Spacer(),
@@ -132,7 +140,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
                       : 'Suscribirse',
                   onPressed: state.status == SubscriptionStatus.loading
                       ? () {}
-                      : onConfirm,
+                      : _onConfirm,
                 ),
               ],
             ),

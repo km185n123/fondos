@@ -11,7 +11,9 @@ class SafeCall {
     try {
       final result = await tryBlock();
       return Right(result);
-    } on ServerException {
+    } on NetworkException catch (e) {
+      return Left(NetworkFailure(e.message));
+    } on ServerException catch (e) {
       if (fallback != null) {
         try {
           final result = await fallback();
@@ -20,11 +22,11 @@ class SafeCall {
           return Left(CacheFailure(e.message));
         }
       }
-      return const Left(ServerFailure(ErrorMessages.serverError));
+      return Left(ServerFailure(e.message));
     } on CacheException catch (e) {
       return Left(CacheFailure(e.message));
-    } catch (_) {
-      return const Left(ServerFailure(ErrorMessages.unexpectedError));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
     }
   }
 }

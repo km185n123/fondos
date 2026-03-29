@@ -24,7 +24,40 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.e);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 3;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+        onCreate: (m) async {
+          await m.createAll();
+          // Seed: default user with initial balance
+          await into(userTable).insertOnConflictUpdate(
+            UserTableCompanion.insert(
+              id: const Value('1'),
+              balance: const Value(500000.0),
+            ),
+          );
+        },
+        onUpgrade: (m, from, to) async {
+          // v1 → v2: user_table was added
+          if (from < 2) {
+            await m.createTable(userTable);
+            await into(userTable).insertOnConflictUpdate(
+              UserTableCompanion.insert(
+                id: const Value('1'),
+                balance: const Value(500000.0),
+              ),
+            );
+          }
+          // v2 → v3: sync_status column added to transactions_table
+          if (from < 3) {
+            await m.addColumn(
+              transactionsTable,
+              transactionsTable.syncStatus,
+            );
+          }
+        },
+      );
 }
 
 LazyDatabase _openConnection() {

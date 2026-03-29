@@ -11,6 +11,7 @@ abstract class TransactionDTO with _$TransactionDTO {
     required double amount,
     @JsonKey(name: 'fund_id') required String fundId,
     required DateTime date,
+    @JsonKey(name: 'sync_status') required String syncStatus,
   }) = _TransactionDTO;
 
   factory TransactionDTO.fromJson(Map<String, dynamic> json) =>

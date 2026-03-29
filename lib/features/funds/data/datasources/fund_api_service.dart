@@ -1,6 +1,5 @@
-// path: features/funds/data/datasources/fund_api_service.dart
-
 import 'package:dio/dio.dart';
+import 'package:fondos/core/network/api_paths.dart';
 import 'package:fondos/core/utils/safe_api_call.dart';
 import 'package:fondos/features/funds/data/models/fund_dto.dart';
 import 'package:injectable/injectable.dart';
@@ -13,7 +12,7 @@ class FundApiService {
 
   Future<List<FundDTO>> getFunds() {
     return SafeApiCall.execute(() async {
-      final response = await _dio.get('/funds');
+      final response = await _dio.get(ApiPaths.funds);
 
       final data = response.data as List<dynamic>;
       return data

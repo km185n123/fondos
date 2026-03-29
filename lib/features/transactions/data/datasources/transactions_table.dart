@@ -7,6 +7,7 @@ class TransactionsTable extends Table {
   RealColumn get amount => real()();
   TextColumn get fundId => text()();
   DateTimeColumn get date => dateTime()();
+  TextColumn get syncStatus => text().withDefault(const Constant('pending'))();
 
   @override
   Set<Column> get primaryKey => {id};

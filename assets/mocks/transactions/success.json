@@ -1,0 +1,5 @@
+{
+  "__mock__": { "statusCode": 200 },
+  "status": "transaction ok",
+  "message": "Transacción procesada y sincronizada exitosamente."
+}

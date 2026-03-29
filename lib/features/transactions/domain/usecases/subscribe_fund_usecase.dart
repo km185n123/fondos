@@ -1,54 +1,51 @@
+import 'dart:async';
+
 import 'package:fpdart/fpdart.dart';
 import 'package:fondos/core/errors/failures.dart';
+import 'package:fondos/core/utils/safe_use_case.dart';
 import 'package:fondos/features/funds/domain/entities/fund.dart';
 import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
+import 'package:fondos/features/transactions/domain/entitie/transaction_response.dart';
 import 'package:fondos/features/transactions/domain/repositories/transaction_repository.dart';
 import 'package:fondos/features/user/domain/repositories/user_repository.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class SubscribeFundUseCase {
-  final UserRepository userRepository;
-  final TransactionRepository transactionRepository;
+  final UserRepository _userRepo;
+  final TransactionRepository _transactionRepo;
 
-  SubscribeFundUseCase({
-    required this.userRepository,
-    required this.transactionRepository,
-  });
+  SubscribeFundUseCase(this._userRepo, this._transactionRepo);
 
-  Future<Either<Failure, Unit>> call({
+  Future<Either<Failure, TransactionResponse>> call({
     required Fund fund,
     required double amount,
     required NotificationMethod notificationMethod,
-  }) async {
-    if (amount < fund.montoMinimo) {
-      return Left(ServerFailure('El monto debe ser al menos COP ${fund.montoMinimo}'));
+  }) => SafeUseCase.execute(() async {
+    if (!fund.canSubscribe(amount)) {
+      return Left(
+        BusinessFailure('Monto inferior al mínimo de ${fund.montoMinimo}'),
+      );
     }
 
-    final currentBalance = await userRepository.getCurrentBalance();
-    if (currentBalance < amount) {
-      return const Left(ServerFailure('Saldo insuficiente'));
-    }
-
-    final newBalance = currentBalance - amount;
-    await userRepository.updateBalance(newBalance);
-
-    final transaction = Transaction(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      type: TransactionType.subscription,
-      amount: amount,
+    final transaction = Transaction.subscription(
       fundId: fund.id,
-      date: DateTime.now(),
+      amount: amount,
     );
-    
-    final result = await transactionRepository.registerTransaction(transaction);
-    
-    return result.fold(
-      (failure) => Left(failure),
-      (_) async {
-        await userRepository.saveNotificationPreference(notificationMethod);
-        return const Right(unit);
-      },
+
+    final result = await _transactionRepo.subscribeFund(
+      transaction: transaction,
     );
-  }
+
+    if (result.isLeft()) {
+      return Left(result.swap().getOrElse((_) => const ServerFailure('Error')));
+    }
+
+    final response = result.getOrElse((_) => throw Exception());
+
+    // fire & forget
+    unawaited(_userRepo.saveNotificationPreference(notificationMethod));
+
+    return Right(response);
+  });
 }

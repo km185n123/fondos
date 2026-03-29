@@ -12,7 +12,9 @@ abstract class SubscriptionState with _$SubscriptionState {
     @Default(SubscriptionStatus.initial) SubscriptionStatus status,
     Fund? selectedFund,
     @Default(0.0) double amount,
+    @Default(12450000.0) double availableBalance,
     NotificationMethod? notificationMethod,
     String? errorMessage,
+    String? amountError, // field-level error shown below the input
   }) = _SubscriptionState;
 }

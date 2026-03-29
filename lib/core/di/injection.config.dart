@@ -81,13 +81,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i421.TransactionRepository>(
       () => _i443.TransactionRepositoryImpl(
         transactionDao: gh<_i514.TransactionDao>(),
+        userDao: gh<_i126.UserDao>(),
         apiService: gh<_i21.TransactionApiService>(),
       ),
     );
     gh.lazySingleton<_i219.SubscribeFundUseCase>(
       () => _i219.SubscribeFundUseCase(
-        userRepository: gh<_i237.UserRepository>(),
-        transactionRepository: gh<_i421.TransactionRepository>(),
+        gh<_i237.UserRepository>(),
+        gh<_i421.TransactionRepository>(),
       ),
     );
     gh.factory<_i433.SubscriptionBloc>(
