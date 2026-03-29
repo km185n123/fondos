@@ -3,12 +3,20 @@ import 'package:fondos/core/design_system/tokens/app_colors.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
 
 class NavigationBottomView extends StatelessWidget {
-  const NavigationBottomView({super.key});
+  final int currentIndex;
+  final ValueChanged<int> onTap;
+
+  const NavigationBottomView({
+    super.key,
+    required this.currentIndex,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: 0,
+      currentIndex: currentIndex,
+      onTap: onTap,
       selectedLabelStyle: AppTypography.label.copyWith(
         fontWeight: FontWeight.bold,
       ),

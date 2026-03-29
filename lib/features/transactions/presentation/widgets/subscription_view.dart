@@ -12,6 +12,7 @@ import 'package:fondos/core/design_system/components/app_input.dart';
 import 'package:fondos/features/transactions/presentation/widgets/fund_header_view.dart';
 import 'package:fondos/features/transactions/presentation/widgets/notification_selector_view.dart';
 import 'package:intl/intl.dart';
+import 'package:go_router/go_router.dart';
 
 class SubscriptionView extends StatefulWidget {
   const SubscriptionView({super.key});
@@ -83,6 +84,10 @@ class _SubscriptionViewState extends State<SubscriptionView> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.surface,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
+          onPressed: () => context.pop(),
+        ),
         title: const Text('Suscripción', style: AppTypography.headlineMedium),
       ),
       body: BlocConsumer<SubscriptionBloc, SubscriptionState>(
@@ -91,7 +96,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Suscripción exitosa')),
             );
-            Navigator.of(context).pop();
+            context.pop();
           } else if (state.status == SubscriptionStatus.error &&
               state.errorMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(
