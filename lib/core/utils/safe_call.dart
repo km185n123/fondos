@@ -1,5 +1,4 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:fondos/core/errors/error_messages.dart';
 import 'package:fondos/core/errors/exceptions.dart';
 import 'package:fondos/core/errors/failures.dart';
 
