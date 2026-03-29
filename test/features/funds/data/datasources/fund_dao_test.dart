@@ -17,7 +17,7 @@ void main() {
   });
 
   group('FundDao', () {
-    final tFundDb = const FundDb(
+    const tFundDb = FundDb(
       id: '1',
       nombre: 'Fondo Test DB',
       montoMinimo: 1500.0,

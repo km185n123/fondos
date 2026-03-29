@@ -267,8 +267,6 @@ class _Success implements FundState {
   return EqualUnmodifiableListView(_funds);
 }
 
-// TODO: configurar esto desde un archivo de configuracion
-// Se asume un saldo inicial de 500.000 según los requerimientos
 @JsonKey() final  double saldoActual;
 
 /// Create a copy of FundState

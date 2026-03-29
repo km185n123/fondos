@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:fondos/core/design_system/tokens/app_colors.dart';
 import 'package:fondos/core/design_system/layout/responsive.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
-import 'package:fondos/features/funds/presentation/widgets/fund_card.dart';
+import 'package:fondos/features/funds/presentation/widgets/fund_card_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fondos/features/funds/presentation/bloc/fund_bloc.dart';
 import 'package:fondos/features/funds/presentation/bloc/fund_state.dart';
 
-class FundsGrid extends StatelessWidget {
-  const FundsGrid({super.key});
+class FundsGridView extends StatelessWidget {
+  const FundsGridView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class FundsGrid extends StatelessWidget {
                   mainAxisSpacing: 16,
                   mainAxisExtent: 160,
                 ),
-                itemBuilder: (_, i) => FundCard(funds[i]),
+                itemBuilder: (_, i) => FundCardView(funds[i]),
               ),
               orElse: () => const SizedBox.shrink(),
             );

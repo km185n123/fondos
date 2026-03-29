@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fondos/core/design_system/tokens/app_colors.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
 
-class DashboardBottomNav extends StatelessWidget {
-  const DashboardBottomNav({super.key});
+class NavigationBottomView extends StatelessWidget {
+  const NavigationBottomView({super.key});
 
   @override
   Widget build(BuildContext context) {

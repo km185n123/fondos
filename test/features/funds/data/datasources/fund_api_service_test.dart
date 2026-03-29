@@ -53,7 +53,7 @@ void main() {
       verifyNoMoreInteractions(mockDio);
     });
 
-    test('should throw ServerException when connection timeout occurs', () async {
+    test('should throw NetworkException when connection timeout occurs', () async {
       // arrange
       when(() => mockDio.get(any())).thenThrow(
         DioException(
@@ -66,11 +66,11 @@ void main() {
 
       // assert
       expect(() => call(), throwsA(
-        isA<ServerException>().having((e) => e.message, 'message', ErrorMessages.timeoutError),
+        isA<NetworkException>().having((e) => e.message, 'message', ErrorMessages.timeoutError),
       ));
     });
     
-    test('should throw ServerException when other DioException occurs', () async {
+    test('should throw ServerException with badRequest message when badResponse occurs', () async {
       // arrange
       when(() => mockDio.get(any())).thenThrow(
         DioException(
@@ -83,11 +83,11 @@ void main() {
 
       // assert
       expect(() => call(), throwsA(
-        isA<ServerException>().having((e) => e.message, 'message', ErrorMessages.networkError),
+        isA<ServerException>().having((e) => e.message, 'message', ErrorMessages.badRequest),
       ));
     });
     
-    test('should throw ServerException when generic exception occurs', () async {
+    test('should throw NetworkException when generic exception occurs', () async {
       // arrange
       when(() => mockDio.get(any())).thenThrow(Exception());
 
@@ -96,7 +96,7 @@ void main() {
 
       // assert
       expect(() => call(), throwsA(
-        isA<ServerException>().having((e) => e.message, 'message', ErrorMessages.unexpectedError),
+        isA<NetworkException>().having((e) => e.message, 'message', ErrorMessages.unexpectedError),
       ));
     });
   });
