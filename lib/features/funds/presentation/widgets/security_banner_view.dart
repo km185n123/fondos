@@ -4,8 +4,8 @@ import 'package:fondos/core/design_system/tokens/app_radius.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
 
-class SecurityBanner extends StatelessWidget {
-  const SecurityBanner({super.key});
+class SecurityBannerView extends StatelessWidget {
+  const SecurityBannerView({super.key});
 
   @override
   Widget build(BuildContext context) {

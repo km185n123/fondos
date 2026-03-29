@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fondos/core/design_system/tokens/app_colors.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
 
-class HeroBalance extends StatelessWidget {
-  const HeroBalance({super.key});
+class HeroBalanceView extends StatelessWidget {
+  const HeroBalanceView({super.key});
 
   @override
   Widget build(BuildContext context) {

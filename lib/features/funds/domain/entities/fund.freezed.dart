@@ -208,8 +208,8 @@ return $default(_that.id,_that.nombre,_that.montoMinimo,_that.categoria);case _:
 /// @nodoc
 
 
-class _Fund implements Fund {
-  const _Fund({required this.id, required this.nombre, required this.montoMinimo, required this.categoria});
+class _Fund extends Fund {
+  const _Fund({required this.id, required this.nombre, required this.montoMinimo, required this.categoria}): super._();
   
 
 @override final  String id;
