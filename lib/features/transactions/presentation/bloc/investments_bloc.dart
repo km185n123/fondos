@@ -58,5 +58,10 @@ class InvestmentsBloc extends Bloc<InvestmentsEvent, InvestmentsState> {
     Emitter<InvestmentsState> emit,
   ) async {
     emit(const InvestmentsState.loading());
+    final result = await cancelInvestmentUseCase(transaction);
+    result.fold(
+      (failure) => emit(InvestmentsState.error(failure.message)),
+      (_) {},
+    );
   }
 }

@@ -89,6 +89,9 @@ class TransactionRepositoryImpl implements TransactionRepository {
           if (result == 0) {
             throw Exception('TRANSACTION_NOT_FOUND');
           }
+          final balance = await userDao.getBalance();
+          final newBalance = balance + transaction.amount;
+          await userDao.updateBalance(newBalance);
         });
         return true;
       },

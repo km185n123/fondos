@@ -4,7 +4,7 @@ import 'package:fondos/core/design_system/theme/app_theme.dart';
 import 'package:fondos/core/router/app_router.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized(); // needed for DI
+  WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
   runApp(const MyApp());
 }
