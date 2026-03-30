@@ -1,5 +1,5 @@
+import 'package:fondos/core/enum/notification_method.dart';
 import 'package:fondos/features/funds/domain/entities/fund.dart';
-import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'subscription_event.freezed.dart';

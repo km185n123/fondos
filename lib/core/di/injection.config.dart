@@ -10,6 +10,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dio/dio.dart' as _i361;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -53,40 +54,67 @@ import '../../features/user/data/repositories/user_repository_impl.dart'
     as _i664;
 import '../../features/user/domain/repositories/user_repository.dart' as _i237;
 import '../database/app_database.dart' as _i982;
+import '../database/database_builder.dart' as _i1026;
+import '../database/database_connection_factory.dart' as _i816;
+import '../database/db_seeder_config.dart' as _i612;
 import '../network/dio_client.dart' as _i667;
+import '../security/encryption_service.dart' as _i320;
 import 'app_module.dart' as _i460;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
-  _i174.GetIt init({
+  Future<_i174.GetIt> init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
-  }) {
+  }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final appModule = _$AppModule();
+    gh.lazySingleton<_i612.DbSeederConfig>(() => _i612.DbSeederConfig());
     gh.lazySingleton<_i667.DioClient>(() => appModule.dioClient);
     gh.lazySingleton<_i361.Dio>(() => appModule.dio);
-    gh.lazySingleton<_i982.AppDatabase>(() => appModule.appDatabase);
-    gh.factory<_i238.HistoryDao>(
-      () => _i238.HistoryDao(gh<_i982.AppDatabase>()),
+    gh.lazySingleton<_i558.FlutterSecureStorage>(() => appModule.secureStorage);
+    gh.lazySingleton<_i816.DatabaseConnectionFactory>(
+      () => appModule.dbFactory,
     );
-    gh.lazySingleton<_i481.FundDao>(
-      () => appModule.getFundDao(gh<_i982.AppDatabase>()),
+    gh.lazySingleton<_i320.EncryptionService>(
+      () => appModule.encryptionService(gh<_i558.FlutterSecureStorage>()),
     );
-    gh.lazySingleton<_i514.TransactionDao>(
-      () => appModule.getTransactionDao(gh<_i982.AppDatabase>()),
-    );
-    gh.lazySingleton<_i126.UserDao>(
-      () => appModule.getUserDao(gh<_i982.AppDatabase>()),
-    );
-    gh.factory<_i237.UserRepository>(
-      () => _i664.UserRepositoryImpl(gh<_i126.UserDao>()),
+    gh.lazySingleton<_i1026.DatabaseBuilder>(
+      () => _i1026.DatabaseBuilder(
+        gh<_i320.EncryptionService>(),
+        gh<_i816.DatabaseConnectionFactory>(),
+        gh<_i612.DbSeederConfig>(),
+      ),
     );
     gh.lazySingleton<_i890.FundApiService>(
       () => _i890.FundApiService(gh<_i361.Dio>()),
     );
     gh.lazySingleton<_i21.TransactionApiService>(
       () => _i21.TransactionApiService(gh<_i361.Dio>()),
+    );
+    await gh.lazySingletonAsync<_i982.AppDatabase>(
+      () => appModule.appDatabase(
+        gh<_i320.EncryptionService>(),
+        gh<_i816.DatabaseConnectionFactory>(),
+        gh<_i612.DbSeederConfig>(),
+        gh<_i1026.DatabaseBuilder>(),
+      ),
+      preResolve: true,
+    );
+    gh.factory<_i238.HistoryDao>(
+      () => _i238.HistoryDao(gh<_i982.AppDatabase>()),
+    );
+    gh.lazySingleton<_i481.FundDao>(
+      () => appModule.fundDao(gh<_i982.AppDatabase>()),
+    );
+    gh.lazySingleton<_i514.TransactionDao>(
+      () => appModule.transactionDao(gh<_i982.AppDatabase>()),
+    );
+    gh.lazySingleton<_i126.UserDao>(
+      () => appModule.userDao(gh<_i982.AppDatabase>()),
+    );
+    gh.factory<_i237.UserRepository>(
+      () => _i664.UserRepositoryImpl(gh<_i126.UserDao>()),
     );
     gh.lazySingleton<_i421.TransactionRepository>(
       () => _i443.TransactionRepositoryImpl(

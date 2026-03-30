@@ -5,9 +5,10 @@ import 'package:fondos/core/router/app_router.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fondos/l10n/app_localizations.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  configureDependencies();
+
+  await configureDependencies();
   runApp(const MyApp());
 }
 

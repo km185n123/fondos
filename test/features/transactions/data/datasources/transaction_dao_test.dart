@@ -1,15 +1,18 @@
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fondos/core/database/app_database.dart';
+import 'package:fondos/core/database/db_seeder_config.dart';
 import 'package:fondos/core/enum/syncs_tatus.dart';
 import 'package:fondos/features/transactions/data/datasources/transaction_dao.dart';
 
 void main() {
   late AppDatabase database;
   late TransactionDao transactionDao;
+  late DbSeederConfig config;
 
   setUp(() {
-    database = AppDatabase.forTesting(NativeDatabase.memory());
+    config = DbSeederConfig();
+    database = AppDatabase.forTesting(NativeDatabase.memory(), config);
     transactionDao = TransactionDao(database);
   });
 

@@ -1,14 +1,17 @@
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fondos/core/database/app_database.dart';
+import 'package:fondos/core/database/db_seeder_config.dart';
 import 'package:fondos/features/funds/data/datasources/fund_dao.dart';
 
 void main() {
   late AppDatabase db;
   late FundDao dao;
+  late DbSeederConfig config;
 
   setUp(() {
-    db = AppDatabase.forTesting(NativeDatabase.memory());
+    config = DbSeederConfig();
+    db = AppDatabase.forTesting(NativeDatabase.memory(), config);
     dao = FundDao(db);
   });
 

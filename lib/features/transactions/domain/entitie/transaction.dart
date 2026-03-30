@@ -1,12 +1,9 @@
 import 'package:fondos/core/enum/syncs_tatus.dart';
+import 'package:fondos/core/enum/transaction_type.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
 
 part 'transaction.freezed.dart';
-
-enum TransactionType { subscription, cancellation }
-
-enum NotificationMethod { email, sms }
 
 @freezed
 abstract class Transaction with _$Transaction {

@@ -1,5 +1,7 @@
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fondos/core/database/db_seeder_config.dart';
+import 'package:fondos/core/enum/transaction_type.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:fondos/core/enum/syncs_tatus.dart';
@@ -21,6 +23,7 @@ void main() {
   late UserDao userDao;
   late TransactionRepositoryImpl repository;
   late MockTransactionApiService mockApiService;
+  late DbSeederConfig config;
 
   setUpAll(() {
     registerFallbackValue(
@@ -37,7 +40,8 @@ void main() {
   });
 
   setUp(() async {
-    database = AppDatabase.forTesting(NativeDatabase.memory());
+    config = DbSeederConfig();
+    database = AppDatabase.forTesting(NativeDatabase.memory(), config);
     transactionDao = TransactionDao(database);
     userDao = UserDao(database);
     mockApiService = MockTransactionApiService();

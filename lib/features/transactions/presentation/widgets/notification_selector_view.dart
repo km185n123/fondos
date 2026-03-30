@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fondos/core/enum/notification_method.dart';
 import 'package:fondos/l10n/app_localizations.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';

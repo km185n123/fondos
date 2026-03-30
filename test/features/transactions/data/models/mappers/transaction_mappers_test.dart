@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fondos/core/enum/syncs_tatus.dart';
+import 'package:fondos/core/enum/transaction_type.dart';
 import 'package:fondos/features/transactions/data/models/mappers/transaction_mappers.dart';
 import 'package:fondos/features/transactions/data/models/transaction_response_dto.dart';
 import 'package:fondos/features/transactions/domain/entitie/transaction.dart';

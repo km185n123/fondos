@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fondos/core/enum/notification_method.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:fondos/core/errors/failures.dart';
 import 'package:fondos/core/utils/safe_use_case.dart';

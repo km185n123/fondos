@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
-import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
+import 'package:fondos/core/enum/notification_method.dart';
+import 'package:fondos/core/enum/subscription_status.dart';
 import 'package:fondos/features/transactions/presentation/bloc/subscription_bloc.dart';
 import 'package:fondos/features/transactions/presentation/bloc/subscription_event.dart';
 import 'package:fondos/features/transactions/presentation/bloc/subscription_state.dart';
@@ -153,7 +154,7 @@ class _SubscriptionFormViewState extends State<SubscriptionFormView> {
                 NotificationSelectorView(
                   selected:
                       state.notificationMethod ?? NotificationMethod.email,
-                  onChanged: (method) {
+                  onChanged: (NotificationMethod method) {
                     context.read<SubscriptionBloc>().add(
                       SubscriptionEvent.changeNotificationMethod(method),
                     );

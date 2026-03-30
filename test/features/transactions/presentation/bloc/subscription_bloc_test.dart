@@ -1,5 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fondos/core/enum/notification_method.dart';
+import 'package:fondos/core/enum/subscription_status.dart';
 import 'package:fondos/core/errors/error_messages.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:fpdart/fpdart.dart';

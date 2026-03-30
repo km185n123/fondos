@@ -1,7 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fondos/core/enum/notification_method.dart';
+import 'package:fondos/core/enum/subscription_status.dart';
 import 'package:fondos/core/errors/error_messages.dart';
 import 'package:fondos/features/funds/domain/entities/fund.dart';
-import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
 import 'package:fondos/features/transactions/domain/usecases/subscribe_fund_usecase.dart';
 import 'package:fondos/features/transactions/presentation/bloc/subscription_event.dart';
 import 'package:fondos/features/transactions/presentation/bloc/subscription_state.dart';
@@ -94,19 +95,16 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       return;
     }
 
-    // 2. Set Loading State
     emit(
       state.copyWith(status: SubscriptionStatus.loading, errorMessage: null),
     );
 
-    // 3. Execute Use Case
     final result = await subscribeFundUseCase.call(
       fund: state.selectedFund!,
       amount: state.amount,
       notificationMethod: state.notificationMethod!,
     );
 
-    // 4. Handle Result
     result.fold(
       (failure) {
         emit(

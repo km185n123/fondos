@@ -1,6 +1,6 @@
+import 'package:fondos/core/enum/notification_method.dart';
 import 'package:injectable/injectable.dart';
 import 'package:fondos/features/user/domain/repositories/user_repository.dart';
-import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
 import 'package:fondos/features/user/data/datasources/user_dao.dart';
 
 @Injectable(as: UserRepository)
