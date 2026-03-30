@@ -19,15 +19,22 @@ class CancelInvestmentUseCase {
   );
 
   Future<Either<Failure, bool>> call(Transaction transaction) async {
-    unawaited(
-      _historyRepo.insertHistory(
-        History(
-          title: transaction.name,
-          amount: '-\$${transaction.amount.toStringAsFixed(2)}',
-          isPositive: false,
-        ),
-      ),
+    final result = await transactionRepository.cancelInvestment(transaction);
+
+    return result.fold(
+      (failure) => Left(failure),
+      (success) {
+        unawaited(
+          _historyRepo.insertHistory(
+            History(
+              title: transaction.name,
+              amount: '-\$${transaction.amount.toStringAsFixed(2)}',
+              isPositive: false,
+            ),
+          ),
+        );
+        return Right(success);
+      },
     );
-    return await transactionRepository.cancelInvestment(transaction);
   }
 }
