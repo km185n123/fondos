@@ -12,5 +12,4 @@ abstract class SubscriptionEvent with _$SubscriptionEvent {
     NotificationMethod method,
   ) = _ChangeNotificationMethod;
   const factory SubscriptionEvent.confirm() = _Confirm;
-  const factory SubscriptionEvent.cancel(Transaction transaction) = _Cancel;
 }

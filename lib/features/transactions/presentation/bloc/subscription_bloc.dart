@@ -19,8 +19,6 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
         changeNotificationMethod: (method) async =>
             _onChangeNotificationMethod(method, emit),
         confirm: () async => await _onConfirm(emit),
-        cancel: (Transaction transaction) async =>
-            await _onCancel(transaction, emit),
       );
     });
   }
@@ -124,9 +122,4 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       },
     );
   }
-
-  Future<void> _onCancel(
-    Transaction transaction,
-    Emitter<SubscriptionState> emit,
-  ) async {}
 }

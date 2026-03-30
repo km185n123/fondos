@@ -30,6 +30,8 @@ import '../../features/transactions/data/repositories/transaction_repository_imp
     as _i443;
 import '../../features/transactions/domain/repositories/transaction_repository.dart'
     as _i421;
+import '../../features/transactions/domain/usecases/cancel_investment_use_case.dart'
+    as _i522;
 import '../../features/transactions/domain/usecases/subscribe_fund_usecase.dart'
     as _i219;
 import '../../features/transactions/domain/usecases/watch_investments_use_case.dart'
@@ -82,12 +84,18 @@ extension GetItInjectableX on _i174.GetIt {
         apiService: gh<_i21.TransactionApiService>(),
       ),
     );
+    gh.lazySingleton<_i522.CancelInvestmentUseCase>(
+      () => _i522.CancelInvestmentUseCase(
+        transactionRepository: gh<_i421.TransactionRepository>(),
+      ),
+    );
     gh.lazySingleton<_i918.WatchInvestmentsUseCase>(
       () => _i918.WatchInvestmentsUseCase(gh<_i421.TransactionRepository>()),
     );
     gh.factory<_i1012.InvestmentsBloc>(
       () => _i1012.InvestmentsBloc(
         watchInvestmentsUseCase: gh<_i918.WatchInvestmentsUseCase>(),
+        cancelInvestmentUseCase: gh<_i522.CancelInvestmentUseCase>(),
       ),
     );
     gh.lazySingleton<_i650.FundRepository>(

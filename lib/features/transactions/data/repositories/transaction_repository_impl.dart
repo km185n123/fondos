@@ -72,10 +72,26 @@ class TransactionRepositoryImpl implements TransactionRepository {
       },
     );
   }
+
   @override
   Stream<List<Transaction>> watchInvestments() {
     return transactionDao.watchInvestments().map(
       (list) => list.map((e) => e.toEntity()).toList(),
+    );
+  }
+
+  @override
+  Future<Either<Failure, bool>> cancelInvestment(Transaction transaction) {
+    return SafeCall.execute<bool>(
+      tryBlock: () async {
+        await transactionDao.runInTransaction(() async {
+          final result = await transactionDao.removeTransaction(transaction.id);
+          if (result == 0) {
+            throw Exception('TRANSACTION_NOT_FOUND');
+          }
+        });
+        return true;
+      },
     );
   }
 }

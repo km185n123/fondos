@@ -35,4 +35,10 @@ class TransactionDao extends DatabaseAccessor<AppDatabase>
       transactionsTable,
     )..where((tbl) => tbl.type.equals('subscription'))).watch();
   }
+
+  Future<int> removeTransaction(String id) async {
+    return await (delete(
+      transactionsTable,
+    )..where((tbl) => tbl.id.equals(id))).go();
+  }
 }

@@ -9,4 +9,6 @@ abstract class TransactionRepository {
   });
 
   Stream<List<Transaction>> watchInvestments();
+
+  Future<Either<Failure, bool>> cancelInvestment(Transaction transaction);
 }

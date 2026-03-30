@@ -55,12 +55,13 @@ extension InvestmentsEventPatterns on InvestmentsEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _StartWatching value)?  startWatching,TResult Function( _OnData value)?  onData,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _StartWatching value)?  startWatching,TResult Function( _OnData value)?  onData,TResult Function( _Cancel value)?  cancel,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _StartWatching() when startWatching != null:
 return startWatching(_that);case _OnData() when onData != null:
-return onData(_that);case _:
+return onData(_that);case _Cancel() when cancel != null:
+return cancel(_that);case _:
   return orElse();
 
 }
@@ -78,12 +79,13 @@ return onData(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _StartWatching value)  startWatching,required TResult Function( _OnData value)  onData,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _StartWatching value)  startWatching,required TResult Function( _OnData value)  onData,required TResult Function( _Cancel value)  cancel,}){
 final _that = this;
 switch (_that) {
 case _StartWatching():
 return startWatching(_that);case _OnData():
-return onData(_that);case _:
+return onData(_that);case _Cancel():
+return cancel(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -100,12 +102,13 @@ return onData(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _StartWatching value)?  startWatching,TResult? Function( _OnData value)?  onData,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _StartWatching value)?  startWatching,TResult? Function( _OnData value)?  onData,TResult? Function( _Cancel value)?  cancel,}){
 final _that = this;
 switch (_that) {
 case _StartWatching() when startWatching != null:
 return startWatching(_that);case _OnData() when onData != null:
-return onData(_that);case _:
+return onData(_that);case _Cancel() when cancel != null:
+return cancel(_that);case _:
   return null;
 
 }
@@ -122,11 +125,12 @@ return onData(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  startWatching,TResult Function( List<Transaction> data)?  onData,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  startWatching,TResult Function( List<Transaction> data)?  onData,TResult Function( Transaction transaction)?  cancel,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _StartWatching() when startWatching != null:
 return startWatching();case _OnData() when onData != null:
-return onData(_that.data);case _:
+return onData(_that.data);case _Cancel() when cancel != null:
+return cancel(_that.transaction);case _:
   return orElse();
 
 }
@@ -144,11 +148,12 @@ return onData(_that.data);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  startWatching,required TResult Function( List<Transaction> data)  onData,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  startWatching,required TResult Function( List<Transaction> data)  onData,required TResult Function( Transaction transaction)  cancel,}) {final _that = this;
 switch (_that) {
 case _StartWatching():
 return startWatching();case _OnData():
-return onData(_that.data);case _:
+return onData(_that.data);case _Cancel():
+return cancel(_that.transaction);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -165,11 +170,12 @@ return onData(_that.data);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  startWatching,TResult? Function( List<Transaction> data)?  onData,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  startWatching,TResult? Function( List<Transaction> data)?  onData,TResult? Function( Transaction transaction)?  cancel,}) {final _that = this;
 switch (_that) {
 case _StartWatching() when startWatching != null:
 return startWatching();case _OnData() when onData != null:
-return onData(_that.data);case _:
+return onData(_that.data);case _Cancel() when cancel != null:
+return cancel(_that.transaction);case _:
   return null;
 
 }
@@ -279,6 +285,81 @@ as List<Transaction>,
 }
 
 
+}
+
+/// @nodoc
+
+
+class _Cancel implements InvestmentsEvent {
+  const _Cancel(this.transaction);
+  
+
+ final  Transaction transaction;
+
+/// Create a copy of InvestmentsEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$CancelCopyWith<_Cancel> get copyWith => __$CancelCopyWithImpl<_Cancel>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Cancel&&(identical(other.transaction, transaction) || other.transaction == transaction));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,transaction);
+
+@override
+String toString() {
+  return 'InvestmentsEvent.cancel(transaction: $transaction)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$CancelCopyWith<$Res> implements $InvestmentsEventCopyWith<$Res> {
+  factory _$CancelCopyWith(_Cancel value, $Res Function(_Cancel) _then) = __$CancelCopyWithImpl;
+@useResult
+$Res call({
+ Transaction transaction
+});
+
+
+$TransactionCopyWith<$Res> get transaction;
+
+}
+/// @nodoc
+class __$CancelCopyWithImpl<$Res>
+    implements _$CancelCopyWith<$Res> {
+  __$CancelCopyWithImpl(this._self, this._then);
+
+  final _Cancel _self;
+  final $Res Function(_Cancel) _then;
+
+/// Create a copy of InvestmentsEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? transaction = null,}) {
+  return _then(_Cancel(
+null == transaction ? _self.transaction : transaction // ignore: cast_nullable_to_non_nullable
+as Transaction,
+  ));
+}
+
+/// Create a copy of InvestmentsEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$TransactionCopyWith<$Res> get transaction {
+  
+  return $TransactionCopyWith<$Res>(_self.transaction, (value) {
+    return _then(_self.copyWith(transaction: value));
+  });
+}
 }
 
 // dart format on

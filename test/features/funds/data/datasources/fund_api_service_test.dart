@@ -61,7 +61,7 @@ void main() {
         // arrange
         when(() => mockDio.get(any())).thenThrow(
           DioException(
-            requestOptions: RequestOptions(path: '/funds'),
+            requestOptions: RequestOptions(path: '/funds/success'),
             type: DioExceptionType.connectionTimeout,
           ),
         );
@@ -89,7 +89,7 @@ void main() {
         // arrange
         when(() => mockDio.get(any())).thenThrow(
           DioException(
-            requestOptions: RequestOptions(path: '/funds'),
+            requestOptions: RequestOptions(path: '/funds/success'),
             type: DioExceptionType.badResponse,
           ),
         );

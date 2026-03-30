@@ -7,4 +7,5 @@ part 'investments_event.freezed.dart';
 class InvestmentsEvent with _$InvestmentsEvent {
   const factory InvestmentsEvent.startWatching() = _StartWatching;
   const factory InvestmentsEvent.onData(List<Transaction> data) = _OnData;
+  const factory InvestmentsEvent.cancel(Transaction transaction) = _Cancel;
 }
