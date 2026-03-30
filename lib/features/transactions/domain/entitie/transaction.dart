@@ -12,6 +12,7 @@ enum NotificationMethod { email, sms }
 abstract class Transaction with _$Transaction {
   const factory Transaction({
     required String id,
+    required String name,
     required TransactionType type,
     required double amount,
     required String fundId,
@@ -22,9 +23,11 @@ abstract class Transaction with _$Transaction {
   factory Transaction.subscription({
     required String fundId,
     required double amount,
+    required String name,
   }) {
     return Transaction(
       id: const Uuid().v4(),
+      name: name,
       type: TransactionType.subscription,
       amount: amount,
       fundId: fundId,
@@ -36,9 +39,11 @@ abstract class Transaction with _$Transaction {
   factory Transaction.cancellation({
     required String fundId,
     required double amount,
+    required String name,
   }) {
     return Transaction(
       id: const Uuid().v4(),
+      name: name,
       type: TransactionType.cancellation,
       amount: amount,
       fundId: fundId,

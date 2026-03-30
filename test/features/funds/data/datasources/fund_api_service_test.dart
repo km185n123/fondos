@@ -21,18 +21,18 @@ void main() {
     final tFundJsonList = [
       {
         'id': '1',
-        'nombre': 'Fondo 1',
-        'monto_minimo': 100.0,
-        'categoria': 'Acciones',
+        'name': 'Fondo 1',
+        'minimumAmount': 100.0,
+        'category': 'Acciones',
       }
     ];
 
     final tFundDtoList = [
       const FundDTO(
         id: '1',
-        nombre: 'Fondo 1',
-        montoMinimo: 100.0,
-        categoria: 'Acciones',
+        name: 'Fondo 1',
+        minimumAmount: 100.0,
+        category: 'Acciones',
       )
     ];
 

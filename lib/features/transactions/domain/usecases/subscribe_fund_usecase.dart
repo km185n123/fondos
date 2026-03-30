@@ -24,13 +24,14 @@ class SubscribeFundUseCase {
   }) => SafeUseCase.execute(() async {
     if (!fund.canSubscribe(amount)) {
       return Left(
-        BusinessFailure('Monto inferior al mínimo de ${fund.montoMinimo}'),
+        BusinessFailure('Monto inferior al mínimo de ${fund.minimumAmount}'),
       );
     }
 
     final transaction = Transaction.subscription(
       fundId: fund.id,
       amount: amount,
+      name: fund.name,
     );
 
     final result = await _transactionRepo.subscribeFund(

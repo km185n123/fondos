@@ -11,14 +11,14 @@ import 'package:fondos/features/transactions/presentation/widgets/fund_header_vi
 import 'package:fondos/features/transactions/presentation/widgets/notification_selector_view.dart';
 import 'package:intl/intl.dart';
 
-class SubscriptionView extends StatefulWidget {
-  const SubscriptionView({super.key});
+class SubscriptionFormView extends StatefulWidget {
+  const SubscriptionFormView({super.key});
 
   @override
-  State<SubscriptionView> createState() => _SubscriptionViewState();
+  State<SubscriptionFormView> createState() => _SubscriptionFormViewState();
 }
 
-class _SubscriptionViewState extends State<SubscriptionView> {
+class _SubscriptionFormViewState extends State<SubscriptionFormView> {
   final _controller = TextEditingController();
 
   // Only responsible for formatting: strips non-digits, formats thousands.
@@ -74,7 +74,6 @@ class _SubscriptionViewState extends State<SubscriptionView> {
     _controller.dispose();
     super.dispose();
   }
-  // SOLO build() modificado
 
   @override
   Widget build(BuildContext context) {

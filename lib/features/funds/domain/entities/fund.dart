@@ -8,12 +8,12 @@ abstract class Fund with _$Fund {
 
   const factory Fund({
     required String id,
-    required String nombre,
-    required double montoMinimo,
-    required String categoria,
+    required String name,
+    required double minimumAmount,
+    required String category,
   }) = _Fund;
 
   bool canSubscribe(double amount) {
-    return amount >= montoMinimo;
+    return amount >= minimumAmount;
   }
 }

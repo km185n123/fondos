@@ -7,4 +7,6 @@ abstract class TransactionRepository {
   Future<Either<Failure, TransactionResponse>> subscribeFund({
     required Transaction transaction,
   });
+
+  Future<Either<Failure, List<Transaction>>> getInvestments();
 }

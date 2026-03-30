@@ -25,8 +25,8 @@ void main() {
   });
 
   const tFunds = [
-    Fund(id: '1', nombre: 'Fondo 1', montoMinimo: 100.0, categoria: 'Acciones'),
-    Fund(id: '2', nombre: 'Fondo 2', montoMinimo: 200.0, categoria: 'Renta Fija'),
+    Fund(id: '1', name: 'Fondo 1', minimumAmount: 100.0, category: 'Acciones'),
+    Fund(id: '2', name: 'Fondo 2', minimumAmount: 200.0, category: 'Renta Fija'),
   ];
 
   group('FundBloc', () {
@@ -43,7 +43,7 @@ void main() {
       act: (bloc) => bloc.add(const FundEvent.getFunds()),
       expect: () => [
         const FundState.loading(),
-        const FundState.success(funds: tFunds),
+        const FundState.success(funds: tFunds, activeFunds: []),
       ],
       verify: (_) {
         verify(() => mockGetFundsUseCase.call()).called(1);

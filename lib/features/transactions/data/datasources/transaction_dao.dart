@@ -23,4 +23,10 @@ class TransactionDao extends DatabaseAccessor<AppDatabase>
       TransactionsTableCompanion(syncStatus: Value(status.name)),
     );
   }
+
+  Future<List<TransactionDb>> getInvestments() async {
+    return await (select(
+      transactionsTable,
+    )..where((tbl) => tbl.type.equals('subscription'))).get();
+  }
 }

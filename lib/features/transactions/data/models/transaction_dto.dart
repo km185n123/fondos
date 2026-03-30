@@ -7,6 +7,7 @@ part 'transaction_dto.g.dart';
 abstract class TransactionDTO with _$TransactionDTO {
   const factory TransactionDTO({
     required String id,
+    required String name,
     required String type,
     required double amount,
     @JsonKey(name: 'fund_id') required String fundId,

@@ -30,14 +30,14 @@ class FundHeaderView extends StatelessWidget {
         children: [
           const Text('Fondo seleccionado', style: AppTypography.label),
           const SizedBox(height: AppSpacing.xs),
-          Text(fund.nombre, style: AppTypography.headlineMedium),
+          Text(fund.name, style: AppTypography.headlineMedium),
           const SizedBox(height: AppSpacing.xs),
           Text(
-            'Categoría: ${fund.categoria}',
+            'Categoría: ${fund.category}',
             style: AppTypography.body.copyWith(color: AppColors.textSecondary),
           ),
           Text(
-            'Monto mínimo: ${currency.format(fund.montoMinimo)}',
+            'Monto mínimo: ${currency.format(fund.minimumAmount)}',
             style: AppTypography.body.copyWith(color: AppColors.textSecondary),
           ),
         ],

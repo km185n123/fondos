@@ -18,39 +18,92 @@ class $FundsTableTable extends FundsTable
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _nombreMeta = const VerificationMeta('nombre');
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
-  late final GeneratedColumn<String> nombre = GeneratedColumn<String>(
-    'nombre',
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
     aliasedName,
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _montoMinimoMeta = const VerificationMeta(
-    'montoMinimo',
+  static const VerificationMeta _minimumAmountMeta = const VerificationMeta(
+    'minimumAmount',
   );
   @override
-  late final GeneratedColumn<double> montoMinimo = GeneratedColumn<double>(
-    'monto_minimo',
+  late final GeneratedColumn<double> minimumAmount = GeneratedColumn<double>(
+    'minimum_amount',
     aliasedName,
     false,
     type: DriftSqlType.double,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _categoriaMeta = const VerificationMeta(
-    'categoria',
+  static const VerificationMeta _categoryMeta = const VerificationMeta(
+    'category',
   );
   @override
-  late final GeneratedColumn<String> categoria = GeneratedColumn<String>(
-    'categoria',
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+    'category',
     aliasedName,
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _subtitleMeta = const VerificationMeta(
+    'subtitle',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, nombre, montoMinimo, categoria];
+  late final GeneratedColumn<String> subtitle = GeneratedColumn<String>(
+    'subtitle',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _investedMeta = const VerificationMeta(
+    'invested',
+  );
+  @override
+  late final GeneratedColumn<String> invested = GeneratedColumn<String>(
+    'invested',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _currentValueMeta = const VerificationMeta(
+    'currentValue',
+  );
+  @override
+  late final GeneratedColumn<String> currentValue = GeneratedColumn<String>(
+    'current_value',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _returnPctMeta = const VerificationMeta(
+    'returnPct',
+  );
+  @override
+  late final GeneratedColumn<String> returnPct = GeneratedColumn<String>(
+    'return_pct',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    minimumAmount,
+    category,
+    subtitle,
+    invested,
+    currentValue,
+    returnPct,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -68,32 +121,59 @@ class $FundsTableTable extends FundsTable
     } else if (isInserting) {
       context.missing(_idMeta);
     }
-    if (data.containsKey('nombre')) {
+    if (data.containsKey('name')) {
       context.handle(
-        _nombreMeta,
-        nombre.isAcceptableOrUnknown(data['nombre']!, _nombreMeta),
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
       );
     } else if (isInserting) {
-      context.missing(_nombreMeta);
+      context.missing(_nameMeta);
     }
-    if (data.containsKey('monto_minimo')) {
+    if (data.containsKey('minimum_amount')) {
       context.handle(
-        _montoMinimoMeta,
-        montoMinimo.isAcceptableOrUnknown(
-          data['monto_minimo']!,
-          _montoMinimoMeta,
+        _minimumAmountMeta,
+        minimumAmount.isAcceptableOrUnknown(
+          data['minimum_amount']!,
+          _minimumAmountMeta,
         ),
       );
     } else if (isInserting) {
-      context.missing(_montoMinimoMeta);
+      context.missing(_minimumAmountMeta);
     }
-    if (data.containsKey('categoria')) {
+    if (data.containsKey('category')) {
       context.handle(
-        _categoriaMeta,
-        categoria.isAcceptableOrUnknown(data['categoria']!, _categoriaMeta),
+        _categoryMeta,
+        category.isAcceptableOrUnknown(data['category']!, _categoryMeta),
       );
     } else if (isInserting) {
-      context.missing(_categoriaMeta);
+      context.missing(_categoryMeta);
+    }
+    if (data.containsKey('subtitle')) {
+      context.handle(
+        _subtitleMeta,
+        subtitle.isAcceptableOrUnknown(data['subtitle']!, _subtitleMeta),
+      );
+    }
+    if (data.containsKey('invested')) {
+      context.handle(
+        _investedMeta,
+        invested.isAcceptableOrUnknown(data['invested']!, _investedMeta),
+      );
+    }
+    if (data.containsKey('current_value')) {
+      context.handle(
+        _currentValueMeta,
+        currentValue.isAcceptableOrUnknown(
+          data['current_value']!,
+          _currentValueMeta,
+        ),
+      );
+    }
+    if (data.containsKey('return_pct')) {
+      context.handle(
+        _returnPctMeta,
+        returnPct.isAcceptableOrUnknown(data['return_pct']!, _returnPctMeta),
+      );
     }
     return context;
   }
@@ -108,18 +188,34 @@ class $FundsTableTable extends FundsTable
         DriftSqlType.string,
         data['${effectivePrefix}id'],
       )!,
-      nombre: attachedDatabase.typeMapping.read(
+      name: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}nombre'],
+        data['${effectivePrefix}name'],
       )!,
-      montoMinimo: attachedDatabase.typeMapping.read(
+      minimumAmount: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
-        data['${effectivePrefix}monto_minimo'],
+        data['${effectivePrefix}minimum_amount'],
       )!,
-      categoria: attachedDatabase.typeMapping.read(
+      category: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}categoria'],
+        data['${effectivePrefix}category'],
       )!,
+      subtitle: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}subtitle'],
+      ),
+      invested: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}invested'],
+      ),
+      currentValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}current_value'],
+      ),
+      returnPct: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}return_pct'],
+      ),
     );
   }
 
@@ -131,31 +227,63 @@ class $FundsTableTable extends FundsTable
 
 class FundDb extends DataClass implements Insertable<FundDb> {
   final String id;
-  final String nombre;
-  final double montoMinimo;
-  final String categoria;
+  final String name;
+  final double minimumAmount;
+  final String category;
+  final String? subtitle;
+  final String? invested;
+  final String? currentValue;
+  final String? returnPct;
   const FundDb({
     required this.id,
-    required this.nombre,
-    required this.montoMinimo,
-    required this.categoria,
+    required this.name,
+    required this.minimumAmount,
+    required this.category,
+    this.subtitle,
+    this.invested,
+    this.currentValue,
+    this.returnPct,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<String>(id);
-    map['nombre'] = Variable<String>(nombre);
-    map['monto_minimo'] = Variable<double>(montoMinimo);
-    map['categoria'] = Variable<String>(categoria);
+    map['name'] = Variable<String>(name);
+    map['minimum_amount'] = Variable<double>(minimumAmount);
+    map['category'] = Variable<String>(category);
+    if (!nullToAbsent || subtitle != null) {
+      map['subtitle'] = Variable<String>(subtitle);
+    }
+    if (!nullToAbsent || invested != null) {
+      map['invested'] = Variable<String>(invested);
+    }
+    if (!nullToAbsent || currentValue != null) {
+      map['current_value'] = Variable<String>(currentValue);
+    }
+    if (!nullToAbsent || returnPct != null) {
+      map['return_pct'] = Variable<String>(returnPct);
+    }
     return map;
   }
 
   FundsTableCompanion toCompanion(bool nullToAbsent) {
     return FundsTableCompanion(
       id: Value(id),
-      nombre: Value(nombre),
-      montoMinimo: Value(montoMinimo),
-      categoria: Value(categoria),
+      name: Value(name),
+      minimumAmount: Value(minimumAmount),
+      category: Value(category),
+      subtitle: subtitle == null && nullToAbsent
+          ? const Value.absent()
+          : Value(subtitle),
+      invested: invested == null && nullToAbsent
+          ? const Value.absent()
+          : Value(invested),
+      currentValue: currentValue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(currentValue),
+      returnPct: returnPct == null && nullToAbsent
+          ? const Value.absent()
+          : Value(returnPct),
     );
   }
 
@@ -166,9 +294,13 @@ class FundDb extends DataClass implements Insertable<FundDb> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return FundDb(
       id: serializer.fromJson<String>(json['id']),
-      nombre: serializer.fromJson<String>(json['nombre']),
-      montoMinimo: serializer.fromJson<double>(json['montoMinimo']),
-      categoria: serializer.fromJson<String>(json['categoria']),
+      name: serializer.fromJson<String>(json['name']),
+      minimumAmount: serializer.fromJson<double>(json['minimumAmount']),
+      category: serializer.fromJson<String>(json['category']),
+      subtitle: serializer.fromJson<String?>(json['subtitle']),
+      invested: serializer.fromJson<String?>(json['invested']),
+      currentValue: serializer.fromJson<String?>(json['currentValue']),
+      returnPct: serializer.fromJson<String?>(json['returnPct']),
     );
   }
   @override
@@ -176,31 +308,49 @@ class FundDb extends DataClass implements Insertable<FundDb> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
-      'nombre': serializer.toJson<String>(nombre),
-      'montoMinimo': serializer.toJson<double>(montoMinimo),
-      'categoria': serializer.toJson<String>(categoria),
+      'name': serializer.toJson<String>(name),
+      'minimumAmount': serializer.toJson<double>(minimumAmount),
+      'category': serializer.toJson<String>(category),
+      'subtitle': serializer.toJson<String?>(subtitle),
+      'invested': serializer.toJson<String?>(invested),
+      'currentValue': serializer.toJson<String?>(currentValue),
+      'returnPct': serializer.toJson<String?>(returnPct),
     };
   }
 
   FundDb copyWith({
     String? id,
-    String? nombre,
-    double? montoMinimo,
-    String? categoria,
+    String? name,
+    double? minimumAmount,
+    String? category,
+    Value<String?> subtitle = const Value.absent(),
+    Value<String?> invested = const Value.absent(),
+    Value<String?> currentValue = const Value.absent(),
+    Value<String?> returnPct = const Value.absent(),
   }) => FundDb(
     id: id ?? this.id,
-    nombre: nombre ?? this.nombre,
-    montoMinimo: montoMinimo ?? this.montoMinimo,
-    categoria: categoria ?? this.categoria,
+    name: name ?? this.name,
+    minimumAmount: minimumAmount ?? this.minimumAmount,
+    category: category ?? this.category,
+    subtitle: subtitle.present ? subtitle.value : this.subtitle,
+    invested: invested.present ? invested.value : this.invested,
+    currentValue: currentValue.present ? currentValue.value : this.currentValue,
+    returnPct: returnPct.present ? returnPct.value : this.returnPct,
   );
   FundDb copyWithCompanion(FundsTableCompanion data) {
     return FundDb(
       id: data.id.present ? data.id.value : this.id,
-      nombre: data.nombre.present ? data.nombre.value : this.nombre,
-      montoMinimo: data.montoMinimo.present
-          ? data.montoMinimo.value
-          : this.montoMinimo,
-      categoria: data.categoria.present ? data.categoria.value : this.categoria,
+      name: data.name.present ? data.name.value : this.name,
+      minimumAmount: data.minimumAmount.present
+          ? data.minimumAmount.value
+          : this.minimumAmount,
+      category: data.category.present ? data.category.value : this.category,
+      subtitle: data.subtitle.present ? data.subtitle.value : this.subtitle,
+      invested: data.invested.present ? data.invested.value : this.invested,
+      currentValue: data.currentValue.present
+          ? data.currentValue.value
+          : this.currentValue,
+      returnPct: data.returnPct.present ? data.returnPct.value : this.returnPct,
     );
   }
 
@@ -208,76 +358,121 @@ class FundDb extends DataClass implements Insertable<FundDb> {
   String toString() {
     return (StringBuffer('FundDb(')
           ..write('id: $id, ')
-          ..write('nombre: $nombre, ')
-          ..write('montoMinimo: $montoMinimo, ')
-          ..write('categoria: $categoria')
+          ..write('name: $name, ')
+          ..write('minimumAmount: $minimumAmount, ')
+          ..write('category: $category, ')
+          ..write('subtitle: $subtitle, ')
+          ..write('invested: $invested, ')
+          ..write('currentValue: $currentValue, ')
+          ..write('returnPct: $returnPct')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, nombre, montoMinimo, categoria);
+  int get hashCode => Object.hash(
+    id,
+    name,
+    minimumAmount,
+    category,
+    subtitle,
+    invested,
+    currentValue,
+    returnPct,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is FundDb &&
           other.id == this.id &&
-          other.nombre == this.nombre &&
-          other.montoMinimo == this.montoMinimo &&
-          other.categoria == this.categoria);
+          other.name == this.name &&
+          other.minimumAmount == this.minimumAmount &&
+          other.category == this.category &&
+          other.subtitle == this.subtitle &&
+          other.invested == this.invested &&
+          other.currentValue == this.currentValue &&
+          other.returnPct == this.returnPct);
 }
 
 class FundsTableCompanion extends UpdateCompanion<FundDb> {
   final Value<String> id;
-  final Value<String> nombre;
-  final Value<double> montoMinimo;
-  final Value<String> categoria;
+  final Value<String> name;
+  final Value<double> minimumAmount;
+  final Value<String> category;
+  final Value<String?> subtitle;
+  final Value<String?> invested;
+  final Value<String?> currentValue;
+  final Value<String?> returnPct;
   final Value<int> rowid;
   const FundsTableCompanion({
     this.id = const Value.absent(),
-    this.nombre = const Value.absent(),
-    this.montoMinimo = const Value.absent(),
-    this.categoria = const Value.absent(),
+    this.name = const Value.absent(),
+    this.minimumAmount = const Value.absent(),
+    this.category = const Value.absent(),
+    this.subtitle = const Value.absent(),
+    this.invested = const Value.absent(),
+    this.currentValue = const Value.absent(),
+    this.returnPct = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   FundsTableCompanion.insert({
     required String id,
-    required String nombre,
-    required double montoMinimo,
-    required String categoria,
+    required String name,
+    required double minimumAmount,
+    required String category,
+    this.subtitle = const Value.absent(),
+    this.invested = const Value.absent(),
+    this.currentValue = const Value.absent(),
+    this.returnPct = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
-       nombre = Value(nombre),
-       montoMinimo = Value(montoMinimo),
-       categoria = Value(categoria);
+       name = Value(name),
+       minimumAmount = Value(minimumAmount),
+       category = Value(category);
   static Insertable<FundDb> custom({
     Expression<String>? id,
-    Expression<String>? nombre,
-    Expression<double>? montoMinimo,
-    Expression<String>? categoria,
+    Expression<String>? name,
+    Expression<double>? minimumAmount,
+    Expression<String>? category,
+    Expression<String>? subtitle,
+    Expression<String>? invested,
+    Expression<String>? currentValue,
+    Expression<String>? returnPct,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (nombre != null) 'nombre': nombre,
-      if (montoMinimo != null) 'monto_minimo': montoMinimo,
-      if (categoria != null) 'categoria': categoria,
+      if (name != null) 'name': name,
+      if (minimumAmount != null) 'minimum_amount': minimumAmount,
+      if (category != null) 'category': category,
+      if (subtitle != null) 'subtitle': subtitle,
+      if (invested != null) 'invested': invested,
+      if (currentValue != null) 'current_value': currentValue,
+      if (returnPct != null) 'return_pct': returnPct,
       if (rowid != null) 'rowid': rowid,
     });
   }
 
   FundsTableCompanion copyWith({
     Value<String>? id,
-    Value<String>? nombre,
-    Value<double>? montoMinimo,
-    Value<String>? categoria,
+    Value<String>? name,
+    Value<double>? minimumAmount,
+    Value<String>? category,
+    Value<String?>? subtitle,
+    Value<String?>? invested,
+    Value<String?>? currentValue,
+    Value<String?>? returnPct,
     Value<int>? rowid,
   }) {
     return FundsTableCompanion(
       id: id ?? this.id,
-      nombre: nombre ?? this.nombre,
-      montoMinimo: montoMinimo ?? this.montoMinimo,
-      categoria: categoria ?? this.categoria,
+      name: name ?? this.name,
+      minimumAmount: minimumAmount ?? this.minimumAmount,
+      category: category ?? this.category,
+      subtitle: subtitle ?? this.subtitle,
+      invested: invested ?? this.invested,
+      currentValue: currentValue ?? this.currentValue,
+      returnPct: returnPct ?? this.returnPct,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -288,14 +483,26 @@ class FundsTableCompanion extends UpdateCompanion<FundDb> {
     if (id.present) {
       map['id'] = Variable<String>(id.value);
     }
-    if (nombre.present) {
-      map['nombre'] = Variable<String>(nombre.value);
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
     }
-    if (montoMinimo.present) {
-      map['monto_minimo'] = Variable<double>(montoMinimo.value);
+    if (minimumAmount.present) {
+      map['minimum_amount'] = Variable<double>(minimumAmount.value);
     }
-    if (categoria.present) {
-      map['categoria'] = Variable<String>(categoria.value);
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (subtitle.present) {
+      map['subtitle'] = Variable<String>(subtitle.value);
+    }
+    if (invested.present) {
+      map['invested'] = Variable<String>(invested.value);
+    }
+    if (currentValue.present) {
+      map['current_value'] = Variable<String>(currentValue.value);
+    }
+    if (returnPct.present) {
+      map['return_pct'] = Variable<String>(returnPct.value);
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -307,9 +514,13 @@ class FundsTableCompanion extends UpdateCompanion<FundDb> {
   String toString() {
     return (StringBuffer('FundsTableCompanion(')
           ..write('id: $id, ')
-          ..write('nombre: $nombre, ')
-          ..write('montoMinimo: $montoMinimo, ')
-          ..write('categoria: $categoria, ')
+          ..write('name: $name, ')
+          ..write('minimumAmount: $minimumAmount, ')
+          ..write('category: $category, ')
+          ..write('subtitle: $subtitle, ')
+          ..write('invested: $invested, ')
+          ..write('currentValue: $currentValue, ')
+          ..write('returnPct: $returnPct, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -326,6 +537,15 @@ class $TransactionsTableTable extends TransactionsTable
   @override
   late final GeneratedColumn<String> id = GeneratedColumn<String>(
     'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
     aliasedName,
     false,
     type: DriftSqlType.string,
@@ -382,6 +602,7 @@ class $TransactionsTableTable extends TransactionsTable
   @override
   List<GeneratedColumn> get $columns => [
     id,
+    name,
     type,
     amount,
     fundId,
@@ -404,6 +625,14 @@ class $TransactionsTableTable extends TransactionsTable
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     } else if (isInserting) {
       context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
     }
     if (data.containsKey('type')) {
       context.handle(
@@ -456,6 +685,10 @@ class $TransactionsTableTable extends TransactionsTable
         DriftSqlType.string,
         data['${effectivePrefix}id'],
       )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
       type: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}type'],
@@ -487,6 +720,7 @@ class $TransactionsTableTable extends TransactionsTable
 
 class TransactionDb extends DataClass implements Insertable<TransactionDb> {
   final String id;
+  final String name;
   final String type;
   final double amount;
   final String fundId;
@@ -494,6 +728,7 @@ class TransactionDb extends DataClass implements Insertable<TransactionDb> {
   final String syncStatus;
   const TransactionDb({
     required this.id,
+    required this.name,
     required this.type,
     required this.amount,
     required this.fundId,
@@ -504,6 +739,7 @@ class TransactionDb extends DataClass implements Insertable<TransactionDb> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
     map['type'] = Variable<String>(type);
     map['amount'] = Variable<double>(amount);
     map['fund_id'] = Variable<String>(fundId);
@@ -515,6 +751,7 @@ class TransactionDb extends DataClass implements Insertable<TransactionDb> {
   TransactionsTableCompanion toCompanion(bool nullToAbsent) {
     return TransactionsTableCompanion(
       id: Value(id),
+      name: Value(name),
       type: Value(type),
       amount: Value(amount),
       fundId: Value(fundId),
@@ -530,6 +767,7 @@ class TransactionDb extends DataClass implements Insertable<TransactionDb> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return TransactionDb(
       id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
       type: serializer.fromJson<String>(json['type']),
       amount: serializer.fromJson<double>(json['amount']),
       fundId: serializer.fromJson<String>(json['fundId']),
@@ -542,6 +780,7 @@ class TransactionDb extends DataClass implements Insertable<TransactionDb> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
       'type': serializer.toJson<String>(type),
       'amount': serializer.toJson<double>(amount),
       'fundId': serializer.toJson<String>(fundId),
@@ -552,6 +791,7 @@ class TransactionDb extends DataClass implements Insertable<TransactionDb> {
 
   TransactionDb copyWith({
     String? id,
+    String? name,
     String? type,
     double? amount,
     String? fundId,
@@ -559,6 +799,7 @@ class TransactionDb extends DataClass implements Insertable<TransactionDb> {
     String? syncStatus,
   }) => TransactionDb(
     id: id ?? this.id,
+    name: name ?? this.name,
     type: type ?? this.type,
     amount: amount ?? this.amount,
     fundId: fundId ?? this.fundId,
@@ -568,6 +809,7 @@ class TransactionDb extends DataClass implements Insertable<TransactionDb> {
   TransactionDb copyWithCompanion(TransactionsTableCompanion data) {
     return TransactionDb(
       id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
       type: data.type.present ? data.type.value : this.type,
       amount: data.amount.present ? data.amount.value : this.amount,
       fundId: data.fundId.present ? data.fundId.value : this.fundId,
@@ -582,6 +824,7 @@ class TransactionDb extends DataClass implements Insertable<TransactionDb> {
   String toString() {
     return (StringBuffer('TransactionDb(')
           ..write('id: $id, ')
+          ..write('name: $name, ')
           ..write('type: $type, ')
           ..write('amount: $amount, ')
           ..write('fundId: $fundId, ')
@@ -592,12 +835,14 @@ class TransactionDb extends DataClass implements Insertable<TransactionDb> {
   }
 
   @override
-  int get hashCode => Object.hash(id, type, amount, fundId, date, syncStatus);
+  int get hashCode =>
+      Object.hash(id, name, type, amount, fundId, date, syncStatus);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is TransactionDb &&
           other.id == this.id &&
+          other.name == this.name &&
           other.type == this.type &&
           other.amount == this.amount &&
           other.fundId == this.fundId &&
@@ -607,6 +852,7 @@ class TransactionDb extends DataClass implements Insertable<TransactionDb> {
 
 class TransactionsTableCompanion extends UpdateCompanion<TransactionDb> {
   final Value<String> id;
+  final Value<String> name;
   final Value<String> type;
   final Value<double> amount;
   final Value<String> fundId;
@@ -615,6 +861,7 @@ class TransactionsTableCompanion extends UpdateCompanion<TransactionDb> {
   final Value<int> rowid;
   const TransactionsTableCompanion({
     this.id = const Value.absent(),
+    this.name = const Value.absent(),
     this.type = const Value.absent(),
     this.amount = const Value.absent(),
     this.fundId = const Value.absent(),
@@ -624,6 +871,7 @@ class TransactionsTableCompanion extends UpdateCompanion<TransactionDb> {
   });
   TransactionsTableCompanion.insert({
     required String id,
+    required String name,
     required String type,
     required double amount,
     required String fundId,
@@ -631,12 +879,14 @@ class TransactionsTableCompanion extends UpdateCompanion<TransactionDb> {
     this.syncStatus = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
+       name = Value(name),
        type = Value(type),
        amount = Value(amount),
        fundId = Value(fundId),
        date = Value(date);
   static Insertable<TransactionDb> custom({
     Expression<String>? id,
+    Expression<String>? name,
     Expression<String>? type,
     Expression<double>? amount,
     Expression<String>? fundId,
@@ -646,6 +896,7 @@ class TransactionsTableCompanion extends UpdateCompanion<TransactionDb> {
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
+      if (name != null) 'name': name,
       if (type != null) 'type': type,
       if (amount != null) 'amount': amount,
       if (fundId != null) 'fund_id': fundId,
@@ -657,6 +908,7 @@ class TransactionsTableCompanion extends UpdateCompanion<TransactionDb> {
 
   TransactionsTableCompanion copyWith({
     Value<String>? id,
+    Value<String>? name,
     Value<String>? type,
     Value<double>? amount,
     Value<String>? fundId,
@@ -666,6 +918,7 @@ class TransactionsTableCompanion extends UpdateCompanion<TransactionDb> {
   }) {
     return TransactionsTableCompanion(
       id: id ?? this.id,
+      name: name ?? this.name,
       type: type ?? this.type,
       amount: amount ?? this.amount,
       fundId: fundId ?? this.fundId,
@@ -680,6 +933,9 @@ class TransactionsTableCompanion extends UpdateCompanion<TransactionDb> {
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
     }
     if (type.present) {
       map['type'] = Variable<String>(type.value);
@@ -706,6 +962,7 @@ class TransactionsTableCompanion extends UpdateCompanion<TransactionDb> {
   String toString() {
     return (StringBuffer('TransactionsTableCompanion(')
           ..write('id: $id, ')
+          ..write('name: $name, ')
           ..write('type: $type, ')
           ..write('amount: $amount, ')
           ..write('fundId: $fundId, ')
@@ -1014,17 +1271,25 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 typedef $$FundsTableTableCreateCompanionBuilder =
     FundsTableCompanion Function({
       required String id,
-      required String nombre,
-      required double montoMinimo,
-      required String categoria,
+      required String name,
+      required double minimumAmount,
+      required String category,
+      Value<String?> subtitle,
+      Value<String?> invested,
+      Value<String?> currentValue,
+      Value<String?> returnPct,
       Value<int> rowid,
     });
 typedef $$FundsTableTableUpdateCompanionBuilder =
     FundsTableCompanion Function({
       Value<String> id,
-      Value<String> nombre,
-      Value<double> montoMinimo,
-      Value<String> categoria,
+      Value<String> name,
+      Value<double> minimumAmount,
+      Value<String> category,
+      Value<String?> subtitle,
+      Value<String?> invested,
+      Value<String?> currentValue,
+      Value<String?> returnPct,
       Value<int> rowid,
     });
 
@@ -1042,18 +1307,38 @@ class $$FundsTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get nombre => $composableBuilder(
-    column: $table.nombre,
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get montoMinimo => $composableBuilder(
-    column: $table.montoMinimo,
+  ColumnFilters<double> get minimumAmount => $composableBuilder(
+    column: $table.minimumAmount,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get categoria => $composableBuilder(
-    column: $table.categoria,
+  ColumnFilters<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get subtitle => $composableBuilder(
+    column: $table.subtitle,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get invested => $composableBuilder(
+    column: $table.invested,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get currentValue => $composableBuilder(
+    column: $table.currentValue,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get returnPct => $composableBuilder(
+    column: $table.returnPct,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -1072,18 +1357,38 @@ class $$FundsTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get nombre => $composableBuilder(
-    column: $table.nombre,
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get montoMinimo => $composableBuilder(
-    column: $table.montoMinimo,
+  ColumnOrderings<double> get minimumAmount => $composableBuilder(
+    column: $table.minimumAmount,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get categoria => $composableBuilder(
-    column: $table.categoria,
+  ColumnOrderings<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get subtitle => $composableBuilder(
+    column: $table.subtitle,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get invested => $composableBuilder(
+    column: $table.invested,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get currentValue => $composableBuilder(
+    column: $table.currentValue,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get returnPct => $composableBuilder(
+    column: $table.returnPct,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -1100,16 +1405,30 @@ class $$FundsTableTableAnnotationComposer
   GeneratedColumn<String> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<String> get nombre =>
-      $composableBuilder(column: $table.nombre, builder: (column) => column);
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
 
-  GeneratedColumn<double> get montoMinimo => $composableBuilder(
-    column: $table.montoMinimo,
+  GeneratedColumn<double> get minimumAmount => $composableBuilder(
+    column: $table.minimumAmount,
     builder: (column) => column,
   );
 
-  GeneratedColumn<String> get categoria =>
-      $composableBuilder(column: $table.categoria, builder: (column) => column);
+  GeneratedColumn<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
+
+  GeneratedColumn<String> get subtitle =>
+      $composableBuilder(column: $table.subtitle, builder: (column) => column);
+
+  GeneratedColumn<String> get invested =>
+      $composableBuilder(column: $table.invested, builder: (column) => column);
+
+  GeneratedColumn<String> get currentValue => $composableBuilder(
+    column: $table.currentValue,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get returnPct =>
+      $composableBuilder(column: $table.returnPct, builder: (column) => column);
 }
 
 class $$FundsTableTableTableManager
@@ -1141,29 +1460,45 @@ class $$FundsTableTableTableManager
           updateCompanionCallback:
               ({
                 Value<String> id = const Value.absent(),
-                Value<String> nombre = const Value.absent(),
-                Value<double> montoMinimo = const Value.absent(),
-                Value<String> categoria = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<double> minimumAmount = const Value.absent(),
+                Value<String> category = const Value.absent(),
+                Value<String?> subtitle = const Value.absent(),
+                Value<String?> invested = const Value.absent(),
+                Value<String?> currentValue = const Value.absent(),
+                Value<String?> returnPct = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => FundsTableCompanion(
                 id: id,
-                nombre: nombre,
-                montoMinimo: montoMinimo,
-                categoria: categoria,
+                name: name,
+                minimumAmount: minimumAmount,
+                category: category,
+                subtitle: subtitle,
+                invested: invested,
+                currentValue: currentValue,
+                returnPct: returnPct,
                 rowid: rowid,
               ),
           createCompanionCallback:
               ({
                 required String id,
-                required String nombre,
-                required double montoMinimo,
-                required String categoria,
+                required String name,
+                required double minimumAmount,
+                required String category,
+                Value<String?> subtitle = const Value.absent(),
+                Value<String?> invested = const Value.absent(),
+                Value<String?> currentValue = const Value.absent(),
+                Value<String?> returnPct = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => FundsTableCompanion.insert(
                 id: id,
-                nombre: nombre,
-                montoMinimo: montoMinimo,
-                categoria: categoria,
+                name: name,
+                minimumAmount: minimumAmount,
+                category: category,
+                subtitle: subtitle,
+                invested: invested,
+                currentValue: currentValue,
+                returnPct: returnPct,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -1191,6 +1526,7 @@ typedef $$FundsTableTableProcessedTableManager =
 typedef $$TransactionsTableTableCreateCompanionBuilder =
     TransactionsTableCompanion Function({
       required String id,
+      required String name,
       required String type,
       required double amount,
       required String fundId,
@@ -1201,6 +1537,7 @@ typedef $$TransactionsTableTableCreateCompanionBuilder =
 typedef $$TransactionsTableTableUpdateCompanionBuilder =
     TransactionsTableCompanion Function({
       Value<String> id,
+      Value<String> name,
       Value<String> type,
       Value<double> amount,
       Value<String> fundId,
@@ -1220,6 +1557,11 @@ class $$TransactionsTableTableFilterComposer
   });
   ColumnFilters<String> get id => $composableBuilder(
     column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1263,6 +1605,11 @@ class $$TransactionsTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get type => $composableBuilder(
     column: $table.type,
     builder: (column) => ColumnOrderings(column),
@@ -1300,6 +1647,9 @@ class $$TransactionsTableTableAnnotationComposer
   });
   GeneratedColumn<String> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
 
   GeneratedColumn<String> get type =>
       $composableBuilder(column: $table.type, builder: (column) => column);
@@ -1360,6 +1710,7 @@ class $$TransactionsTableTableTableManager
           updateCompanionCallback:
               ({
                 Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
                 Value<String> type = const Value.absent(),
                 Value<double> amount = const Value.absent(),
                 Value<String> fundId = const Value.absent(),
@@ -1368,6 +1719,7 @@ class $$TransactionsTableTableTableManager
                 Value<int> rowid = const Value.absent(),
               }) => TransactionsTableCompanion(
                 id: id,
+                name: name,
                 type: type,
                 amount: amount,
                 fundId: fundId,
@@ -1378,6 +1730,7 @@ class $$TransactionsTableTableTableManager
           createCompanionCallback:
               ({
                 required String id,
+                required String name,
                 required String type,
                 required double amount,
                 required String fundId,
@@ -1386,6 +1739,7 @@ class $$TransactionsTableTableTableManager
                 Value<int> rowid = const Value.absent(),
               }) => TransactionsTableCompanion.insert(
                 id: id,
+                name: name,
                 type: type,
                 amount: amount,
                 fundId: fundId,

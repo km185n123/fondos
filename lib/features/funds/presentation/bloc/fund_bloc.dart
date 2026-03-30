@@ -17,9 +17,11 @@ class FundBloc extends Bloc<FundEvent, FundState> {
 
     final failureOrFunds = await getFundsUseCase.call();
 
-    failureOrFunds.fold(
-      (failure) => emit(FundState.error(failure.message)),
-      (funds) => emit(FundState.success(funds: funds)),
-    );
+    failureOrFunds.fold((failure) => emit(FundState.error(failure.message)), (
+      funds,
+    ) {
+      final activeFunds = funds.toList();
+      emit(FundState.success(funds: funds, activeFunds: activeFunds));
+    });
   }
 }

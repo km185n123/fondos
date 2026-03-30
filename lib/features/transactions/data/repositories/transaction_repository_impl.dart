@@ -45,8 +45,6 @@ class TransactionRepositoryImpl implements TransactionRepository {
           );
         });
 
-        // 2. SYNC (fuera de tx)
-
         final response = await _trySync(transaction);
 
         await transactionDao.updateSyncStatus(
@@ -63,5 +61,15 @@ class TransactionRepositoryImpl implements TransactionRepository {
     final dto = transaction.toDto();
     final responseDto = await apiService.createTransaction(dto);
     return responseDto.toEntity();
+  }
+
+  @override
+  Future<Either<Failure, List<Transaction>>> getInvestments() {
+    return SafeCall.execute<List<Transaction>>(
+      tryBlock: () async {
+        final transactions = await transactionDao.getInvestments();
+        return transactions.map((e) => e.toEntity()).toList();
+      },
+    );
   }
 }

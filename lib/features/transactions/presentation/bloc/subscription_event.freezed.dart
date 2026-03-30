@@ -55,14 +55,15 @@ extension SubscriptionEventPatterns on SubscriptionEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _SelectFund value)?  selectFund,TResult Function( _ChangeAmount value)?  changeAmount,TResult Function( _ChangeNotificationMethod value)?  changeNotificationMethod,TResult Function( _Confirm value)?  confirm,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _SelectFund value)?  selectFund,TResult Function( _ChangeAmount value)?  changeAmount,TResult Function( _ChangeNotificationMethod value)?  changeNotificationMethod,TResult Function( _Confirm value)?  confirm,TResult Function( _Cancel value)?  cancel,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _SelectFund() when selectFund != null:
 return selectFund(_that);case _ChangeAmount() when changeAmount != null:
 return changeAmount(_that);case _ChangeNotificationMethod() when changeNotificationMethod != null:
 return changeNotificationMethod(_that);case _Confirm() when confirm != null:
-return confirm(_that);case _:
+return confirm(_that);case _Cancel() when cancel != null:
+return cancel(_that);case _:
   return orElse();
 
 }
@@ -80,14 +81,15 @@ return confirm(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _SelectFund value)  selectFund,required TResult Function( _ChangeAmount value)  changeAmount,required TResult Function( _ChangeNotificationMethod value)  changeNotificationMethod,required TResult Function( _Confirm value)  confirm,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _SelectFund value)  selectFund,required TResult Function( _ChangeAmount value)  changeAmount,required TResult Function( _ChangeNotificationMethod value)  changeNotificationMethod,required TResult Function( _Confirm value)  confirm,required TResult Function( _Cancel value)  cancel,}){
 final _that = this;
 switch (_that) {
 case _SelectFund():
 return selectFund(_that);case _ChangeAmount():
 return changeAmount(_that);case _ChangeNotificationMethod():
 return changeNotificationMethod(_that);case _Confirm():
-return confirm(_that);case _:
+return confirm(_that);case _Cancel():
+return cancel(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -104,14 +106,15 @@ return confirm(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _SelectFund value)?  selectFund,TResult? Function( _ChangeAmount value)?  changeAmount,TResult? Function( _ChangeNotificationMethod value)?  changeNotificationMethod,TResult? Function( _Confirm value)?  confirm,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _SelectFund value)?  selectFund,TResult? Function( _ChangeAmount value)?  changeAmount,TResult? Function( _ChangeNotificationMethod value)?  changeNotificationMethod,TResult? Function( _Confirm value)?  confirm,TResult? Function( _Cancel value)?  cancel,}){
 final _that = this;
 switch (_that) {
 case _SelectFund() when selectFund != null:
 return selectFund(_that);case _ChangeAmount() when changeAmount != null:
 return changeAmount(_that);case _ChangeNotificationMethod() when changeNotificationMethod != null:
 return changeNotificationMethod(_that);case _Confirm() when confirm != null:
-return confirm(_that);case _:
+return confirm(_that);case _Cancel() when cancel != null:
+return cancel(_that);case _:
   return null;
 
 }
@@ -128,13 +131,14 @@ return confirm(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Fund fund)?  selectFund,TResult Function( double amount)?  changeAmount,TResult Function( NotificationMethod method)?  changeNotificationMethod,TResult Function()?  confirm,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Fund fund)?  selectFund,TResult Function( double amount)?  changeAmount,TResult Function( NotificationMethod method)?  changeNotificationMethod,TResult Function()?  confirm,TResult Function( Transaction transaction)?  cancel,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SelectFund() when selectFund != null:
 return selectFund(_that.fund);case _ChangeAmount() when changeAmount != null:
 return changeAmount(_that.amount);case _ChangeNotificationMethod() when changeNotificationMethod != null:
 return changeNotificationMethod(_that.method);case _Confirm() when confirm != null:
-return confirm();case _:
+return confirm();case _Cancel() when cancel != null:
+return cancel(_that.transaction);case _:
   return orElse();
 
 }
@@ -152,13 +156,14 @@ return confirm();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Fund fund)  selectFund,required TResult Function( double amount)  changeAmount,required TResult Function( NotificationMethod method)  changeNotificationMethod,required TResult Function()  confirm,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Fund fund)  selectFund,required TResult Function( double amount)  changeAmount,required TResult Function( NotificationMethod method)  changeNotificationMethod,required TResult Function()  confirm,required TResult Function( Transaction transaction)  cancel,}) {final _that = this;
 switch (_that) {
 case _SelectFund():
 return selectFund(_that.fund);case _ChangeAmount():
 return changeAmount(_that.amount);case _ChangeNotificationMethod():
 return changeNotificationMethod(_that.method);case _Confirm():
-return confirm();case _:
+return confirm();case _Cancel():
+return cancel(_that.transaction);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -175,13 +180,14 @@ return confirm();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Fund fund)?  selectFund,TResult? Function( double amount)?  changeAmount,TResult? Function( NotificationMethod method)?  changeNotificationMethod,TResult? Function()?  confirm,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Fund fund)?  selectFund,TResult? Function( double amount)?  changeAmount,TResult? Function( NotificationMethod method)?  changeNotificationMethod,TResult? Function()?  confirm,TResult? Function( Transaction transaction)?  cancel,}) {final _that = this;
 switch (_that) {
 case _SelectFund() when selectFund != null:
 return selectFund(_that.fund);case _ChangeAmount() when changeAmount != null:
 return changeAmount(_that.amount);case _ChangeNotificationMethod() when changeNotificationMethod != null:
 return changeNotificationMethod(_that.method);case _Confirm() when confirm != null:
-return confirm();case _:
+return confirm();case _Cancel() when cancel != null:
+return cancel(_that.transaction);case _:
   return null;
 
 }
@@ -427,5 +433,80 @@ String toString() {
 
 
 
+
+/// @nodoc
+
+
+class _Cancel implements SubscriptionEvent {
+  const _Cancel(this.transaction);
+  
+
+ final  Transaction transaction;
+
+/// Create a copy of SubscriptionEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$CancelCopyWith<_Cancel> get copyWith => __$CancelCopyWithImpl<_Cancel>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Cancel&&(identical(other.transaction, transaction) || other.transaction == transaction));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,transaction);
+
+@override
+String toString() {
+  return 'SubscriptionEvent.cancel(transaction: $transaction)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$CancelCopyWith<$Res> implements $SubscriptionEventCopyWith<$Res> {
+  factory _$CancelCopyWith(_Cancel value, $Res Function(_Cancel) _then) = __$CancelCopyWithImpl;
+@useResult
+$Res call({
+ Transaction transaction
+});
+
+
+$TransactionCopyWith<$Res> get transaction;
+
+}
+/// @nodoc
+class __$CancelCopyWithImpl<$Res>
+    implements _$CancelCopyWith<$Res> {
+  __$CancelCopyWithImpl(this._self, this._then);
+
+  final _Cancel _self;
+  final $Res Function(_Cancel) _then;
+
+/// Create a copy of SubscriptionEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? transaction = null,}) {
+  return _then(_Cancel(
+null == transaction ? _self.transaction : transaction // ignore: cast_nullable_to_non_nullable
+as Transaction,
+  ));
+}
+
+/// Create a copy of SubscriptionEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$TransactionCopyWith<$Res> get transaction {
+  
+  return $TransactionCopyWith<$Res>(_self.transaction, (value) {
+    return _then(_self.copyWith(transaction: value));
+  });
+}
+}
 
 // dart format on

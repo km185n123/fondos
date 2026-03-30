@@ -9,6 +9,7 @@ extension TransactionMappers on Transaction {
   TransactionDb toDb() {
     return TransactionDb(
       id: id,
+      name: name,
       type: type.name,
       amount: amount,
       fundId: fundId,
@@ -20,6 +21,7 @@ extension TransactionMappers on Transaction {
   TransactionDTO toDto() {
     return TransactionDTO(
       id: id,
+      name: name,
       type: type.name,
       amount: amount,
       fundId: fundId,
@@ -32,5 +34,19 @@ extension TransactionMappers on Transaction {
 extension TransactionResponseDTOMapper on TransactionResponseDTO {
   TransactionResponse toEntity() {
     return TransactionResponse(status: status, message: message);
+  }
+}
+
+extension TransactionDbMapper on TransactionDb {
+  Transaction toEntity() {
+    return Transaction(
+      id: id,
+      name: name,
+      type: TransactionType.values.firstWhere((e) => e.name == type),
+      amount: amount,
+      fundId: fundId,
+      date: date,
+      syncStatus: syncStatus,
+    );
   }
 }

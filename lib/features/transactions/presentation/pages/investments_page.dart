@@ -1,32 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fondos/core/design_system/tokens/app_colors.dart';
-import 'package:fondos/core/design_system/tokens/app_typography.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
+import 'package:fondos/features/transactions/presentation/bloc/investments_bloc.dart';
+import 'package:fondos/features/transactions/presentation/bloc/investments_event.dart';
+import 'package:fondos/features/transactions/presentation/bloc/investments_state.dart';
+import 'package:fondos/features/transactions/presentation/widgets/investment_card_view.dart';
 
-class InvestmentsPage extends StatelessWidget {
+class InvestmentsPage extends StatefulWidget {
   const InvestmentsPage({super.key});
 
   @override
+  State<InvestmentsPage> createState() => _InvestmentsPageState();
+}
+
+class _InvestmentsPageState extends State<InvestmentsPage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<InvestmentsBloc>().add(
+      const InvestmentsEvent.getInvestments(),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: AppColors.background,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.show_chart, size: 64, color: AppColors.primary),
-            SizedBox(height: AppSpacing.md),
-            Text(
-              'My Investments',
-              style: AppTypography.headlineMedium,
-            ),
-            SizedBox(height: AppSpacing.sm),
-            Text(
-              'Próximamente verás aquí tus fondos activos.',
-              style: AppTypography.body,
-            ),
-          ],
-        ),
+      body: BlocBuilder<InvestmentsBloc, InvestmentsState>(
+        builder: (context, state) {
+          return state.when(
+            initial: () => const Center(child: CircularProgressIndicator()),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (message) => Center(child: Text(message)),
+            success: (investments, saldoActual) {
+              if (investments.isEmpty) {
+                return const Center(
+                  child: Text('No tienes inversiones activas'),
+                );
+              }
+
+              return ListView.separated(
+                padding: const EdgeInsets.all(AppSpacing.lg),
+                itemCount: investments.length,
+                separatorBuilder: (_, __) =>
+                    const SizedBox(height: AppSpacing.lg),
+                itemBuilder: (_, i) =>
+                    InvestmentCardView(transaction: investments[i]),
+              );
+            },
+          );
+        },
       ),
     );
   }

@@ -15,6 +15,6 @@ abstract class SubscriptionState with _$SubscriptionState {
     @Default(12450000.0) double availableBalance,
     NotificationMethod? notificationMethod,
     String? errorMessage,
-    String? amountError, // field-level error shown below the input
+    String? amountError,
   }) = _SubscriptionState;
 }
