@@ -9,4 +9,5 @@ abstract class TransactionRepository {
   });
 
   Future<Either<Failure, List<Transaction>>> getInvestments();
+  Stream<List<Transaction>> watchInvestments();
 }

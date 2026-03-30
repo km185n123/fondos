@@ -72,4 +72,10 @@ class TransactionRepositoryImpl implements TransactionRepository {
       },
     );
   }
+  @override
+  Stream<List<Transaction>> watchInvestments() {
+    return transactionDao.watchInvestments().map(
+      (list) => list.map((e) => e.toEntity()).toList(),
+    );
+  }
 }

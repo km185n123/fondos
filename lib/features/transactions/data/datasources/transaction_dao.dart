@@ -29,4 +29,10 @@ class TransactionDao extends DatabaseAccessor<AppDatabase>
       transactionsTable,
     )..where((tbl) => tbl.type.equals('subscription'))).get();
   }
+
+  Stream<List<TransactionDb>> watchInvestments() {
+    return (select(
+      transactionsTable,
+    )..where((tbl) => tbl.type.equals('subscription'))).watch();
+  }
 }

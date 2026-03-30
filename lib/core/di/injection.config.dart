@@ -32,6 +32,8 @@ import '../../features/transactions/domain/usecases/get_investments_use_case.dar
     as _i636;
 import '../../features/transactions/domain/usecases/subscribe_fund_usecase.dart'
     as _i219;
+import '../../features/transactions/domain/usecases/watch_investments_use_case.dart'
+    as _i918;
 import '../../features/transactions/presentation/bloc/investments_bloc.dart'
     as _i1012;
 import '../../features/transactions/presentation/bloc/subscription_bloc.dart'
@@ -83,19 +85,22 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i636.GetInvestmentsUseCase>(
       () => _i636.GetInvestmentsUseCase(gh<_i421.TransactionRepository>()),
     );
+    gh.lazySingleton<_i918.WatchInvestmentsUseCase>(
+      () => _i918.WatchInvestmentsUseCase(gh<_i421.TransactionRepository>()),
+    );
     gh.lazySingleton<_i650.FundRepository>(
       () => _i985.FundRepositoryImpl(
         apiService: gh<_i890.FundApiService>(),
         fundDao: gh<_i481.FundDao>(),
       ),
     );
-    gh.factory<_i1012.InvestmentsBloc>(
-      () => _i1012.InvestmentsBloc(
-        getInvestmentsUseCase: gh<_i636.GetInvestmentsUseCase>(),
-      ),
-    );
     gh.lazySingleton<_i98.GetFundsUseCase>(
       () => _i98.GetFundsUseCase(gh<_i650.FundRepository>()),
+    );
+    gh.factory<_i1012.InvestmentsBloc>(
+      () => _i1012.InvestmentsBloc(
+        watchInvestmentsUseCase: gh<_i918.WatchInvestmentsUseCase>(),
+      ),
     );
     gh.lazySingleton<_i219.SubscribeFundUseCase>(
       () => _i219.SubscribeFundUseCase(

@@ -19,7 +19,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
   void initState() {
     super.initState();
     context.read<InvestmentsBloc>().add(
-      const InvestmentsEvent.getInvestments(),
+      const InvestmentsEvent.startWatching(),
     );
   }
 

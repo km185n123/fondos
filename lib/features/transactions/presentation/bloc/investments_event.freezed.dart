@@ -55,11 +55,12 @@ extension InvestmentsEventPatterns on InvestmentsEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _GetInvestments value)?  getInvestments,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _StartWatching value)?  startWatching,TResult Function( _OnData value)?  onData,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _GetInvestments() when getInvestments != null:
-return getInvestments(_that);case _:
+case _StartWatching() when startWatching != null:
+return startWatching(_that);case _OnData() when onData != null:
+return onData(_that);case _:
   return orElse();
 
 }
@@ -77,11 +78,12 @@ return getInvestments(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _GetInvestments value)  getInvestments,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _StartWatching value)  startWatching,required TResult Function( _OnData value)  onData,}){
 final _that = this;
 switch (_that) {
-case _GetInvestments():
-return getInvestments(_that);case _:
+case _StartWatching():
+return startWatching(_that);case _OnData():
+return onData(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -98,11 +100,12 @@ return getInvestments(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _GetInvestments value)?  getInvestments,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _StartWatching value)?  startWatching,TResult? Function( _OnData value)?  onData,}){
 final _that = this;
 switch (_that) {
-case _GetInvestments() when getInvestments != null:
-return getInvestments(_that);case _:
+case _StartWatching() when startWatching != null:
+return startWatching(_that);case _OnData() when onData != null:
+return onData(_that);case _:
   return null;
 
 }
@@ -119,10 +122,11 @@ return getInvestments(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  getInvestments,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  startWatching,TResult Function( List<Transaction> data)?  onData,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _GetInvestments() when getInvestments != null:
-return getInvestments();case _:
+case _StartWatching() when startWatching != null:
+return startWatching();case _OnData() when onData != null:
+return onData(_that.data);case _:
   return orElse();
 
 }
@@ -140,10 +144,11 @@ return getInvestments();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  getInvestments,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  startWatching,required TResult Function( List<Transaction> data)  onData,}) {final _that = this;
 switch (_that) {
-case _GetInvestments():
-return getInvestments();case _:
+case _StartWatching():
+return startWatching();case _OnData():
+return onData(_that.data);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -160,10 +165,11 @@ return getInvestments();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  getInvestments,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  startWatching,TResult? Function( List<Transaction> data)?  onData,}) {final _that = this;
 switch (_that) {
-case _GetInvestments() when getInvestments != null:
-return getInvestments();case _:
+case _StartWatching() when startWatching != null:
+return startWatching();case _OnData() when onData != null:
+return onData(_that.data);case _:
   return null;
 
 }
@@ -174,8 +180,8 @@ return getInvestments();case _:
 /// @nodoc
 
 
-class _GetInvestments implements InvestmentsEvent {
-  const _GetInvestments();
+class _StartWatching implements InvestmentsEvent {
+  const _StartWatching();
   
 
 
@@ -185,7 +191,7 @@ class _GetInvestments implements InvestmentsEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GetInvestments);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StartWatching);
 }
 
 
@@ -194,7 +200,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'InvestmentsEvent.getInvestments()';
+  return 'InvestmentsEvent.startWatching()';
 }
 
 
@@ -202,5 +208,77 @@ String toString() {
 
 
 
+
+/// @nodoc
+
+
+class _OnData implements InvestmentsEvent {
+  const _OnData(final  List<Transaction> data): _data = data;
+  
+
+ final  List<Transaction> _data;
+ List<Transaction> get data {
+  if (_data is EqualUnmodifiableListView) return _data;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_data);
+}
+
+
+/// Create a copy of InvestmentsEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$OnDataCopyWith<_OnData> get copyWith => __$OnDataCopyWithImpl<_OnData>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OnData&&const DeepCollectionEquality().equals(other._data, _data));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_data));
+
+@override
+String toString() {
+  return 'InvestmentsEvent.onData(data: $data)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$OnDataCopyWith<$Res> implements $InvestmentsEventCopyWith<$Res> {
+  factory _$OnDataCopyWith(_OnData value, $Res Function(_OnData) _then) = __$OnDataCopyWithImpl;
+@useResult
+$Res call({
+ List<Transaction> data
+});
+
+
+
+
+}
+/// @nodoc
+class __$OnDataCopyWithImpl<$Res>
+    implements _$OnDataCopyWith<$Res> {
+  __$OnDataCopyWithImpl(this._self, this._then);
+
+  final _OnData _self;
+  final $Res Function(_OnData) _then;
+
+/// Create a copy of InvestmentsEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? data = null,}) {
+  return _then(_OnData(
+null == data ? _self._data : data // ignore: cast_nullable_to_non_nullable
+as List<Transaction>,
+  ));
+}
+
+
+}
 
 // dart format on
