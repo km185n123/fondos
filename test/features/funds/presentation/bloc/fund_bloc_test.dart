@@ -58,7 +58,7 @@ void main() {
       act: (bloc) => bloc.add(const FundEvent.getFunds()),
       expect: () => [
         const FundState.loading(),
-        const FundState.success(funds: tFunds, activeFunds: []),
+        const FundState.success(funds: tFunds),
       ],
       verify: (_) {
         verify(() => mockGetFundsUseCase.call()).called(1);

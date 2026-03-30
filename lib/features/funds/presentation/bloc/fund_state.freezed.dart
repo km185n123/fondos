@@ -128,12 +128,12 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<Fund> funds,  List<Fund> activeFunds,  double currentBalance)?  success,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<Fund> funds,  double currentBalance)?  success,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading();case _Success() when success != null:
-return success(_that.funds,_that.activeFunds,_that.currentBalance);case _Error() when error != null:
+return success(_that.funds,_that.currentBalance);case _Error() when error != null:
 return error(_that.message);case _:
   return orElse();
 
@@ -152,12 +152,12 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<Fund> funds,  List<Fund> activeFunds,  double currentBalance)  success,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<Fund> funds,  double currentBalance)  success,required TResult Function( String message)  error,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Loading():
 return loading();case _Success():
-return success(_that.funds,_that.activeFunds,_that.currentBalance);case _Error():
+return success(_that.funds,_that.currentBalance);case _Error():
 return error(_that.message);case _:
   throw StateError('Unexpected subclass');
 
@@ -175,12 +175,12 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<Fund> funds,  List<Fund> activeFunds,  double currentBalance)?  success,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<Fund> funds,  double currentBalance)?  success,TResult? Function( String message)?  error,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading();case _Success() when success != null:
-return success(_that.funds,_that.activeFunds,_that.currentBalance);case _Error() when error != null:
+return success(_that.funds,_that.currentBalance);case _Error() when error != null:
 return error(_that.message);case _:
   return null;
 
@@ -257,7 +257,7 @@ String toString() {
 
 
 class _Success implements FundState {
-  const _Success({required final  List<Fund> funds, required final  List<Fund> activeFunds, this.currentBalance = 500000.0}): _funds = funds,_activeFunds = activeFunds;
+  const _Success({required final  List<Fund> funds, this.currentBalance = 500000.0}): _funds = funds;
   
 
  final  List<Fund> _funds;
@@ -265,13 +265,6 @@ class _Success implements FundState {
   if (_funds is EqualUnmodifiableListView) return _funds;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_funds);
-}
-
- final  List<Fund> _activeFunds;
- List<Fund> get activeFunds {
-  if (_activeFunds is EqualUnmodifiableListView) return _activeFunds;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_activeFunds);
 }
 
 @JsonKey() final  double currentBalance;
@@ -286,16 +279,16 @@ _$SuccessCopyWith<_Success> get copyWith => __$SuccessCopyWithImpl<_Success>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Success&&const DeepCollectionEquality().equals(other._funds, _funds)&&const DeepCollectionEquality().equals(other._activeFunds, _activeFunds)&&(identical(other.currentBalance, currentBalance) || other.currentBalance == currentBalance));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Success&&const DeepCollectionEquality().equals(other._funds, _funds)&&(identical(other.currentBalance, currentBalance) || other.currentBalance == currentBalance));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_funds),const DeepCollectionEquality().hash(_activeFunds),currentBalance);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_funds),currentBalance);
 
 @override
 String toString() {
-  return 'FundState.success(funds: $funds, activeFunds: $activeFunds, currentBalance: $currentBalance)';
+  return 'FundState.success(funds: $funds, currentBalance: $currentBalance)';
 }
 
 
@@ -306,7 +299,7 @@ abstract mixin class _$SuccessCopyWith<$Res> implements $FundStateCopyWith<$Res>
   factory _$SuccessCopyWith(_Success value, $Res Function(_Success) _then) = __$SuccessCopyWithImpl;
 @useResult
 $Res call({
- List<Fund> funds, List<Fund> activeFunds, double currentBalance
+ List<Fund> funds, double currentBalance
 });
 
 
@@ -323,10 +316,9 @@ class __$SuccessCopyWithImpl<$Res>
 
 /// Create a copy of FundState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? funds = null,Object? activeFunds = null,Object? currentBalance = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? funds = null,Object? currentBalance = null,}) {
   return _then(_Success(
 funds: null == funds ? _self._funds : funds // ignore: cast_nullable_to_non_nullable
-as List<Fund>,activeFunds: null == activeFunds ? _self._activeFunds : activeFunds // ignore: cast_nullable_to_non_nullable
 as List<Fund>,currentBalance: null == currentBalance ? _self.currentBalance : currentBalance // ignore: cast_nullable_to_non_nullable
 as double,
   ));

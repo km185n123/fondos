@@ -9,7 +9,6 @@ class FundState with _$FundState {
   const factory FundState.loading() = _Loading;
   const factory FundState.success({
     required List<Fund> funds,
-    required List<Fund> activeFunds,
     @Default(500000.0) double currentBalance,
   }) = _Success;
   const factory FundState.error(String message) = _Error;

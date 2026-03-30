@@ -23,7 +23,7 @@ class HeroBalanceView extends StatelessWidget {
         BlocBuilder<FundBloc, FundState>(
           builder: (context, state) {
             final balance = state.maybeWhen(
-              success: (_, __, balance) => balance,
+              success: (_, balance) => balance,
               orElse: () => 500000.0,
             );
             return Text(

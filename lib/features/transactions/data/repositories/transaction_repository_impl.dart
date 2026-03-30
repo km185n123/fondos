@@ -64,16 +64,6 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
-  Future<Either<Failure, List<Transaction>>> getInvestments() {
-    return SafeCall.execute<List<Transaction>>(
-      tryBlock: () async {
-        final transactions = await transactionDao.getInvestments();
-        return transactions.map((e) => e.toEntity()).toList();
-      },
-    );
-  }
-
-  @override
   Stream<List<Transaction>> watchInvestments() {
     return transactionDao.watchInvestments().map(
       (list) => list.map((e) => e.toEntity()).toList(),

@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fondos/core/errors/error_messages.dart';
 import 'package:fondos/features/funds/domain/entities/fund.dart';
 import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
 import 'package:fondos/features/transactions/domain/usecases/subscribe_fund_usecase.dart';
@@ -35,7 +36,7 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
 
   void _onChangeAmount(double amount, Emitter<SubscriptionState> emit) {
     final String? amountError = amount > state.availableBalance
-        ? 'insufficient_balance'
+        ? ErrorMessages.insufficientBalance
         : null;
 
     emit(
@@ -62,13 +63,12 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
   }
 
   Future<void> _onConfirm(Emitter<SubscriptionState> emit) async {
-    // 1. Form Validations before calling the Use Case
     emit(state.copyWith(status: SubscriptionStatus.loading));
     if (state.selectedFund == null) {
       emit(
         state.copyWith(
           status: SubscriptionStatus.error,
-          errorMessage: 'select_fund_error',
+          errorMessage: ErrorMessages.selectFundError,
         ),
       );
       return;
@@ -78,7 +78,7 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       emit(
         state.copyWith(
           status: SubscriptionStatus.error,
-          errorMessage: 'error_notification_method',
+          errorMessage: ErrorMessages.errorNotificationMethod,
         ),
       );
       return;
@@ -88,7 +88,7 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       emit(
         state.copyWith(
           status: SubscriptionStatus.error,
-          errorMessage: 'error_min_amount',
+          errorMessage: ErrorMessages.errorMinAmount,
         ),
       );
       return;

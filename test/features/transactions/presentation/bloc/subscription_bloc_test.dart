@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fondos/core/errors/error_messages.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:fondos/core/errors/failures.dart';
@@ -99,9 +100,10 @@ void main() {
         build: () => bloc,
         act: (bloc) => bloc.add(const SubscriptionEvent.confirm()),
         expect: () => [
+          const SubscriptionState(status: SubscriptionStatus.loading),
           const SubscriptionState(
             status: SubscriptionStatus.error,
-            errorMessage: 'Por favor selecciona un fondo',
+            errorMessage: ErrorMessages.selectFundError,
           ),
         ],
       );
@@ -120,8 +122,14 @@ void main() {
             selectedFund: tFund,
             amount: 50.0,
             notificationMethod: NotificationMethod.email,
+            status: SubscriptionStatus.loading,
+          ),
+          const SubscriptionState(
+            selectedFund: tFund,
+            amount: 50.0,
+            notificationMethod: NotificationMethod.email,
             status: SubscriptionStatus.error,
-            errorMessage: 'El monto debe ser al menos COP 100.0',
+            errorMessage: ErrorMessages.errorMinAmount,
           ),
         ],
       );
@@ -208,8 +216,13 @@ void main() {
           const SubscriptionState(
             selectedFund: tFund,
             amount: 200.0,
+            status: SubscriptionStatus.loading,
+          ),
+          const SubscriptionState(
+            selectedFund: tFund,
+            amount: 200.0,
             status: SubscriptionStatus.error,
-            errorMessage: 'Debe elegir email o SMS',
+            errorMessage: ErrorMessages.errorNotificationMethod,
           ),
         ],
       );

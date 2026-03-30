@@ -37,7 +37,7 @@ void main() {
     );
     registerFallbackValue(NotificationMethod.email);
     registerFallbackValue(
-      History(title: '', amount: '', isPositive: true),
+      const History(title: '', amount: '', isPositive: true),
     );
   });
 
@@ -76,7 +76,10 @@ void main() {
         ).thenAnswer((_) async => const Right(tResponse));
         when(
           () => mockUserRepo.saveNotificationPreference(any()),
-        ).thenAnswer((_) async {});
+        ).thenAnswer((_) async => Future.value());
+        when(
+          () => mockHistoryRepo.insertHistory(any()),
+        ).thenAnswer((_) async => const Right(null));
 
         // act
         final result = await useCase(
@@ -96,6 +99,7 @@ void main() {
           () =>
               mockUserRepo.saveNotificationPreference(NotificationMethod.email),
         ).called(1);
+        verify(() => mockHistoryRepo.insertHistory(any())).called(1);
       },
     );
 

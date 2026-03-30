@@ -43,7 +43,7 @@ class FundsGridView extends StatelessWidget {
             return state.maybeWhen(
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (msg) => Center(child: Text(msg)),
-              success: (funds, _, saldoActual) => GridView.builder(
+              success: (funds, _) => GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: funds.length,

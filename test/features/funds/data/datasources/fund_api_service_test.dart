@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:fondos/core/network/api_paths.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:fondos/features/funds/data/datasources/fund_api_service.dart';
 import 'package:fondos/features/funds/data/models/fund_dto.dart';
 import 'package:fondos/core/errors/exceptions.dart';
-import 'package:fondos/core/errors/error_messages.dart';
 
 class MockDio extends Mock implements Dio {}
 
@@ -40,9 +40,9 @@ void main() {
       // arrange
       when(() => mockDio.get(any())).thenAnswer(
         (_) async => Response(
-          data: tFundJsonList,
+          data: {'data': tFundJsonList},
           statusCode: 200,
-          requestOptions: RequestOptions(path: '/funds/success'),
+          requestOptions: RequestOptions(path: ApiPaths.funds),
         ),
       );
 
@@ -51,17 +51,17 @@ void main() {
 
       // assert
       expect(result, equals(tFundDtoList));
-      verify(() => mockDio.get('/funds')).called(1);
+      verify(() => mockDio.get(ApiPaths.funds)).called(1);
       verifyNoMoreInteractions(mockDio);
     });
 
     test(
-      'should throw NetworkException when connection timeout occurs',
+      'should delegate exception handling to SafeApiCall when Dio error occurs',
       () async {
-        // arrange
+        // arrange: we don't test EACH dio error here because it's tested in safe_api_call_test.dart
         when(() => mockDio.get(any())).thenThrow(
           DioException(
-            requestOptions: RequestOptions(path: '/funds/success'),
+            requestOptions: RequestOptions(path: ApiPaths.funds),
             type: DioExceptionType.connectionTimeout,
           ),
         );
@@ -69,68 +69,8 @@ void main() {
         // act
         final call = apiService.getFunds;
 
-        // assert
-        expect(
-          () => call(),
-          throwsA(
-            isA<NetworkException>().having(
-              (e) => e.message,
-              'message',
-              ErrorMessages.timeoutError,
-            ),
-          ),
-        );
-      },
-    );
-
-    test(
-      'should throw ServerException with badRequest message when badResponse occurs',
-      () async {
-        // arrange
-        when(() => mockDio.get(any())).thenThrow(
-          DioException(
-            requestOptions: RequestOptions(path: '/funds/success'),
-            type: DioExceptionType.badResponse,
-          ),
-        );
-
-        // act
-        final call = apiService.getFunds;
-
-        // assert
-        expect(
-          () => call(),
-          throwsA(
-            isA<ServerException>().having(
-              (e) => e.message,
-              'message',
-              ErrorMessages.badRequest,
-            ),
-          ),
-        );
-      },
-    );
-
-    test(
-      'should throw NetworkException when generic exception occurs',
-      () async {
-        // arrange
-        when(() => mockDio.get(any())).thenThrow(Exception());
-
-        // act
-        final call = apiService.getFunds;
-
-        // assert
-        expect(
-          () => call(),
-          throwsA(
-            isA<NetworkException>().having(
-              (e) => e.message,
-              'message',
-              ErrorMessages.unexpectedError,
-            ),
-          ),
-        );
+        // assert: we only verify that a NetworkException is rethrown (SafeApiCall logic)
+        expect(() => call(), throwsA(isA<NetworkException>()));
       },
     );
   });

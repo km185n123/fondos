@@ -42,7 +42,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
               return ListView.separated(
                 padding: const EdgeInsets.all(AppSpacing.lg),
                 itemCount: investments.length,
-                separatorBuilder: (_, __) =>
+                separatorBuilder: (_, _) =>
                     const SizedBox(height: AppSpacing.lg),
                 itemBuilder: (_, i) =>
                     InvestmentCardView(transaction: investments[i]),

@@ -31,18 +31,11 @@ class FundBloc extends Bloc<FundEvent, FundState> {
     failureOrFunds.fold((failure) => emit(FundState.error(failure.message)), (
       funds,
     ) {
-      final activeFunds = funds.toList();
       final currentBalance = state.maybeWhen(
-        success: (_, __, balance) => balance,
+        success: (_, balance) => balance,
         orElse: () => 500000.0,
       );
-      emit(
-        FundState.success(
-          funds: funds,
-          activeFunds: activeFunds,
-          currentBalance: currentBalance,
-        ),
-      );
+      emit(FundState.success(funds: funds, currentBalance: currentBalance));
     });
   }
 
@@ -54,16 +47,10 @@ class FundBloc extends Bloc<FundEvent, FundState> {
           (failure) => FundState.error(failure.message),
           (balance) {
             return state.maybeWhen(
-              success: (funds, activeFunds, _) => FundState.success(
-                funds: funds,
-                activeFunds: activeFunds,
-                currentBalance: balance,
-              ),
-              orElse: () => FundState.success(
-                funds: [],
-                activeFunds: [],
-                currentBalance: balance,
-              ),
+              success: (funds, _) =>
+                  FundState.success(funds: funds, currentBalance: balance),
+              orElse: () =>
+                  FundState.success(funds: [], currentBalance: balance),
             );
           },
         );
