@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fondos/features/funds/domain/entities/fund.dart';
 import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
-import 'package:fondos/features/transactions/domain/usecases/get_investments_use_case.dart';
 import 'package:fondos/features/transactions/domain/usecases/subscribe_fund_usecase.dart';
 import 'package:fondos/features/transactions/presentation/bloc/subscription_event.dart';
 import 'package:fondos/features/transactions/presentation/bloc/subscription_state.dart';
@@ -10,12 +9,9 @@ import 'package:injectable/injectable.dart';
 @injectable
 class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
   final SubscribeFundUseCase subscribeFundUseCase;
-  final GetInvestmentsUseCase getInvestmentsUseCase;
 
-  SubscriptionBloc({
-    required this.subscribeFundUseCase,
-    required this.getInvestmentsUseCase,
-  }) : super(const SubscriptionState()) {
+  SubscriptionBloc({required this.subscribeFundUseCase})
+    : super(const SubscriptionState()) {
     on<SubscriptionEvent>((event, emit) async {
       await event.when(
         selectFund: (fund) async => _onSelectFund(fund, emit),

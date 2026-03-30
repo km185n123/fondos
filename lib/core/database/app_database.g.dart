@@ -71,12 +71,12 @@ class $FundsTableTable extends FundsTable
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _currentValueMeta = const VerificationMeta(
-    'currentValue',
+  static const VerificationMeta _currentBalanceMeta = const VerificationMeta(
+    'currentBalance',
   );
   @override
-  late final GeneratedColumn<String> currentValue = GeneratedColumn<String>(
-    'current_value',
+  late final GeneratedColumn<String> currentBalance = GeneratedColumn<String>(
+    'current_balance',
     aliasedName,
     true,
     type: DriftSqlType.string,
@@ -101,7 +101,7 @@ class $FundsTableTable extends FundsTable
     category,
     subtitle,
     invested,
-    currentValue,
+    currentBalance,
     returnPct,
   ];
   @override
@@ -160,12 +160,12 @@ class $FundsTableTable extends FundsTable
         invested.isAcceptableOrUnknown(data['invested']!, _investedMeta),
       );
     }
-    if (data.containsKey('current_value')) {
+    if (data.containsKey('current_balance')) {
       context.handle(
-        _currentValueMeta,
-        currentValue.isAcceptableOrUnknown(
-          data['current_value']!,
-          _currentValueMeta,
+        _currentBalanceMeta,
+        currentBalance.isAcceptableOrUnknown(
+          data['current_balance']!,
+          _currentBalanceMeta,
         ),
       );
     }
@@ -208,9 +208,9 @@ class $FundsTableTable extends FundsTable
         DriftSqlType.string,
         data['${effectivePrefix}invested'],
       ),
-      currentValue: attachedDatabase.typeMapping.read(
+      currentBalance: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}current_value'],
+        data['${effectivePrefix}current_balance'],
       ),
       returnPct: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
@@ -232,7 +232,7 @@ class FundDb extends DataClass implements Insertable<FundDb> {
   final String category;
   final String? subtitle;
   final String? invested;
-  final String? currentValue;
+  final String? currentBalance;
   final String? returnPct;
   const FundDb({
     required this.id,
@@ -241,7 +241,7 @@ class FundDb extends DataClass implements Insertable<FundDb> {
     required this.category,
     this.subtitle,
     this.invested,
-    this.currentValue,
+    this.currentBalance,
     this.returnPct,
   });
   @override
@@ -257,8 +257,8 @@ class FundDb extends DataClass implements Insertable<FundDb> {
     if (!nullToAbsent || invested != null) {
       map['invested'] = Variable<String>(invested);
     }
-    if (!nullToAbsent || currentValue != null) {
-      map['current_value'] = Variable<String>(currentValue);
+    if (!nullToAbsent || currentBalance != null) {
+      map['current_balance'] = Variable<String>(currentBalance);
     }
     if (!nullToAbsent || returnPct != null) {
       map['return_pct'] = Variable<String>(returnPct);
@@ -278,9 +278,9 @@ class FundDb extends DataClass implements Insertable<FundDb> {
       invested: invested == null && nullToAbsent
           ? const Value.absent()
           : Value(invested),
-      currentValue: currentValue == null && nullToAbsent
+      currentBalance: currentBalance == null && nullToAbsent
           ? const Value.absent()
-          : Value(currentValue),
+          : Value(currentBalance),
       returnPct: returnPct == null && nullToAbsent
           ? const Value.absent()
           : Value(returnPct),
@@ -299,7 +299,7 @@ class FundDb extends DataClass implements Insertable<FundDb> {
       category: serializer.fromJson<String>(json['category']),
       subtitle: serializer.fromJson<String?>(json['subtitle']),
       invested: serializer.fromJson<String?>(json['invested']),
-      currentValue: serializer.fromJson<String?>(json['currentValue']),
+      currentBalance: serializer.fromJson<String?>(json['currentBalance']),
       returnPct: serializer.fromJson<String?>(json['returnPct']),
     );
   }
@@ -313,7 +313,7 @@ class FundDb extends DataClass implements Insertable<FundDb> {
       'category': serializer.toJson<String>(category),
       'subtitle': serializer.toJson<String?>(subtitle),
       'invested': serializer.toJson<String?>(invested),
-      'currentValue': serializer.toJson<String?>(currentValue),
+      'currentBalance': serializer.toJson<String?>(currentBalance),
       'returnPct': serializer.toJson<String?>(returnPct),
     };
   }
@@ -325,7 +325,7 @@ class FundDb extends DataClass implements Insertable<FundDb> {
     String? category,
     Value<String?> subtitle = const Value.absent(),
     Value<String?> invested = const Value.absent(),
-    Value<String?> currentValue = const Value.absent(),
+    Value<String?> currentBalance = const Value.absent(),
     Value<String?> returnPct = const Value.absent(),
   }) => FundDb(
     id: id ?? this.id,
@@ -334,7 +334,9 @@ class FundDb extends DataClass implements Insertable<FundDb> {
     category: category ?? this.category,
     subtitle: subtitle.present ? subtitle.value : this.subtitle,
     invested: invested.present ? invested.value : this.invested,
-    currentValue: currentValue.present ? currentValue.value : this.currentValue,
+    currentBalance: currentBalance.present
+        ? currentBalance.value
+        : this.currentBalance,
     returnPct: returnPct.present ? returnPct.value : this.returnPct,
   );
   FundDb copyWithCompanion(FundsTableCompanion data) {
@@ -347,9 +349,9 @@ class FundDb extends DataClass implements Insertable<FundDb> {
       category: data.category.present ? data.category.value : this.category,
       subtitle: data.subtitle.present ? data.subtitle.value : this.subtitle,
       invested: data.invested.present ? data.invested.value : this.invested,
-      currentValue: data.currentValue.present
-          ? data.currentValue.value
-          : this.currentValue,
+      currentBalance: data.currentBalance.present
+          ? data.currentBalance.value
+          : this.currentBalance,
       returnPct: data.returnPct.present ? data.returnPct.value : this.returnPct,
     );
   }
@@ -363,7 +365,7 @@ class FundDb extends DataClass implements Insertable<FundDb> {
           ..write('category: $category, ')
           ..write('subtitle: $subtitle, ')
           ..write('invested: $invested, ')
-          ..write('currentValue: $currentValue, ')
+          ..write('currentBalance: $currentBalance, ')
           ..write('returnPct: $returnPct')
           ..write(')'))
         .toString();
@@ -377,7 +379,7 @@ class FundDb extends DataClass implements Insertable<FundDb> {
     category,
     subtitle,
     invested,
-    currentValue,
+    currentBalance,
     returnPct,
   );
   @override
@@ -390,7 +392,7 @@ class FundDb extends DataClass implements Insertable<FundDb> {
           other.category == this.category &&
           other.subtitle == this.subtitle &&
           other.invested == this.invested &&
-          other.currentValue == this.currentValue &&
+          other.currentBalance == this.currentBalance &&
           other.returnPct == this.returnPct);
 }
 
@@ -401,7 +403,7 @@ class FundsTableCompanion extends UpdateCompanion<FundDb> {
   final Value<String> category;
   final Value<String?> subtitle;
   final Value<String?> invested;
-  final Value<String?> currentValue;
+  final Value<String?> currentBalance;
   final Value<String?> returnPct;
   final Value<int> rowid;
   const FundsTableCompanion({
@@ -411,7 +413,7 @@ class FundsTableCompanion extends UpdateCompanion<FundDb> {
     this.category = const Value.absent(),
     this.subtitle = const Value.absent(),
     this.invested = const Value.absent(),
-    this.currentValue = const Value.absent(),
+    this.currentBalance = const Value.absent(),
     this.returnPct = const Value.absent(),
     this.rowid = const Value.absent(),
   });
@@ -422,7 +424,7 @@ class FundsTableCompanion extends UpdateCompanion<FundDb> {
     required String category,
     this.subtitle = const Value.absent(),
     this.invested = const Value.absent(),
-    this.currentValue = const Value.absent(),
+    this.currentBalance = const Value.absent(),
     this.returnPct = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
@@ -436,7 +438,7 @@ class FundsTableCompanion extends UpdateCompanion<FundDb> {
     Expression<String>? category,
     Expression<String>? subtitle,
     Expression<String>? invested,
-    Expression<String>? currentValue,
+    Expression<String>? currentBalance,
     Expression<String>? returnPct,
     Expression<int>? rowid,
   }) {
@@ -447,7 +449,7 @@ class FundsTableCompanion extends UpdateCompanion<FundDb> {
       if (category != null) 'category': category,
       if (subtitle != null) 'subtitle': subtitle,
       if (invested != null) 'invested': invested,
-      if (currentValue != null) 'current_value': currentValue,
+      if (currentBalance != null) 'current_balance': currentBalance,
       if (returnPct != null) 'return_pct': returnPct,
       if (rowid != null) 'rowid': rowid,
     });
@@ -460,7 +462,7 @@ class FundsTableCompanion extends UpdateCompanion<FundDb> {
     Value<String>? category,
     Value<String?>? subtitle,
     Value<String?>? invested,
-    Value<String?>? currentValue,
+    Value<String?>? currentBalance,
     Value<String?>? returnPct,
     Value<int>? rowid,
   }) {
@@ -471,7 +473,7 @@ class FundsTableCompanion extends UpdateCompanion<FundDb> {
       category: category ?? this.category,
       subtitle: subtitle ?? this.subtitle,
       invested: invested ?? this.invested,
-      currentValue: currentValue ?? this.currentValue,
+      currentBalance: currentBalance ?? this.currentBalance,
       returnPct: returnPct ?? this.returnPct,
       rowid: rowid ?? this.rowid,
     );
@@ -498,8 +500,8 @@ class FundsTableCompanion extends UpdateCompanion<FundDb> {
     if (invested.present) {
       map['invested'] = Variable<String>(invested.value);
     }
-    if (currentValue.present) {
-      map['current_value'] = Variable<String>(currentValue.value);
+    if (currentBalance.present) {
+      map['current_balance'] = Variable<String>(currentBalance.value);
     }
     if (returnPct.present) {
       map['return_pct'] = Variable<String>(returnPct.value);
@@ -519,7 +521,7 @@ class FundsTableCompanion extends UpdateCompanion<FundDb> {
           ..write('category: $category, ')
           ..write('subtitle: $subtitle, ')
           ..write('invested: $invested, ')
-          ..write('currentValue: $currentValue, ')
+          ..write('currentBalance: $currentBalance, ')
           ..write('returnPct: $returnPct, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -1276,7 +1278,7 @@ typedef $$FundsTableTableCreateCompanionBuilder =
       required String category,
       Value<String?> subtitle,
       Value<String?> invested,
-      Value<String?> currentValue,
+      Value<String?> currentBalance,
       Value<String?> returnPct,
       Value<int> rowid,
     });
@@ -1288,7 +1290,7 @@ typedef $$FundsTableTableUpdateCompanionBuilder =
       Value<String> category,
       Value<String?> subtitle,
       Value<String?> invested,
-      Value<String?> currentValue,
+      Value<String?> currentBalance,
       Value<String?> returnPct,
       Value<int> rowid,
     });
@@ -1332,8 +1334,8 @@ class $$FundsTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get currentValue => $composableBuilder(
-    column: $table.currentValue,
+  ColumnFilters<String> get currentBalance => $composableBuilder(
+    column: $table.currentBalance,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1382,8 +1384,8 @@ class $$FundsTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get currentValue => $composableBuilder(
-    column: $table.currentValue,
+  ColumnOrderings<String> get currentBalance => $composableBuilder(
+    column: $table.currentBalance,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -1422,8 +1424,8 @@ class $$FundsTableTableAnnotationComposer
   GeneratedColumn<String> get invested =>
       $composableBuilder(column: $table.invested, builder: (column) => column);
 
-  GeneratedColumn<String> get currentValue => $composableBuilder(
-    column: $table.currentValue,
+  GeneratedColumn<String> get currentBalance => $composableBuilder(
+    column: $table.currentBalance,
     builder: (column) => column,
   );
 
@@ -1465,7 +1467,7 @@ class $$FundsTableTableTableManager
                 Value<String> category = const Value.absent(),
                 Value<String?> subtitle = const Value.absent(),
                 Value<String?> invested = const Value.absent(),
-                Value<String?> currentValue = const Value.absent(),
+                Value<String?> currentBalance = const Value.absent(),
                 Value<String?> returnPct = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => FundsTableCompanion(
@@ -1475,7 +1477,7 @@ class $$FundsTableTableTableManager
                 category: category,
                 subtitle: subtitle,
                 invested: invested,
-                currentValue: currentValue,
+                currentBalance: currentBalance,
                 returnPct: returnPct,
                 rowid: rowid,
               ),
@@ -1487,7 +1489,7 @@ class $$FundsTableTableTableManager
                 required String category,
                 Value<String?> subtitle = const Value.absent(),
                 Value<String?> invested = const Value.absent(),
-                Value<String?> currentValue = const Value.absent(),
+                Value<String?> currentBalance = const Value.absent(),
                 Value<String?> returnPct = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => FundsTableCompanion.insert(
@@ -1497,7 +1499,7 @@ class $$FundsTableTableTableManager
                 category: category,
                 subtitle: subtitle,
                 invested: invested,
-                currentValue: currentValue,
+                currentBalance: currentBalance,
                 returnPct: returnPct,
                 rowid: rowid,
               ),

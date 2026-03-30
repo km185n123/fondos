@@ -7,19 +7,15 @@ import 'package:fondos/features/funds/domain/entities/fund.dart';
 import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
 import 'package:fondos/features/transactions/domain/entitie/transaction_response.dart';
 import 'package:fondos/features/transactions/domain/usecases/subscribe_fund_usecase.dart';
-import 'package:fondos/features/transactions/domain/usecases/get_investments_use_case.dart';
 import 'package:fondos/features/transactions/presentation/bloc/subscription_bloc.dart';
 import 'package:fondos/features/transactions/presentation/bloc/subscription_event.dart';
 import 'package:fondos/features/transactions/presentation/bloc/subscription_state.dart';
 
 class MockSubscribeFundUseCase extends Mock implements SubscribeFundUseCase {}
 
-class MockGetInvestmentsUseCase extends Mock implements GetInvestmentsUseCase {}
-
 void main() {
   late SubscriptionBloc bloc;
   late MockSubscribeFundUseCase mockSubscribeUseCase;
-  late MockGetInvestmentsUseCase mockGetInvestmentsUseCase;
 
   setUpAll(() {
     registerFallbackValue(
@@ -35,11 +31,7 @@ void main() {
 
   setUp(() {
     mockSubscribeUseCase = MockSubscribeFundUseCase();
-    mockGetInvestmentsUseCase = MockGetInvestmentsUseCase();
-    bloc = SubscriptionBloc(
-      subscribeFundUseCase: mockSubscribeUseCase,
-      getInvestmentsUseCase: mockGetInvestmentsUseCase,
-    );
+    bloc = SubscriptionBloc(subscribeFundUseCase: mockSubscribeUseCase);
   });
 
   tearDown(() {

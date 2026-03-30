@@ -24,7 +24,7 @@ void main() {
         'name': 'Fondo 1',
         'minimumAmount': 100.0,
         'category': 'Acciones',
-      }
+      },
     ];
 
     final tFundDtoList = [
@@ -33,16 +33,18 @@ void main() {
         name: 'Fondo 1',
         minimumAmount: 100.0,
         category: 'Acciones',
-      )
+      ),
     ];
 
     test('should return a list of FundDTO when response is 200', () async {
       // arrange
-      when(() => mockDio.get(any())).thenAnswer((_) async => Response(
-            data: tFundJsonList,
-            statusCode: 200,
-            requestOptions: RequestOptions(path: '/funds'),
-          ));
+      when(() => mockDio.get(any())).thenAnswer(
+        (_) async => Response(
+          data: tFundJsonList,
+          statusCode: 200,
+          requestOptions: RequestOptions(path: '/funds/success'),
+        ),
+      );
 
       // act
       final result = await apiService.getFunds();
@@ -53,51 +55,83 @@ void main() {
       verifyNoMoreInteractions(mockDio);
     });
 
-    test('should throw NetworkException when connection timeout occurs', () async {
-      // arrange
-      when(() => mockDio.get(any())).thenThrow(
-        DioException(
+    test(
+      'should throw NetworkException when connection timeout occurs',
+      () async {
+        // arrange
+        when(() => mockDio.get(any())).thenThrow(
+          DioException(
             requestOptions: RequestOptions(path: '/funds'),
-            type: DioExceptionType.connectionTimeout),
-      );
+            type: DioExceptionType.connectionTimeout,
+          ),
+        );
 
-      // act
-      final call = apiService.getFunds;
+        // act
+        final call = apiService.getFunds;
 
-      // assert
-      expect(() => call(), throwsA(
-        isA<NetworkException>().having((e) => e.message, 'message', ErrorMessages.timeoutError),
-      ));
-    });
-    
-    test('should throw ServerException with badRequest message when badResponse occurs', () async {
-      // arrange
-      when(() => mockDio.get(any())).thenThrow(
-        DioException(
+        // assert
+        expect(
+          () => call(),
+          throwsA(
+            isA<NetworkException>().having(
+              (e) => e.message,
+              'message',
+              ErrorMessages.timeoutError,
+            ),
+          ),
+        );
+      },
+    );
+
+    test(
+      'should throw ServerException with badRequest message when badResponse occurs',
+      () async {
+        // arrange
+        when(() => mockDio.get(any())).thenThrow(
+          DioException(
             requestOptions: RequestOptions(path: '/funds'),
-            type: DioExceptionType.badResponse),
-      );
+            type: DioExceptionType.badResponse,
+          ),
+        );
 
-      // act
-      final call = apiService.getFunds;
+        // act
+        final call = apiService.getFunds;
 
-      // assert
-      expect(() => call(), throwsA(
-        isA<ServerException>().having((e) => e.message, 'message', ErrorMessages.badRequest),
-      ));
-    });
-    
-    test('should throw NetworkException when generic exception occurs', () async {
-      // arrange
-      when(() => mockDio.get(any())).thenThrow(Exception());
+        // assert
+        expect(
+          () => call(),
+          throwsA(
+            isA<ServerException>().having(
+              (e) => e.message,
+              'message',
+              ErrorMessages.badRequest,
+            ),
+          ),
+        );
+      },
+    );
 
-      // act
-      final call = apiService.getFunds;
+    test(
+      'should throw NetworkException when generic exception occurs',
+      () async {
+        // arrange
+        when(() => mockDio.get(any())).thenThrow(Exception());
 
-      // assert
-      expect(() => call(), throwsA(
-        isA<NetworkException>().having((e) => e.message, 'message', ErrorMessages.unexpectedError),
-      ));
-    });
+        // act
+        final call = apiService.getFunds;
+
+        // assert
+        expect(
+          () => call(),
+          throwsA(
+            isA<NetworkException>().having(
+              (e) => e.message,
+              'message',
+              ErrorMessages.unexpectedError,
+            ),
+          ),
+        );
+      },
+    );
   });
 }

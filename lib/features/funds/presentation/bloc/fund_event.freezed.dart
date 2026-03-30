@@ -55,11 +55,12 @@ extension FundEventPatterns on FundEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _GetFunds value)?  getFunds,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _GetFunds value)?  getFunds,TResult Function( _WatchBalance value)?  watchBalance,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _GetFunds() when getFunds != null:
-return getFunds(_that);case _:
+return getFunds(_that);case _WatchBalance() when watchBalance != null:
+return watchBalance(_that);case _:
   return orElse();
 
 }
@@ -77,11 +78,12 @@ return getFunds(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _GetFunds value)  getFunds,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _GetFunds value)  getFunds,required TResult Function( _WatchBalance value)  watchBalance,}){
 final _that = this;
 switch (_that) {
 case _GetFunds():
-return getFunds(_that);case _:
+return getFunds(_that);case _WatchBalance():
+return watchBalance(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -98,11 +100,12 @@ return getFunds(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _GetFunds value)?  getFunds,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _GetFunds value)?  getFunds,TResult? Function( _WatchBalance value)?  watchBalance,}){
 final _that = this;
 switch (_that) {
 case _GetFunds() when getFunds != null:
-return getFunds(_that);case _:
+return getFunds(_that);case _WatchBalance() when watchBalance != null:
+return watchBalance(_that);case _:
   return null;
 
 }
@@ -119,10 +122,11 @@ return getFunds(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  getFunds,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  getFunds,TResult Function()?  watchBalance,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _GetFunds() when getFunds != null:
-return getFunds();case _:
+return getFunds();case _WatchBalance() when watchBalance != null:
+return watchBalance();case _:
   return orElse();
 
 }
@@ -140,10 +144,11 @@ return getFunds();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  getFunds,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  getFunds,required TResult Function()  watchBalance,}) {final _that = this;
 switch (_that) {
 case _GetFunds():
-return getFunds();case _:
+return getFunds();case _WatchBalance():
+return watchBalance();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -160,10 +165,11 @@ return getFunds();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  getFunds,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  getFunds,TResult? Function()?  watchBalance,}) {final _that = this;
 switch (_that) {
 case _GetFunds() when getFunds != null:
-return getFunds();case _:
+return getFunds();case _WatchBalance() when watchBalance != null:
+return watchBalance();case _:
   return null;
 
 }
@@ -195,6 +201,38 @@ int get hashCode => runtimeType.hashCode;
 @override
 String toString() {
   return 'FundEvent.getFunds()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class _WatchBalance implements FundEvent {
+  const _WatchBalance();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _WatchBalance);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'FundEvent.watchBalance()';
 }
 
 

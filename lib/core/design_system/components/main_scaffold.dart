@@ -20,7 +20,9 @@ class MainScaffold extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => getIt<FundBloc>()..add(const FundEvent.getFunds()),
+          create: (context) => getIt<FundBloc>()
+            ..add(const FundEvent.getFunds())
+            ..add(const FundEvent.watchBalance()),
           lazy: false,
         ),
         BlocProvider(

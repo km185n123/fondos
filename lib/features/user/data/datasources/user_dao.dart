@@ -9,6 +9,9 @@ class UserDao extends DatabaseAccessor<AppDatabase> with _$UserDaoMixin {
   UserDao(super.db);
 
   Future<UserDb?> getUser() => select(userTable).getSingleOrNull();
+  Stream<double> watchBalance() => select(userTable)
+      .watchSingle()
+      .map((user) => user?.balance ?? 500000.0);
 
   Future<double> getBalance() async {
     final user = await getUser();

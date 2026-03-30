@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fondos/core/design_system/tokens/app_colors.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
+import 'package:fondos/features/funds/presentation/bloc/fund_bloc.dart';
+import 'package:fondos/features/funds/presentation/bloc/fund_state.dart';
+import 'package:intl/intl.dart';
 
 class HeroBalanceView extends StatelessWidget {
   const HeroBalanceView({super.key});
@@ -15,7 +19,18 @@ class HeroBalanceView extends StatelessWidget {
           style: AppTypography.label.copyWith(color: AppColors.secondary),
         ),
         const SizedBox(height: 8),
-        const Text('COP 500.000', style: AppTypography.headlineLarge),
+        BlocBuilder<FundBloc, FundState>(
+          builder: (context, state) {
+            final balance = state.maybeWhen(
+              success: (_, __, balance) => balance,
+              orElse: () => 500000.0,
+            );
+            return Text(
+              'COP ${NumberFormat.decimalPattern('es_CO').format(balance)}',
+              style: AppTypography.headlineLarge,
+            );
+          },
+        ),
         const SizedBox(height: 6),
         Row(
           children: [

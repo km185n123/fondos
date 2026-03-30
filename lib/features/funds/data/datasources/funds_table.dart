@@ -8,7 +8,7 @@ class FundsTable extends Table {
   TextColumn get category => text()();
   TextColumn get subtitle => text().nullable()();
   TextColumn get invested => text().nullable()();
-  TextColumn get currentValue => text().nullable()();
+  TextColumn get currentBalance => text().nullable()();
   TextColumn get returnPct => text().nullable()();
 
   @override

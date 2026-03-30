@@ -15,6 +15,11 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
+  Stream<double> watchBalance() {
+    return userDao.watchBalance();
+  }
+
+  @override
   Future<void> updateBalance(double newBalance) async {
     await userDao.updateBalance(newBalance);
   }

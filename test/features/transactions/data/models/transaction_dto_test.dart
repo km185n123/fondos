@@ -17,6 +17,7 @@ void main() {
 
     final tJson = {
       'id': '1',
+      'name': 'Fund 1',
       'type': 'subscription',
       'amount': 100.0,
       'fund_id': 'fund_1',
