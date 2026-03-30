@@ -7,7 +7,6 @@ import 'package:mocktail/mocktail.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:fondos/core/errors/failures.dart';
 import 'package:fondos/features/funds/domain/entities/fund.dart';
-import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
 import 'package:fondos/features/transactions/domain/entitie/transaction_response.dart';
 import 'package:fondos/features/transactions/domain/usecases/subscribe_fund_usecase.dart';
 import 'package:fondos/features/transactions/presentation/bloc/subscription_bloc.dart';

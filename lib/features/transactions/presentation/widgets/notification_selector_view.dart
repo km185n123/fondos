@@ -3,7 +3,6 @@ import 'package:fondos/core/enum/notification_method.dart';
 import 'package:fondos/l10n/app_localizations.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
-import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
 import 'package:fondos/core/design_system/components/app_radio_card.dart';
 
 class NotificationSelectorView extends StatelessWidget {
