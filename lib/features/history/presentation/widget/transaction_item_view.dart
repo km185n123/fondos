@@ -4,6 +4,7 @@ import 'package:fondos/core/design_system/tokens/app_radius.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
 import 'package:fondos/features/history/presentation/models/transaction_ui_model.dart';
+import 'package:fondos/l10n/app_localizations.dart';
 
 class TransactionItemView extends StatelessWidget {
   final TransactionUiModel transaction;
@@ -79,7 +80,7 @@ class TransactionItemView extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                'COMPLETADO',
+                AppLocalizations.of(context)!.completed,
                 style: AppTypography.label.copyWith(
                   color: AppColors.textSecondary,
                 ),

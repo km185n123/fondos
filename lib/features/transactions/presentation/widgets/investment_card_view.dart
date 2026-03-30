@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fondos/l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 import 'package:fondos/core/design_system/tokens/app_colors.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
@@ -49,8 +51,12 @@ class InvestmentCardView extends StatelessWidget {
             children: [
               Expanded(
                 child: AppInfoItem(
-                  label: 'Invertido',
-                  value: transaction.amount.toString(),
+                  label: AppLocalizations.of(context)!.invested,
+                  value: NumberFormat.currency(
+                    locale: 'es_CO',
+                    symbol: '\$',
+                    decimalDigits: 0,
+                  ).format(transaction.amount),
                 ),
               ),
             ],
@@ -64,7 +70,7 @@ class InvestmentCardView extends StatelessWidget {
               Expanded(
                 child: OutlinedButton(
                   onPressed: () {},
-                  child: const Text('Detalles'),
+                  child: Text(AppLocalizations.of(context)!.details),
                 ),
               ),
               const SizedBox(width: 12),
@@ -73,7 +79,7 @@ class InvestmentCardView extends StatelessWidget {
                   onPressed: () =>
                       cancelSubscriptionBottomSheet(context, transaction),
                   style: OutlinedButton.styleFrom(foregroundColor: Colors.red),
-                  child: const Text('Cancelar'),
+                  child: Text(AppLocalizations.of(context)!.cancel),
                 ),
               ),
             ],

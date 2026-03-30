@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fondos/core/di/injection.dart';
 import 'package:fondos/core/design_system/theme/app_theme.dart';
 import 'package:fondos/core/router/app_router.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:fondos/l10n/app_localizations.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +23,13 @@ class MyApp extends StatelessWidget {
       darkTheme: AppTheme.dark(),
       themeMode: ThemeMode.system,
       routerConfig: appRouter,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
       builder: (context, child) {
         return MediaQuery(
           data: MediaQuery.of(

@@ -35,7 +35,7 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
 
   void _onChangeAmount(double amount, Emitter<SubscriptionState> emit) {
     final String? amountError = amount > state.availableBalance
-        ? 'Saldo insuficiente'
+        ? 'insufficient_balance'
         : null;
 
     emit(
@@ -68,7 +68,7 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       emit(
         state.copyWith(
           status: SubscriptionStatus.error,
-          errorMessage: 'Por favor selecciona un fondo',
+          errorMessage: 'select_fund_error',
         ),
       );
       return;
@@ -78,7 +78,7 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       emit(
         state.copyWith(
           status: SubscriptionStatus.error,
-          errorMessage: 'Debe elegir email o SMS',
+          errorMessage: 'error_notification_method',
         ),
       );
       return;
@@ -88,8 +88,7 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       emit(
         state.copyWith(
           status: SubscriptionStatus.error,
-          errorMessage:
-              'El monto debe ser al menos COP ${state.selectedFund!.minimumAmount}',
+          errorMessage: 'error_min_amount',
         ),
       );
       return;

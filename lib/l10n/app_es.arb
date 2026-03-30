@@ -1,0 +1,49 @@
+{
+  "@@locale": "es",
+  "transactions": "Transacciones",
+  "confirm_cancellation": "¿Confirmar cancelación?",
+  "cancellation_warning": "El proceso puede tardar 48h",
+  "yes_cancel": "Sí, cancelar",
+  "keep_investment": "Mantener inversión",
+  "invested": "Invertido",
+  "details": "Detalles",
+  "cancel": "Cancelar",
+  "no_investments": "No tienes inversiones activas",
+  "subscription_success": "Suscripción exitosa",
+  "notification_method": "Método de notificación",
+  "selected_fund": "Fondo seleccionado",
+  "security_center": "Centro de Seguridad",
+  "completed": "COMPLETADO",
+  "min_amount_error": "Monto inferior al mínimo de {amount}",
+  "@min_amount_error": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "balance": "Balance",
+  "search": "Buscar...",
+  "invest": "Invertir",
+  "category": "Categoría: {category}",
+  "min_amount": "Monto mínimo: {amount}",
+  "minimum_investment": "Inversión mínima",
+  "total_portfolio": "Balance total del portafolio",
+  "monthly_growth": "+{percent}% este mes",
+  "@monthly_growth": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "wealth_protected": "Su riqueza, meticulosamente protegida.",
+  "amount_to_invest": "Monto a invertir",
+  "available": "Disponible: {amount}",
+  "processing": "Procesando...",
+  "subscribe": "Suscribirse",
+  "insufficient_balance": "Saldo insuficiente",
+  "select_fund_error": "Por favor selecciona un fondo",
+  "notification_method_error": "Debe elegir email o SMS",
+  "error": "Error"
+}

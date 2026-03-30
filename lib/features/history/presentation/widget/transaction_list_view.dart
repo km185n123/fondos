@@ -5,6 +5,7 @@ import 'package:fondos/features/history/presentation/bloc/history_bloc.dart';
 import 'package:fondos/features/history/presentation/models/transaction_ui_model.dart';
 import 'package:fondos/features/history/presentation/widget/empty_state_view.dart';
 import 'package:fondos/features/history/presentation/widget/transaction_item_view.dart';
+import 'package:fondos/l10n/app_localizations.dart';
 
 class TransactionListView extends StatelessWidget {
   const TransactionListView({super.key});
@@ -16,7 +17,8 @@ class TransactionListView extends StatelessWidget {
         return state.when(
           initial: () => const SizedBox.shrink(),
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (message) => Center(child: Text(message)),
+          error: (message) =>
+              Center(child: Text(AppLocalizations.of(context)!.error)),
           success: (history) {
             if (history.isEmpty) return const EmptyStateView();
 

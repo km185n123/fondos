@@ -7,6 +7,7 @@ import 'package:fondos/features/history/presentation/bloc/history_bloc.dart';
 import 'package:fondos/features/history/presentation/widget/app_section_label.dart';
 import 'package:fondos/features/history/presentation/widget/transaction_list_view.dart';
 import 'package:fondos/features/history/presentation/widget/search_bar_view.dart';
+import 'package:fondos/l10n/app_localizations.dart';
 
 class HistoryPage extends StatelessWidget {
   const HistoryPage({super.key});
@@ -14,7 +15,8 @@ class HistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<HistoryBloc>()..add(const HistoryEvent.watchHistory()),
+      create: (context) =>
+          getIt<HistoryBloc>()..add(const HistoryEvent.watchHistory()),
       child: const Scaffold(
         backgroundColor: AppColors.background,
         body: SingleChildScrollView(child: _Body()),
@@ -28,16 +30,21 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.fromLTRB(AppSpacing.lg, 60, AppSpacing.lg, AppSpacing.lg),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.lg,
+        60,
+        AppSpacing.lg,
+        AppSpacing.lg,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SearchBarView(),
-          SizedBox(height: AppSpacing.lg),
-          AppSectionLabel(label: 'Transacciones'),
-          SizedBox(height: AppSpacing.md),
-          TransactionListView(),
+          const SearchBarView(),
+          const SizedBox(height: AppSpacing.lg),
+          AppSectionLabel(label: AppLocalizations.of(context)!.transactions),
+          const SizedBox(height: AppSpacing.md),
+          const TransactionListView(),
         ],
       ),
     );

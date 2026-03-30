@@ -5,6 +5,7 @@ import 'package:fondos/core/design_system/tokens/app_colors.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
 import 'package:fondos/features/funds/domain/entities/fund.dart';
 import 'package:fondos/features/transactions/presentation/botton_sheet/subscription_bottom_sheet.dart';
+import 'package:fondos/l10n/app_localizations.dart';
 
 class FundCardView extends StatelessWidget {
   final Fund fund;
@@ -59,7 +60,7 @@ class FundCardView extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Minimum Investment',
+                    AppLocalizations.of(context)!.minimum_investment,
                     style: AppTypography.label.copyWith(
                       color: AppColors.textSecondary.withValues(alpha: 0.5),
                       fontSize: 10,

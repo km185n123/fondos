@@ -1,0 +1,49 @@
+{
+  "@@locale": "en",
+  "transactions": "Transactions",
+  "confirm_cancellation": "Confirm cancellation?",
+  "cancellation_warning": "The process may take up to 48 hours",
+  "yes_cancel": "Yes, cancel",
+  "keep_investment": "Keep investment",
+  "invested": "Invested",
+  "details": "Details",
+  "cancel": "Cancel",
+  "no_investments": "You don't have active investments",
+  "subscription_success": "Subscription successful",
+  "notification_method": "Notification method",
+  "selected_fund": "Selected fund",
+  "security_center": "Security Center",
+  "completed": "COMPLETED",
+  "min_amount_error": "Amount is below the minimum of {amount}",
+  "@min_amount_error": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "balance": "Balance",
+  "search": "Search...",
+  "invest": "Invest",
+  "category": "Category: {category}",
+  "min_amount": "Minimum amount: {amount}",
+  "minimum_investment": "Minimum Investment",
+  "total_portfolio": "Total portfolio balance",
+  "monthly_growth": "+{percent}% this month",
+  "@monthly_growth": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "wealth_protected": "Your wealth, meticulously protected.",
+  "amount_to_invest": "Amount to invest",
+  "available": "Available: {amount}",
+  "processing": "Processing...",
+  "subscribe": "Subscribe",
+  "insufficient_balance": "Insufficient balance",
+  "select_fund_error": "Please select a fund",
+  "notification_method_error": "You must choose email or SMS",
+  "error": "Error"
+}

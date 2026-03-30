@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
 import 'package:fondos/features/transactions/presentation/bloc/investments_bloc.dart';
 import 'package:fondos/features/transactions/presentation/bloc/investments_event.dart';
+import 'package:fondos/l10n/app_localizations.dart';
 
 class CancelSubscriptionView extends StatelessWidget {
   final Transaction transaction;
@@ -21,10 +22,10 @@ class CancelSubscriptionView extends StatelessWidget {
           const Icon(Icons.warning, size: 48, color: Colors.red),
           const SizedBox(height: 16),
 
-          const Text('¿Confirmar cancelación?'),
+          Text(AppLocalizations.of(context)!.confirm_cancellation),
           const SizedBox(height: 12),
 
-          const Text('El proceso puede tardar 48h'),
+          Text(AppLocalizations.of(context)!.cancellation_warning),
 
           const SizedBox(height: 24),
 
@@ -36,7 +37,7 @@ class CancelSubscriptionView extends StatelessWidget {
                 bloc.add(InvestmentsEvent.cancel(transaction));
                 Navigator.pop(context);
               },
-              child: const Text('Sí, cancelar'),
+              child: Text(AppLocalizations.of(context)!.yes_cancel),
             ),
           ),
 
@@ -47,7 +48,7 @@ class CancelSubscriptionView extends StatelessWidget {
             width: double.infinity,
             child: OutlinedButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Mantener inversión'),
+              child: Text(AppLocalizations.of(context)!.keep_investment),
             ),
           ),
         ],

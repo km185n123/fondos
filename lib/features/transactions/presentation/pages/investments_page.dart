@@ -6,6 +6,7 @@ import 'package:fondos/features/transactions/presentation/bloc/investments_bloc.
 import 'package:fondos/features/transactions/presentation/bloc/investments_event.dart';
 import 'package:fondos/features/transactions/presentation/bloc/investments_state.dart';
 import 'package:fondos/features/transactions/presentation/widgets/investment_card_view.dart';
+import 'package:fondos/l10n/app_localizations.dart';
 
 class InvestmentsPage extends StatefulWidget {
   const InvestmentsPage({super.key});
@@ -18,9 +19,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
   @override
   void initState() {
     super.initState();
-    context.read<InvestmentsBloc>().add(
-      const InvestmentsEvent.startWatching(),
-    );
+    context.read<InvestmentsBloc>().add(const InvestmentsEvent.startWatching());
   }
 
   @override
@@ -35,8 +34,8 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
             error: (message) => Center(child: Text(message)),
             success: (investments, saldoActual) {
               if (investments.isEmpty) {
-                return const Center(
-                  child: Text('No tienes inversiones activas'),
+                return Center(
+                  child: Text(AppLocalizations.of(context)!.no_investments),
                 );
               }
 

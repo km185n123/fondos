@@ -3,6 +3,7 @@ import 'package:fondos/core/design_system/tokens/app_colors.dart';
 import 'package:fondos/core/design_system/tokens/app_radius.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
+import 'package:fondos/l10n/app_localizations.dart';
 
 class SecurityBannerView extends StatelessWidget {
   const SecurityBannerView({super.key});
@@ -21,7 +22,7 @@ class SecurityBannerView extends StatelessWidget {
           const SizedBox(width: 16),
           Expanded(
             child: Text(
-              'Your wealth, meticulously protected.',
+              AppLocalizations.of(context)!.wealth_protected,
               style: AppTypography.label.copyWith(
                 fontWeight: FontWeight.bold,
                 color: AppColors.textPrimary,
@@ -30,7 +31,7 @@ class SecurityBannerView extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {},
-            child: const Text('Security Center'),
+            child: Text(AppLocalizations.of(context)!.security_center),
           ),
         ],
       ),

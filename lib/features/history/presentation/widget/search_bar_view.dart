@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fondos/l10n/app_localizations.dart';
 import 'package:fondos/core/design_system/tokens/app_colors.dart';
 import 'package:fondos/core/design_system/tokens/app_radius.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
@@ -14,10 +15,10 @@ class SearchBarView extends StatelessWidget {
         color: AppColors.surfaceLow,
         borderRadius: BorderRadius.circular(AppRadius.xl),
       ),
-      child: const TextField(
+      child: TextField(
         decoration: InputDecoration(
-          icon: Icon(Icons.search, color: AppColors.textSecondary),
-          hintText: 'Buscar por nombre de fondo...',
+          icon: const Icon(Icons.search, color: AppColors.textSecondary),
+          hintText: AppLocalizations.of(context)!.search,
           border: InputBorder.none,
         ),
       ),
