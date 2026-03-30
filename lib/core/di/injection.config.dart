@@ -21,7 +21,7 @@ import '../../features/funds/data/repositories/fund_repository_impl.dart'
 import '../../features/funds/domain/repositories/fund_repository.dart' as _i650;
 import '../../features/funds/domain/usecases/get_funds_usecase.dart' as _i98;
 import '../../features/funds/domain/usecases/watch_current_balance_usecase.dart'
-    as _i112;
+    as _i270;
 import '../../features/funds/presentation/bloc/fund_bloc.dart' as _i979;
 import '../../features/history/data/datasource/history_dao.dart' as _i238;
 import '../../features/history/data/repositories/history_respository_impl.dart'
@@ -40,11 +40,11 @@ import '../../features/transactions/data/repositories/transaction_repository_imp
 import '../../features/transactions/domain/repositories/transaction_repository.dart'
     as _i421;
 import '../../features/transactions/domain/usecases/cancel_investment_usecase.dart'
-    as _i522;
+    as _i736;
 import '../../features/transactions/domain/usecases/subscribe_fund_usecase.dart'
     as _i219;
 import '../../features/transactions/domain/usecases/watch_investments_usecase.dart'
-    as _i918;
+    as _i598;
 import '../../features/transactions/presentation/bloc/investments_bloc.dart'
     as _i1012;
 import '../../features/transactions/presentation/bloc/subscription_bloc.dart'
@@ -86,20 +86,19 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i612.DbSeederConfig>(),
       ),
     );
+    await gh.lazySingletonAsync<_i982.AppDatabase>(
+      () => appModule.appDatabase(
+        gh<_i320.EncryptionService>(),
+        gh<_i816.DatabaseConnectionFactory>(),
+        gh<_i1026.DatabaseBuilder>(),
+      ),
+      preResolve: true,
+    );
     gh.lazySingleton<_i890.FundApiService>(
       () => _i890.FundApiService(gh<_i361.Dio>()),
     );
     gh.lazySingleton<_i21.TransactionApiService>(
       () => _i21.TransactionApiService(gh<_i361.Dio>()),
-    );
-    await gh.lazySingletonAsync<_i982.AppDatabase>(
-      () => appModule.appDatabase(
-        gh<_i320.EncryptionService>(),
-        gh<_i816.DatabaseConnectionFactory>(),
-        gh<_i612.DbSeederConfig>(),
-        gh<_i1026.DatabaseBuilder>(),
-      ),
-      preResolve: true,
     );
     gh.factory<_i238.HistoryDao>(
       () => _i238.HistoryDao(gh<_i982.AppDatabase>()),
@@ -123,8 +122,8 @@ extension GetItInjectableX on _i174.GetIt {
         apiService: gh<_i21.TransactionApiService>(),
       ),
     );
-    gh.lazySingleton<_i918.WatchInvestmentsUseCase>(
-      () => _i918.WatchInvestmentsUseCase(gh<_i421.TransactionRepository>()),
+    gh.lazySingleton<_i598.WatchInvestmentsUseCase>(
+      () => _i598.WatchInvestmentsUseCase(gh<_i421.TransactionRepository>()),
     );
     gh.factory<_i142.HistoryRepository>(
       () => _i895.HistoryRepositoryImpl(gh<_i238.HistoryDao>()),
@@ -136,8 +135,8 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i1070.HistoryBloc(getHistoryUseCase: gh<_i840.GetHistoryUseCase>()),
     );
-    gh.lazySingleton<_i522.CancelInvestmentUseCase>(
-      () => _i522.CancelInvestmentUseCase(
+    gh.lazySingleton<_i736.CancelInvestmentUseCase>(
+      () => _i736.CancelInvestmentUseCase(
         gh<_i421.TransactionRepository>(),
         gh<_i142.HistoryRepository>(),
       ),
@@ -149,8 +148,8 @@ extension GetItInjectableX on _i174.GetIt {
         userRepository: gh<_i237.UserRepository>(),
       ),
     );
-    gh.factory<_i112.WatchCurrentBalanceUseCase>(
-      () => _i112.WatchCurrentBalanceUseCase(
+    gh.factory<_i270.WatchCurrentBalanceUseCase>(
+      () => _i270.WatchCurrentBalanceUseCase(
         repository: gh<_i650.FundRepository>(),
       ),
     );
@@ -163,8 +162,8 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i1012.InvestmentsBloc>(
       () => _i1012.InvestmentsBloc(
-        watchInvestmentsUseCase: gh<_i918.WatchInvestmentsUseCase>(),
-        cancelInvestmentUseCase: gh<_i522.CancelInvestmentUseCase>(),
+        watchInvestmentsUseCase: gh<_i598.WatchInvestmentsUseCase>(),
+        cancelInvestmentUseCase: gh<_i736.CancelInvestmentUseCase>(),
       ),
     );
     gh.factory<_i433.SubscriptionBloc>(
@@ -178,7 +177,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i979.FundBloc>(
       () => _i979.FundBloc(
         getFundsUseCase: gh<_i98.GetFundsUseCase>(),
-        watchCurrentBalance: gh<_i112.WatchCurrentBalanceUseCase>(),
+        watchCurrentBalance: gh<_i270.WatchCurrentBalanceUseCase>(),
       ),
     );
     return this;

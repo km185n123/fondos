@@ -3,7 +3,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fondos/core/database/app_database.dart';
 import 'package:fondos/core/database/database_builder.dart';
 import 'package:fondos/core/database/database_connection_factory.dart';
-import 'package:fondos/core/database/db_seeder_config.dart';
 import 'package:fondos/core/network/dio_client.dart';
 import 'package:fondos/core/security/encryption_service.dart';
 import 'package:fondos/features/funds/data/datasources/fund_dao.dart';
@@ -37,7 +36,6 @@ abstract class AppModule {
   Future<AppDatabase> appDatabase(
     EncryptionService encryptionService,
     DatabaseConnectionFactory factory,
-    DbSeederConfig config,
     DatabaseBuilder builder,
   ) async => builder.build();
 

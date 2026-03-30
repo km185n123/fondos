@@ -15,6 +15,6 @@ class DatabaseBuilder {
   Future<AppDatabase> build() async {
     final key = await encryptionService.getOrCreateKey();
     final db = await factory.create(key);
-    return AppDatabase(db, config);
+    return AppDatabase(db);
   }
 }

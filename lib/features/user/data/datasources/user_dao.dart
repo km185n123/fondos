@@ -8,45 +8,55 @@ part 'user_dao.g.dart';
 class UserDao extends DatabaseAccessor<AppDatabase> with _$UserDaoMixin {
   UserDao(super.db);
 
-  Future<UserDb?> getUser() => select(userTable).getSingleOrNull();
+  static const _userId = '1';
+  static const _defaultBalance = 500000.0;
+
+  Future<UserDb?> getUser() =>
+      (select(userTable)..where((t) => t.id.equals(_userId))).getSingleOrNull();
+
   Stream<double> watchBalance() =>
-      select(userTable).watchSingle().map((user) => user.balance);
+      (select(userTable)..where((t) => t.id.equals(_userId)))
+          .watchSingleOrNull()
+          .map((user) => user?.balance ?? _defaultBalance);
 
   Future<double> getBalance() async {
     final user = await getUser();
     if (user == null) {
-      await into(userTable).insert(const UserTableCompanion(id: Value('1')));
-      return 500000.0;
+      await _createDefaultUser();
+      return _defaultBalance;
     }
     return user.balance;
   }
 
-  Future<void> updateBalance(double newBalance) async {
-    final user = await getUser();
-    if (user == null) {
-      await into(userTable).insert(
-        UserTableCompanion(id: const Value('1'), balance: Value(newBalance)),
-      );
-    } else {
-      await update(
-        userTable,
-      ).write(UserTableCompanion(balance: Value(newBalance)));
+  Future<void> _createDefaultUser() async {
+    await into(userTable).insert(
+      UserTableCompanion.insert(
+        id: const Value(_userId),
+        balance: const Value(_defaultBalance),
+      ),
+    );
+  }
+
+  Future<void> ensureUserExists() async {
+    final exists = await getUser();
+    if (exists == null) {
+      await _createDefaultUser();
     }
   }
 
+  Future<void> updateBalance(double newBalance) async {
+    await ensureUserExists();
+
+    await (update(userTable)..where((t) => t.id.equals(_userId))).write(
+      UserTableCompanion(balance: Value(newBalance)),
+    );
+  }
+
   Future<void> updateNotificationMethod(String method) async {
-    final user = await getUser();
-    if (user == null) {
-      await into(userTable).insert(
-        UserTableCompanion(
-          id: const Value('1'),
-          notificationMethod: Value(method),
-        ),
-      );
-    } else {
-      await update(
-        userTable,
-      ).write(UserTableCompanion(notificationMethod: Value(method)));
-    }
+    await ensureUserExists();
+
+    await (update(userTable)..where((t) => t.id.equals(_userId))).write(
+      UserTableCompanion(notificationMethod: Value(method)),
+    );
   }
 }

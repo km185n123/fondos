@@ -23,7 +23,6 @@ void main() {
   late UserDao userDao;
   late TransactionRepositoryImpl repository;
   late MockTransactionApiService mockApiService;
-  late DbSeederConfig config;
 
   setUpAll(() {
     registerFallbackValue(
@@ -40,8 +39,7 @@ void main() {
   });
 
   setUp(() async {
-    config = DbSeederConfig();
-    database = AppDatabase.forTesting(NativeDatabase.memory(), config);
+    database = AppDatabase.forTesting(NativeDatabase.memory());
     transactionDao = TransactionDao(database);
     userDao = UserDao(database);
     mockApiService = MockTransactionApiService();
