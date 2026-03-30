@@ -7,16 +7,21 @@ import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
 import 'package:fondos/features/transactions/domain/entitie/transaction_response.dart';
 import 'package:fondos/features/transactions/domain/repositories/transaction_repository.dart';
 import 'package:fondos/features/user/domain/repositories/user_repository.dart';
+import 'package:fondos/features/history/domain/entitie/history.dart';
+import 'package:fondos/features/history/domain/repositories/history_repository.dart';
 import 'package:fondos/features/transactions/domain/usecases/subscribe_fund_usecase.dart';
 
 class MockUserRepository extends Mock implements UserRepository {}
 
 class MockTransactionRepository extends Mock implements TransactionRepository {}
 
+class MockHistoryRepository extends Mock implements HistoryRepository {}
+
 void main() {
   late SubscribeFundUseCase useCase;
   late MockUserRepository mockUserRepo;
   late MockTransactionRepository mockTransactionRepo;
+  late MockHistoryRepository mockHistoryRepo;
 
   setUpAll(() {
     registerFallbackValue(
@@ -31,12 +36,20 @@ void main() {
       Transaction.subscription(fundId: '1', amount: 100.0, name: 'Fondo 1'),
     );
     registerFallbackValue(NotificationMethod.email);
+    registerFallbackValue(
+      History(title: '', amount: '', isPositive: true),
+    );
   });
 
   setUp(() {
     mockUserRepo = MockUserRepository();
     mockTransactionRepo = MockTransactionRepository();
-    useCase = SubscribeFundUseCase(mockUserRepo, mockTransactionRepo);
+    mockHistoryRepo = MockHistoryRepository();
+    useCase = SubscribeFundUseCase(
+      mockUserRepo,
+      mockTransactionRepo,
+      mockHistoryRepo,
+    );
   });
 
   const tFund = Fund(

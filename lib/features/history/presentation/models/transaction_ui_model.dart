@@ -1,13 +1,12 @@
-class TransactionUiModel {
-  final String title;
-  final String subtitle;
-  final String amount;
-  final bool isPositive;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  TransactionUiModel({
-    required this.title,
-    required this.subtitle,
-    required this.amount,
-    required this.isPositive,
-  });
+part 'transaction_ui_model.freezed.dart';
+
+@freezed
+abstract class TransactionUiModel with _$TransactionUiModel {
+  const factory TransactionUiModel({
+    required String title,
+    required String amount,
+    required bool isPositive,
+  }) = _TransactionUiModel;
 }

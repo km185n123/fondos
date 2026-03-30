@@ -1247,6 +1247,307 @@ class UserTableCompanion extends UpdateCompanion<UserDb> {
   }
 }
 
+class $HistoryTablesTable extends HistoryTables
+    with TableInfo<$HistoryTablesTable, HistoryTable> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $HistoryTablesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _amountMeta = const VerificationMeta('amount');
+  @override
+  late final GeneratedColumn<String> amount = GeneratedColumn<String>(
+    'amount',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isPositiveMeta = const VerificationMeta(
+    'isPositive',
+  );
+  @override
+  late final GeneratedColumn<bool> isPositive = GeneratedColumn<bool>(
+    'is_positive',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_positive" IN (0, 1))',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, title, amount, isPositive];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'history_tables';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<HistoryTable> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('amount')) {
+      context.handle(
+        _amountMeta,
+        amount.isAcceptableOrUnknown(data['amount']!, _amountMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_amountMeta);
+    }
+    if (data.containsKey('is_positive')) {
+      context.handle(
+        _isPositiveMeta,
+        isPositive.isAcceptableOrUnknown(data['is_positive']!, _isPositiveMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_isPositiveMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  HistoryTable map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return HistoryTable(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      amount: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}amount'],
+      )!,
+      isPositive: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_positive'],
+      )!,
+    );
+  }
+
+  @override
+  $HistoryTablesTable createAlias(String alias) {
+    return $HistoryTablesTable(attachedDatabase, alias);
+  }
+}
+
+class HistoryTable extends DataClass implements Insertable<HistoryTable> {
+  final int id;
+  final String title;
+  final String amount;
+  final bool isPositive;
+  const HistoryTable({
+    required this.id,
+    required this.title,
+    required this.amount,
+    required this.isPositive,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['title'] = Variable<String>(title);
+    map['amount'] = Variable<String>(amount);
+    map['is_positive'] = Variable<bool>(isPositive);
+    return map;
+  }
+
+  HistoryTablesCompanion toCompanion(bool nullToAbsent) {
+    return HistoryTablesCompanion(
+      id: Value(id),
+      title: Value(title),
+      amount: Value(amount),
+      isPositive: Value(isPositive),
+    );
+  }
+
+  factory HistoryTable.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return HistoryTable(
+      id: serializer.fromJson<int>(json['id']),
+      title: serializer.fromJson<String>(json['title']),
+      amount: serializer.fromJson<String>(json['amount']),
+      isPositive: serializer.fromJson<bool>(json['isPositive']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'title': serializer.toJson<String>(title),
+      'amount': serializer.toJson<String>(amount),
+      'isPositive': serializer.toJson<bool>(isPositive),
+    };
+  }
+
+  HistoryTable copyWith({
+    int? id,
+    String? title,
+    String? amount,
+    bool? isPositive,
+  }) => HistoryTable(
+    id: id ?? this.id,
+    title: title ?? this.title,
+    amount: amount ?? this.amount,
+    isPositive: isPositive ?? this.isPositive,
+  );
+  HistoryTable copyWithCompanion(HistoryTablesCompanion data) {
+    return HistoryTable(
+      id: data.id.present ? data.id.value : this.id,
+      title: data.title.present ? data.title.value : this.title,
+      amount: data.amount.present ? data.amount.value : this.amount,
+      isPositive: data.isPositive.present
+          ? data.isPositive.value
+          : this.isPositive,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('HistoryTable(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('amount: $amount, ')
+          ..write('isPositive: $isPositive')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, title, amount, isPositive);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is HistoryTable &&
+          other.id == this.id &&
+          other.title == this.title &&
+          other.amount == this.amount &&
+          other.isPositive == this.isPositive);
+}
+
+class HistoryTablesCompanion extends UpdateCompanion<HistoryTable> {
+  final Value<int> id;
+  final Value<String> title;
+  final Value<String> amount;
+  final Value<bool> isPositive;
+  const HistoryTablesCompanion({
+    this.id = const Value.absent(),
+    this.title = const Value.absent(),
+    this.amount = const Value.absent(),
+    this.isPositive = const Value.absent(),
+  });
+  HistoryTablesCompanion.insert({
+    this.id = const Value.absent(),
+    required String title,
+    required String amount,
+    required bool isPositive,
+  }) : title = Value(title),
+       amount = Value(amount),
+       isPositive = Value(isPositive);
+  static Insertable<HistoryTable> custom({
+    Expression<int>? id,
+    Expression<String>? title,
+    Expression<String>? amount,
+    Expression<bool>? isPositive,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (title != null) 'title': title,
+      if (amount != null) 'amount': amount,
+      if (isPositive != null) 'is_positive': isPositive,
+    });
+  }
+
+  HistoryTablesCompanion copyWith({
+    Value<int>? id,
+    Value<String>? title,
+    Value<String>? amount,
+    Value<bool>? isPositive,
+  }) {
+    return HistoryTablesCompanion(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      amount: amount ?? this.amount,
+      isPositive: isPositive ?? this.isPositive,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (amount.present) {
+      map['amount'] = Variable<String>(amount.value);
+    }
+    if (isPositive.present) {
+      map['is_positive'] = Variable<bool>(isPositive.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('HistoryTablesCompanion(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('amount: $amount, ')
+          ..write('isPositive: $isPositive')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -1254,11 +1555,13 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $TransactionsTableTable transactionsTable =
       $TransactionsTableTable(this);
   late final $UserTableTable userTable = $UserTableTable(this);
+  late final $HistoryTablesTable historyTables = $HistoryTablesTable(this);
   late final FundDao fundDao = FundDao(this as AppDatabase);
   late final TransactionDao transactionDao = TransactionDao(
     this as AppDatabase,
   );
   late final UserDao userDao = UserDao(this as AppDatabase);
+  late final HistoryDao historyDao = HistoryDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1267,6 +1570,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     fundsTable,
     transactionsTable,
     userTable,
+    historyTables,
   ];
 }
 
@@ -1932,6 +2236,183 @@ typedef $$UserTableTableProcessedTableManager =
       UserDb,
       PrefetchHooks Function()
     >;
+typedef $$HistoryTablesTableCreateCompanionBuilder =
+    HistoryTablesCompanion Function({
+      Value<int> id,
+      required String title,
+      required String amount,
+      required bool isPositive,
+    });
+typedef $$HistoryTablesTableUpdateCompanionBuilder =
+    HistoryTablesCompanion Function({
+      Value<int> id,
+      Value<String> title,
+      Value<String> amount,
+      Value<bool> isPositive,
+    });
+
+class $$HistoryTablesTableFilterComposer
+    extends Composer<_$AppDatabase, $HistoryTablesTable> {
+  $$HistoryTablesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get amount => $composableBuilder(
+    column: $table.amount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isPositive => $composableBuilder(
+    column: $table.isPositive,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$HistoryTablesTableOrderingComposer
+    extends Composer<_$AppDatabase, $HistoryTablesTable> {
+  $$HistoryTablesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get amount => $composableBuilder(
+    column: $table.amount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isPositive => $composableBuilder(
+    column: $table.isPositive,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$HistoryTablesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $HistoryTablesTable> {
+  $$HistoryTablesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get amount =>
+      $composableBuilder(column: $table.amount, builder: (column) => column);
+
+  GeneratedColumn<bool> get isPositive => $composableBuilder(
+    column: $table.isPositive,
+    builder: (column) => column,
+  );
+}
+
+class $$HistoryTablesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $HistoryTablesTable,
+          HistoryTable,
+          $$HistoryTablesTableFilterComposer,
+          $$HistoryTablesTableOrderingComposer,
+          $$HistoryTablesTableAnnotationComposer,
+          $$HistoryTablesTableCreateCompanionBuilder,
+          $$HistoryTablesTableUpdateCompanionBuilder,
+          (
+            HistoryTable,
+            BaseReferences<_$AppDatabase, $HistoryTablesTable, HistoryTable>,
+          ),
+          HistoryTable,
+          PrefetchHooks Function()
+        > {
+  $$HistoryTablesTableTableManager(_$AppDatabase db, $HistoryTablesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$HistoryTablesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$HistoryTablesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$HistoryTablesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<String> amount = const Value.absent(),
+                Value<bool> isPositive = const Value.absent(),
+              }) => HistoryTablesCompanion(
+                id: id,
+                title: title,
+                amount: amount,
+                isPositive: isPositive,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String title,
+                required String amount,
+                required bool isPositive,
+              }) => HistoryTablesCompanion.insert(
+                id: id,
+                title: title,
+                amount: amount,
+                isPositive: isPositive,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$HistoryTablesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $HistoryTablesTable,
+      HistoryTable,
+      $$HistoryTablesTableFilterComposer,
+      $$HistoryTablesTableOrderingComposer,
+      $$HistoryTablesTableAnnotationComposer,
+      $$HistoryTablesTableCreateCompanionBuilder,
+      $$HistoryTablesTableUpdateCompanionBuilder,
+      (
+        HistoryTable,
+        BaseReferences<_$AppDatabase, $HistoryTablesTable, HistoryTable>,
+      ),
+      HistoryTable,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -1942,4 +2423,6 @@ class $AppDatabaseManager {
       $$TransactionsTableTableTableManager(_db, _db.transactionsTable);
   $$UserTableTableTableManager get userTable =>
       $$UserTableTableTableManager(_db, _db.userTable);
+  $$HistoryTablesTableTableManager get historyTables =>
+      $$HistoryTablesTableTableManager(_db, _db.historyTables);
 }

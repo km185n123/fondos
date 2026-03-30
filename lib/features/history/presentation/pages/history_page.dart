@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fondos/core/design_system/tokens/app_colors.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
+import 'package:fondos/core/di/injection.dart';
+import 'package:fondos/features/history/presentation/bloc/history_bloc.dart';
 import 'package:fondos/features/history/presentation/widget/app_section_label.dart';
 import 'package:fondos/features/history/presentation/widget/transaction_list_view.dart';
 import 'package:fondos/features/history/presentation/widget/search_bar_view.dart';
@@ -10,9 +13,12 @@ class HistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: AppColors.background,
-      body: SingleChildScrollView(child: _Body()),
+    return BlocProvider(
+      create: (context) => getIt<HistoryBloc>()..add(const HistoryEvent.watchHistory()),
+      child: const Scaffold(
+        backgroundColor: AppColors.background,
+        body: SingleChildScrollView(child: _Body()),
+      ),
     );
   }
 }

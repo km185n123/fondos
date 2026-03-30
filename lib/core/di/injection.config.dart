@@ -22,6 +22,14 @@ import '../../features/funds/domain/usecases/get_funds_usecase.dart' as _i98;
 import '../../features/funds/domain/usecases/watch_current_balance.dart'
     as _i112;
 import '../../features/funds/presentation/bloc/fund_bloc.dart' as _i979;
+import '../../features/history/data/datasource/history_dao.dart' as _i238;
+import '../../features/history/data/repositories/history_respository_impl.dart'
+    as _i895;
+import '../../features/history/domain/repositories/history_repository.dart'
+    as _i142;
+import '../../features/history/domain/usecases/get_history_usecase.dart'
+    as _i840;
+import '../../features/history/presentation/bloc/history_bloc.dart' as _i1070;
 import '../../features/transactions/data/datasources/transaction_api_service.dart'
     as _i21;
 import '../../features/transactions/data/datasources/transaction_dao.dart'
@@ -59,6 +67,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i667.DioClient>(() => appModule.dioClient);
     gh.lazySingleton<_i361.Dio>(() => appModule.dio);
     gh.lazySingleton<_i982.AppDatabase>(() => appModule.appDatabase);
+    gh.factory<_i238.HistoryDao>(
+      () => _i238.HistoryDao(gh<_i982.AppDatabase>()),
+    );
     gh.lazySingleton<_i481.FundDao>(
       () => appModule.getFundDao(gh<_i982.AppDatabase>()),
     );
@@ -84,18 +95,23 @@ extension GetItInjectableX on _i174.GetIt {
         apiService: gh<_i21.TransactionApiService>(),
       ),
     );
-    gh.lazySingleton<_i522.CancelInvestmentUseCase>(
-      () => _i522.CancelInvestmentUseCase(
-        transactionRepository: gh<_i421.TransactionRepository>(),
-      ),
-    );
     gh.lazySingleton<_i918.WatchInvestmentsUseCase>(
       () => _i918.WatchInvestmentsUseCase(gh<_i421.TransactionRepository>()),
     );
-    gh.factory<_i1012.InvestmentsBloc>(
-      () => _i1012.InvestmentsBloc(
-        watchInvestmentsUseCase: gh<_i918.WatchInvestmentsUseCase>(),
-        cancelInvestmentUseCase: gh<_i522.CancelInvestmentUseCase>(),
+    gh.factory<_i142.HistoryRepository>(
+      () => _i895.HistoryRepositoryImpl(gh<_i238.HistoryDao>()),
+    );
+    gh.factory<_i840.GetHistoryUseCase>(
+      () => _i840.GetHistoryUseCase(gh<_i142.HistoryRepository>()),
+    );
+    gh.factory<_i1070.HistoryBloc>(
+      () =>
+          _i1070.HistoryBloc(getHistoryUseCase: gh<_i840.GetHistoryUseCase>()),
+    );
+    gh.lazySingleton<_i522.CancelInvestmentUseCase>(
+      () => _i522.CancelInvestmentUseCase(
+        gh<_i421.TransactionRepository>(),
+        gh<_i142.HistoryRepository>(),
       ),
     );
     gh.lazySingleton<_i650.FundRepository>(
@@ -112,6 +128,13 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i219.SubscribeFundUseCase(
         gh<_i237.UserRepository>(),
         gh<_i421.TransactionRepository>(),
+        gh<_i142.HistoryRepository>(),
+      ),
+    );
+    gh.factory<_i1012.InvestmentsBloc>(
+      () => _i1012.InvestmentsBloc(
+        watchInvestmentsUseCase: gh<_i918.WatchInvestmentsUseCase>(),
+        cancelInvestmentUseCase: gh<_i522.CancelInvestmentUseCase>(),
       ),
     );
     gh.factory<_i433.SubscriptionBloc>(

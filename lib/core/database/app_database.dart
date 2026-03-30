@@ -13,18 +13,21 @@ import 'package:fondos/features/transactions/data/datasources/transaction_dao.da
 import 'package:fondos/features/user/data/datasources/user_table.dart';
 import 'package:fondos/features/user/data/datasources/user_dao.dart';
 
+import 'package:fondos/features/history/data/datasource/history_table.dart';
+import 'package:fondos/features/history/data/datasource/history_dao.dart';
+
 part 'app_database.g.dart';
 
 @DriftDatabase(
-  tables: [FundsTable, TransactionsTable, UserTable],
-  daos: [FundDao, TransactionDao, UserDao],
+  tables: [FundsTable, TransactionsTable, UserTable, HistoryTables],
+  daos: [FundDao, TransactionDao, UserDao, HistoryDao],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
   AppDatabase.forTesting(super.e);
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -55,6 +58,10 @@ class AppDatabase extends _$AppDatabase {
               transactionsTable,
               transactionsTable.syncStatus,
             );
+          }
+          // v3 → v4: history_tables was added
+          if (from < 4) {
+            await m.createTable(historyTables);
           }
         },
       );
