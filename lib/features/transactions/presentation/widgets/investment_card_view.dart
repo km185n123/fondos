@@ -5,7 +5,7 @@ import 'package:fondos/core/design_system/tokens/app_colors.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
 import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
-import 'package:fondos/features/transactions/presentation/widgets/app_info_item.dart';
+import 'package:fondos/core/design_system/components/app_info_item.dart';
 import 'package:fondos/features/transactions/presentation/botton_sheet/cancel_subscription_bottom_sheet.dart';
 
 class InvestmentCardView extends StatelessWidget {

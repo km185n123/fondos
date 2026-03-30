@@ -19,15 +19,6 @@ class UserDao extends DatabaseAccessor<AppDatabase> with _$UserDaoMixin {
           .watchSingleOrNull()
           .map((user) => user?.balance ?? _defaultBalance);
 
-  Future<double> getBalance() async {
-    final user = await getUser();
-    if (user == null) {
-      await _createDefaultUser();
-      return _defaultBalance;
-    }
-    return user.balance;
-  }
-
   Future<void> _createDefaultUser() async {
     await into(userTable).insert(
       UserTableCompanion.insert(

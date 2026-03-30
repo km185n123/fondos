@@ -10,11 +10,6 @@ class UserRepositoryImpl implements UserRepository {
   UserRepositoryImpl(this.userDao);
 
   @override
-  Future<double> getCurrentBalance() async {
-    return await userDao.getBalance();
-  }
-
-  @override
   Stream<double> watchBalance() {
     return userDao.watchBalance();
   }

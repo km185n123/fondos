@@ -1,6 +1,5 @@
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fondos/core/database/db_seeder_config.dart';
 import 'package:fondos/core/enum/transaction_type.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:fpdart/fpdart.dart';
@@ -76,7 +75,6 @@ void main() {
       'subscribeFund should return Right(TransactionResponse) when everything succeeds',
       () async {
         // arrange
-        // Initial balance is 500,000 from migration
         when(
           () => mockApiService.createTransaction(any()),
         ).thenAnswer((_) async => tResponseDto);
@@ -89,7 +87,7 @@ void main() {
         // assert
         expect(result, equals(const Right(tResponse)));
 
-        final balance = await userDao.getBalance();
+        final balance = await userDao.watchBalance().first;
         expect(balance, 500000.0 - 100.0);
 
         final transactions = await database
@@ -114,8 +112,8 @@ void main() {
         // assert
         expect(result.isLeft(), true);
 
-        final balance = await userDao.getBalance();
-        expect(balance, 50.0); // No change
+        final balance = await userDao.watchBalance().first;
+        expect(balance, 50.0);
       },
     );
 
