@@ -5,14 +5,15 @@ import 'package:fpdart/fpdart.dart';
 import 'package:fondos/core/errors/failures.dart';
 import 'package:fondos/features/funds/domain/entities/fund.dart';
 import 'package:fondos/features/funds/domain/usecases/get_funds_usecase.dart';
-import 'package:fondos/features/funds/domain/usecases/watch_current_balance.dart';
+import 'package:fondos/features/funds/domain/usecases/watch_current_balance_usecase.dart';
 import 'package:fondos/features/funds/presentation/bloc/fund_bloc.dart';
 import 'package:fondos/features/funds/presentation/bloc/fund_event.dart';
 import 'package:fondos/features/funds/presentation/bloc/fund_state.dart';
 
 class MockGetFundsUseCase extends Mock implements GetFundsUseCase {}
 
-class MockWatchCurrentBalance extends Mock implements WatchCurrentBalance {}
+class MockWatchCurrentBalance extends Mock
+    implements WatchCurrentBalanceUseCase {}
 
 void main() {
   late FundBloc bloc;

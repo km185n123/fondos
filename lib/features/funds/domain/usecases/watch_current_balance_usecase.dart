@@ -4,10 +4,10 @@ import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class WatchCurrentBalance {
+class WatchCurrentBalanceUseCase {
   final FundRepository repository;
 
-  WatchCurrentBalance({required this.repository});
+  WatchCurrentBalanceUseCase({required this.repository});
 
   Stream<Either<Failure, double>> call() {
     return repository.watchCurrentBalance();

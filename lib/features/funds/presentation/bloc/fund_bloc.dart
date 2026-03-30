@@ -6,12 +6,12 @@ import 'package:fondos/features/funds/presentation/bloc/fund_event.dart';
 import 'package:fondos/features/funds/presentation/bloc/fund_state.dart';
 import 'package:fondos/core/errors/failures.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:fondos/features/funds/domain/usecases/watch_current_balance.dart';
+import 'package:fondos/features/funds/domain/usecases/watch_current_balance_usecase.dart';
 
 @injectable
 class FundBloc extends Bloc<FundEvent, FundState> {
   final GetFundsUseCase getFundsUseCase;
-  final WatchCurrentBalance watchCurrentBalance;
+  final WatchCurrentBalanceUseCase watchCurrentBalance;
 
   FundBloc({required this.getFundsUseCase, required this.watchCurrentBalance})
     : super(const FundState.initial()) {

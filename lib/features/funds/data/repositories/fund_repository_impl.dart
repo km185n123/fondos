@@ -50,7 +50,7 @@ class FundRepositoryImpl implements FundRepository {
     final local = await fundDao.getFunds();
 
     if (local.isEmpty) {
-      throw CacheException(ErrorMessages.noCacheData); // importante
+      throw CacheException(ErrorMessages.noCacheData);
     }
 
     return local.map((e) => e.toDomain()).toList();

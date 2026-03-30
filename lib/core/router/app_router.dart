@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fondos/core/router/routes.dart';
 import 'package:go_router/go_router.dart';
 import 'package:fondos/features/funds/presentation/pages/dashboard_page.dart';
 import 'package:fondos/features/history/presentation/pages/history_page.dart';
@@ -12,7 +13,7 @@ final _shellNavigatorHistoryKey = GlobalKey<NavigatorState>();
 
 final appRouter = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: '/',
+  initialLocation: homeRoute,
   routes: [
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
@@ -23,7 +24,7 @@ final appRouter = GoRouter(
           navigatorKey: _shellNavigatorDashboardKey,
           routes: [
             GoRoute(
-              path: '/',
+              path: homeRoute,
               builder: (context, state) => const DashboardPage(),
             ),
           ],
@@ -32,7 +33,7 @@ final appRouter = GoRouter(
           navigatorKey: _shellNavigatorInvestmentsKey,
           routes: [
             GoRoute(
-              path: '/investments',
+              path: investmentsRoute,
               builder: (context, state) => const InvestmentsPage(),
             ),
           ],
@@ -41,7 +42,7 @@ final appRouter = GoRouter(
           navigatorKey: _shellNavigatorHistoryKey,
           routes: [
             GoRoute(
-              path: '/history',
+              path: historyRoute,
               builder: (context, state) => const HistoryPage(),
             ),
           ],

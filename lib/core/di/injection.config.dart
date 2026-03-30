@@ -20,7 +20,7 @@ import '../../features/funds/data/repositories/fund_repository_impl.dart'
     as _i985;
 import '../../features/funds/domain/repositories/fund_repository.dart' as _i650;
 import '../../features/funds/domain/usecases/get_funds_usecase.dart' as _i98;
-import '../../features/funds/domain/usecases/watch_current_balance.dart'
+import '../../features/funds/domain/usecases/watch_current_balance_usecase.dart'
     as _i112;
 import '../../features/funds/presentation/bloc/fund_bloc.dart' as _i979;
 import '../../features/history/data/datasource/history_dao.dart' as _i238;
@@ -39,11 +39,11 @@ import '../../features/transactions/data/repositories/transaction_repository_imp
     as _i443;
 import '../../features/transactions/domain/repositories/transaction_repository.dart'
     as _i421;
-import '../../features/transactions/domain/usecases/cancel_investment_use_case.dart'
+import '../../features/transactions/domain/usecases/cancel_investment_usecase.dart'
     as _i522;
 import '../../features/transactions/domain/usecases/subscribe_fund_usecase.dart'
     as _i219;
-import '../../features/transactions/domain/usecases/watch_investments_use_case.dart'
+import '../../features/transactions/domain/usecases/watch_investments_usecase.dart'
     as _i918;
 import '../../features/transactions/presentation/bloc/investments_bloc.dart'
     as _i1012;
@@ -149,8 +149,10 @@ extension GetItInjectableX on _i174.GetIt {
         userRepository: gh<_i237.UserRepository>(),
       ),
     );
-    gh.factory<_i112.WatchCurrentBalance>(
-      () => _i112.WatchCurrentBalance(repository: gh<_i650.FundRepository>()),
+    gh.factory<_i112.WatchCurrentBalanceUseCase>(
+      () => _i112.WatchCurrentBalanceUseCase(
+        repository: gh<_i650.FundRepository>(),
+      ),
     );
     gh.lazySingleton<_i219.SubscribeFundUseCase>(
       () => _i219.SubscribeFundUseCase(
@@ -176,7 +178,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i979.FundBloc>(
       () => _i979.FundBloc(
         getFundsUseCase: gh<_i98.GetFundsUseCase>(),
-        watchCurrentBalance: gh<_i112.WatchCurrentBalance>(),
+        watchCurrentBalance: gh<_i112.WatchCurrentBalanceUseCase>(),
       ),
     );
     return this;

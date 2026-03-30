@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
-import 'package:fondos/features/transactions/domain/usecases/cancel_investment_use_case.dart';
-import 'package:fondos/features/transactions/domain/usecases/watch_investments_use_case.dart';
+import 'package:fondos/features/transactions/domain/usecases/cancel_investment_usecase.dart';
+import 'package:fondos/features/transactions/domain/usecases/watch_investments_usecase.dart';
 import 'package:fondos/features/transactions/presentation/bloc/investments_event.dart';
 import 'package:fondos/features/transactions/presentation/bloc/investments_state.dart';
 import 'package:injectable/injectable.dart';
