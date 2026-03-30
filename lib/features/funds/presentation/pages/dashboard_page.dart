@@ -19,9 +19,9 @@ class DashboardPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             HeroBalanceView(),
-            SizedBox(height: 32),
+            SizedBox(height: AppSpacing.lg),
             FundsGridView(),
-            SizedBox(height: 40),
+            SizedBox(height: AppSpacing.xl),
             SecurityBannerView(),
           ],
         ),

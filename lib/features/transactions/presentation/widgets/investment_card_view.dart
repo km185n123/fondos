@@ -53,7 +53,7 @@ class InvestmentCardView extends StatelessWidget {
                 child: AppInfoItem(
                   label: AppLocalizations.of(context)!.invested,
                   value: NumberFormat.currency(
-                    locale: 'es_CO',
+                    locale: Localizations.localeOf(context).toString(),
                     symbol: '\$',
                     decimalDigits: 0,
                   ).format(transaction.amount),

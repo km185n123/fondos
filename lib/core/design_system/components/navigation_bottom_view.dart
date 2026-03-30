@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fondos/core/design_system/tokens/app_colors.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
+import 'package:fondos/l10n/app_localizations.dart';
 
 class NavigationBottomView extends StatelessWidget {
   final int currentIndex;
@@ -22,16 +23,19 @@ class NavigationBottomView extends StatelessWidget {
       ),
       unselectedLabelStyle: AppTypography.label,
       selectedItemColor: AppColors.primary,
-      items: const [
+      items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.dashboard),
-          label: 'Dashboard',
+          icon: const Icon(Icons.dashboard),
+          label: AppLocalizations.of(context)!.dashboard,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.show_chart),
-          label: 'Investments',
+          icon: const Icon(Icons.show_chart),
+          label: AppLocalizations.of(context)!.investments,
         ),
-        BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.history),
+          label: AppLocalizations.of(context)!.history,
+        ),
       ],
     );
   }

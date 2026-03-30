@@ -15,7 +15,7 @@ class FundHeaderView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currency = NumberFormat.currency(
-      locale: 'es_CO',
+      locale: Localizations.localeOf(context).toString(),
       symbol: '\$',
       decimalDigits: 0,
     );

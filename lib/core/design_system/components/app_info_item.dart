@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fondos/core/design_system/tokens/app_spacing.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
 
 class AppInfoItem extends StatelessWidget {
@@ -12,8 +13,8 @@ class AppInfoItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(fontSize: 12)),
-        const SizedBox(height: 4),
+        Text(label, style: AppTypography.label),
+        const SizedBox(height: AppSpacing.xs),
         Text(value, style: AppTypography.headlineMedium),
       ],
     );

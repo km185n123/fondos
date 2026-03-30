@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fondos/core/design_system/tokens/app_colors.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
+import 'package:fondos/l10n/app_localizations.dart';
 
 class EmptyStateView extends StatelessWidget {
   const EmptyStateView({super.key});
@@ -20,13 +21,13 @@ class EmptyStateView extends StatelessWidget {
           child: const Icon(Icons.history_toggle_off),
         ),
         const SizedBox(height: AppSpacing.md),
-        const Text(
-          'No hay transacciones registradas',
+        Text(
+          AppLocalizations.of(context)!.no_transactions,
           style: AppTypography.headlineMedium,
         ),
         const SizedBox(height: AppSpacing.sm),
-        const Text(
-          'Tus movimientos financieros aparecerán aquí.',
+        Text(
+          AppLocalizations.of(context)!.no_transactions_description,
           style: AppTypography.body,
         ),
       ],

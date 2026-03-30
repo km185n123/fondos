@@ -289,6 +289,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error'**
   String get error;
+
+  /// No description provided for @dashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboard'**
+  String get dashboard;
+
+  /// No description provided for @investments.
+  ///
+  /// In en, this message translates to:
+  /// **'Investments'**
+  String get investments;
+
+  /// No description provided for @history.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get history;
+
+  /// No description provided for @the_digital_mint.
+  ///
+  /// In en, this message translates to:
+  /// **'The Digital Mint'**
+  String get the_digital_mint;
+
+  /// No description provided for @total_portfolio_balance.
+  ///
+  /// In en, this message translates to:
+  /// **'\$12,450.000'**
+  String get total_portfolio_balance;
+
+  /// No description provided for @no_transactions.
+  ///
+  /// In en, this message translates to:
+  /// **'No transactions recorded'**
+  String get no_transactions;
+
+  /// No description provided for @no_transactions_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Your financial movements will appear here.'**
+  String get no_transactions_description;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @sms.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS'**
+  String get sms;
 }
 
 class _AppLocalizationsDelegate

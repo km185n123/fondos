@@ -30,7 +30,7 @@ class NotificationSelectorView extends StatelessWidget {
           children: [
             Expanded(
               child: AppRadioCard(
-                label: 'Email',
+                label: AppLocalizations.of(context)!.email,
                 selected: selected == NotificationMethod.email,
                 onTap: () => onChanged(NotificationMethod.email),
               ),
@@ -38,7 +38,7 @@ class NotificationSelectorView extends StatelessWidget {
             const SizedBox(width: AppSpacing.sm),
             Expanded(
               child: AppRadioCard(
-                label: 'SMS',
+                label: AppLocalizations.of(context)!.sms,
                 selected: selected == NotificationMethod.sms,
                 onTap: () => onChanged(NotificationMethod.sms),
               ),

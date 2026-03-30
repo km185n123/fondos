@@ -169,7 +169,7 @@ class _SubscriptionFormViewState extends State<SubscriptionFormView> {
                       ? () {}
                       : _onConfirm,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.lg),
               ],
             );
           },

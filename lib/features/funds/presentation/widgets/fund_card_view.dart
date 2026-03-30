@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fondos/core/design_system/components/app_card.dart';
 import 'package:fondos/core/design_system/components/app_chip.dart';
 import 'package:fondos/core/design_system/tokens/app_colors.dart';
+import 'package:fondos/core/design_system/tokens/app_spacing.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
 import 'package:fondos/features/funds/domain/entities/fund.dart';
 import 'package:fondos/features/transactions/presentation/botton_sheet/subscription_bottom_sheet.dart';
@@ -34,7 +35,7 @@ class FundCardView extends StatelessWidget {
                         fontSize: 10,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.xs),
                     Text(
                       fund.name,
                       style: AppTypography.headlineMedium.copyWith(
@@ -46,7 +47,7 @@ class FundCardView extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.sm),
               AppChip(label: fund.category.toUpperCase()),
             ],
           ),

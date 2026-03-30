@@ -45,5 +45,14 @@
   "insufficient_balance": "Insufficient balance",
   "select_fund_error": "Please select a fund",
   "notification_method_error": "You must choose email or SMS",
-  "error": "Error"
+  "error": "Error",
+  "dashboard": "Dashboard",
+  "investments": "Investments",
+  "history": "History",
+  "the_digital_mint": "The Digital Mint",
+  "total_portfolio_balance": "$12,450.000",
+  "no_transactions": "No transactions recorded",
+  "no_transactions_description": "Your financial movements will appear here.",
+  "email": "Email",
+  "sms": "SMS"
 }

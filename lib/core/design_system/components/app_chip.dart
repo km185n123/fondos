@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fondos/core/design_system/tokens/app_colors.dart';
+import 'package:fondos/core/design_system/tokens/app_typography.dart';
 
 class AppChip extends StatelessWidget {
   final String label;
@@ -14,10 +15,7 @@ class AppChip extends StatelessWidget {
         color: AppColors.surfaceHigh,
         borderRadius: BorderRadius.circular(999),
       ),
-      child: Text(
-        label,
-        style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-      ),
+      child: Text(label, style: AppTypography.label),
     );
   }
 }

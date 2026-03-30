@@ -113,4 +113,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get error => 'Error';
+
+  @override
+  String get dashboard => 'Dashboard';
+
+  @override
+  String get investments => 'Investments';
+
+  @override
+  String get history => 'History';
+
+  @override
+  String get the_digital_mint => 'The Digital Mint';
+
+  @override
+  String get total_portfolio_balance => '\$12,450.000';
+
+  @override
+  String get no_transactions => 'No transactions recorded';
+
+  @override
+  String get no_transactions_description =>
+      'Your financial movements will appear here.';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get sms => 'SMS';
 }

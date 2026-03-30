@@ -24,7 +24,6 @@ class TransactionItemView extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// LEFT SIDE (flexible)
           Expanded(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +44,6 @@ class TransactionItemView extends StatelessWidget {
                 ),
                 const SizedBox(width: AppSpacing.md),
 
-                /// TEXTS
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +65,6 @@ class TransactionItemView extends StatelessWidget {
 
           const SizedBox(width: AppSpacing.md),
 
-          /// RIGHT SIDE (fixed)
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -78,7 +75,7 @@ class TransactionItemView extends StatelessWidget {
                   color: isPositive ? AppColors.primary : Colors.red,
                 ),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.xs),
               Text(
                 AppLocalizations.of(context)!.completed,
                 style: AppTypography.label.copyWith(

@@ -19,7 +19,7 @@ class SecurityBannerView extends StatelessWidget {
       child: Row(
         children: [
           const Icon(Icons.shield, size: 40, color: AppColors.primary),
-          const SizedBox(width: 16),
+          const SizedBox(width: AppSpacing.md),
           Expanded(
             child: Text(
               AppLocalizations.of(context)!.wealth_protected,

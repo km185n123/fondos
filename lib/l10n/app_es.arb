@@ -45,5 +45,14 @@
   "insufficient_balance": "Saldo insuficiente",
   "select_fund_error": "Por favor selecciona un fondo",
   "notification_method_error": "Debe elegir email o SMS",
-  "error": "Error"
+  "error": "Error",
+  "dashboard": "Dashboard",
+  "investments": "Inversiones",
+  "history": "Historial",
+  "the_digital_mint": "La Moneda Digital",
+  "total_portfolio_balance": "$12,450.000",
+  "no_transactions": "No hay transacciones registradas",
+  "no_transactions_description": "Tus movimientos financieros aparecerán aquí.",
+  "email": "Email",
+  "sms": "SMS"
 }
