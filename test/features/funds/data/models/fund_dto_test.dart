@@ -5,16 +5,16 @@ import 'package:fondos/features/funds/domain/entities/fund.dart';
 void main() {
   const tFundDto = FundDTO(
     id: '1',
-    nombre: 'Fondo Test',
-    montoMinimo: 1000.0,
-    categoria: 'Inversión',
+    name: 'Fondo Test',
+    minimumAmount: 1000.0,
+    category: 'Inversión',
   );
 
   final tFundJson = {
     'id': '1',
-    'nombre': 'Fondo Test',
-    'monto_minimo': 1000.0,
-    'categoria': 'Inversión',
+    'name': 'Fondo Test',
+    'minimumAmount': 1000.0,
+    'category': 'Inversión',
   };
 
   group('FundDTO', () {
@@ -31,9 +31,9 @@ void main() {
       // arrange
       const expectedDomain = Fund(
         id: '1',
-        nombre: 'Fondo Test',
-        montoMinimo: 1000.0,
-        categoria: 'Inversión',
+        name: 'Fondo Test',
+        minimumAmount: 1000.0,
+        category: 'Inversión',
       );
 
       // act

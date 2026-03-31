@@ -22,6 +22,7 @@ void main() {
     final tDate = DateTime(2026, 3, 29);
     final tTransactionDto = TransactionDTO(
       id: '1',
+      name: 'Fund 1',
       type: 'subscription',
       amount: 100.0,
       fundId: 'fund_1',
@@ -39,58 +40,87 @@ void main() {
       'message': 'Transaction created',
     };
 
-    test('should return TransactionResponseDTO when post is successful', () async {
-      // arrange
-      when(() => mockDio.post(any(), data: any(named: 'data'))).thenAnswer(
-        (_) async => Response(
-          data: tResponseJson,
-          statusCode: 200,
-          requestOptions: RequestOptions(path: '/transactions'),
-        ),
-      );
-
-      // act
-      final result = await apiService.createTransaction(tTransactionDto);
-
-      // assert
-      expect(result, equals(tResponseDto));
-      verify(() => mockDio.post(any(), data: tTransactionDto.toJson())).called(1);
-    });
-
-    test('should throw ServerException when badResponse occurs (e.g. 400)', () async {
-      // arrange
-      when(() => mockDio.post(any(), data: any(named: 'data'))).thenThrow(
-        DioException(
-          requestOptions: RequestOptions(path: '/transactions'),
-          type: DioExceptionType.badResponse,
-          response: Response(
+    test(
+      'should return TransactionResponseDTO when post is successful',
+      () async {
+        // arrange
+        when(() => mockDio.post(any(), data: any(named: 'data'))).thenAnswer(
+          (_) async => Response(
+            data: tResponseJson,
+            statusCode: 200,
             requestOptions: RequestOptions(path: '/transactions'),
-            statusCode: 400,
           ),
-        ),
-      );
+        );
 
-      // act
-      final call = apiService.createTransaction(tTransactionDto);
+        // act
+        final result = await apiService.createTransaction(tTransactionDto);
 
-      // assert
-      expect(() => call, throwsA(isA<ServerException>().having((e) => e.message, 'message', ErrorMessages.badRequest)));
-    });
+        // assert
+        expect(result, equals(tResponseDto));
+        verify(
+          () => mockDio.post(any(), data: tTransactionDto.toJson()),
+        ).called(1);
+      },
+    );
 
-    test('should throw NetworkException when connection timeout occurs', () async {
-      // arrange
-      when(() => mockDio.post(any(), data: any(named: 'data'))).thenThrow(
-        DioException(
-          requestOptions: RequestOptions(path: '/transactions'),
-          type: DioExceptionType.connectionTimeout,
-        ),
-      );
+    test(
+      'should throw ServerException when badResponse occurs (e.g. 400)',
+      () async {
+        // arrange
+        when(() => mockDio.post(any(), data: any(named: 'data'))).thenThrow(
+          DioException(
+            requestOptions: RequestOptions(path: '/transactions'),
+            type: DioExceptionType.badResponse,
+            response: Response(
+              requestOptions: RequestOptions(path: '/transactions'),
+              statusCode: 400,
+            ),
+          ),
+        );
 
-      // act
-      final call = apiService.createTransaction(tTransactionDto);
+        // act
+        final call = apiService.createTransaction(tTransactionDto);
 
-      // assert
-      expect(() => call, throwsA(isA<NetworkException>().having((e) => e.message, 'message', ErrorMessages.timeoutError)));
-    });
+        // assert
+        expect(
+          () => call,
+          throwsA(
+            isA<ServerException>().having(
+              (e) => e.message,
+              'message',
+              ErrorMessages.badRequest,
+            ),
+          ),
+        );
+      },
+    );
+
+    test(
+      'should throw NetworkException when connection timeout occurs',
+      () async {
+        // arrange
+        when(() => mockDio.post(any(), data: any(named: 'data'))).thenThrow(
+          DioException(
+            requestOptions: RequestOptions(path: '/transactions'),
+            type: DioExceptionType.connectionTimeout,
+          ),
+        );
+
+        // act
+        final call = apiService.createTransaction(tTransactionDto);
+
+        // assert
+        expect(
+          () => call,
+          throwsA(
+            isA<NetworkException>().having(
+              (e) => e.message,
+              'message',
+              ErrorMessages.timeoutError,
+            ),
+          ),
+        );
+      },
+    );
   });
 }

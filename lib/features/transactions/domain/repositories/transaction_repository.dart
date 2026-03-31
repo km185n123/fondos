@@ -7,4 +7,8 @@ abstract class TransactionRepository {
   Future<Either<Failure, TransactionResponse>> subscribeFund({
     required Transaction transaction,
   });
+
+  Stream<List<Transaction>> watchInvestments();
+
+  Future<Either<Failure, bool>> cancelInvestment(Transaction transaction);
 }

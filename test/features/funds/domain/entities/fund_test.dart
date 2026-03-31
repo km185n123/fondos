@@ -8,32 +8,32 @@ void main() {
       // act
       const fund = Fund(
         id: '1',
-        nombre: 'Fondo Prueba',
-        montoMinimo: 500.0,
-        categoria: 'Tecnología',
+        name: 'Fondo Prueba',
+        minimumAmount: 500.0,
+        category: 'Tecnología',
       );
 
       // assert
       expect(fund.id, '1');
-      expect(fund.nombre, 'Fondo Prueba');
-      expect(fund.montoMinimo, 500.0);
-      expect(fund.categoria, 'Tecnología');
+      expect(fund.name, 'Fondo Prueba');
+      expect(fund.minimumAmount, 500.0);
+      expect(fund.category, 'Tecnología');
     });
 
     test('validates equality based on props (freezed)', () {
       // arrange
       const fund1 = Fund(
         id: '1',
-        nombre: 'Fondo Prueba',
-        montoMinimo: 500.0,
-        categoria: 'Tecnología',
+        name: 'Fondo Prueba',
+        minimumAmount: 500.0,
+        category: 'Tecnología',
       );
 
       const fund2 = Fund(
         id: '1',
-        nombre: 'Fondo Prueba',
-        montoMinimo: 500.0,
-        categoria: 'Tecnología',
+        name: 'Fondo Prueba',
+        minimumAmount: 500.0,
+        category: 'Tecnología',
       );
 
       // act & assert

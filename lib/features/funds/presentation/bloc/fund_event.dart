@@ -5,4 +5,5 @@ part 'fund_event.freezed.dart';
 @freezed
 class FundEvent with _$FundEvent {
   const factory FundEvent.getFunds() = _GetFunds;
+  const factory FundEvent.watchBalance() = _WatchBalance;
 }

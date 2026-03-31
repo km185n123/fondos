@@ -1,7 +1,8 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:fondos/core/enum/notification_method.dart';
+import 'package:fondos/l10n/app_localizations.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
-import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
 import 'package:fondos/core/design_system/components/app_radio_card.dart';
 
 class NotificationSelectorView extends StatelessWidget {
@@ -19,13 +20,16 @@ class NotificationSelectorView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Método de notificación', style: AppTypography.label),
+        Text(
+          AppLocalizations.of(context)!.notification_method,
+          style: AppTypography.label,
+        ),
         const SizedBox(height: AppSpacing.sm),
         Row(
           children: [
             Expanded(
               child: AppRadioCard(
-                label: 'Email',
+                label: AppLocalizations.of(context)!.email,
                 selected: selected == NotificationMethod.email,
                 onTap: () => onChanged(NotificationMethod.email),
               ),
@@ -33,7 +37,7 @@ class NotificationSelectorView extends StatelessWidget {
             const SizedBox(width: AppSpacing.sm),
             Expanded(
               child: AppRadioCard(
-                label: 'SMS',
+                label: AppLocalizations.of(context)!.sms,
                 selected: selected == NotificationMethod.sms,
                 onTap: () => onChanged(NotificationMethod.sms),
               ),

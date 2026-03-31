@@ -7,6 +7,7 @@ void main() {
     final tDate = DateTime(2026, 3, 29);
     final tTransactionDto = TransactionDTO(
       id: '1',
+      name: 'Fund 1',
       type: 'subscription',
       amount: 100.0,
       fundId: 'fund_1',
@@ -16,6 +17,7 @@ void main() {
 
     final tJson = {
       'id': '1',
+      'name': 'Fund 1',
       'type': 'subscription',
       'amount': 100.0,
       'fund_id': 'fund_1',

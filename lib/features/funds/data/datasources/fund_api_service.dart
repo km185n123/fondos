@@ -14,7 +14,7 @@ class FundApiService {
     return SafeApiCall.execute(() async {
       final response = await _dio.get(ApiPaths.funds);
 
-      final data = response.data as List<dynamic>;
+      final data = response.data['data'] as List<dynamic>;
       return data
           .map((json) => FundDTO.fromJson(json as Map<String, dynamic>))
           .toList();

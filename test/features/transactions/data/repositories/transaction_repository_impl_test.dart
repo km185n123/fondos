@@ -1,5 +1,6 @@
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fondos/core/enum/transaction_type.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:fondos/core/enum/syncs_tatus.dart';
@@ -23,9 +24,17 @@ void main() {
   late MockTransactionApiService mockApiService;
 
   setUpAll(() {
-    registerFallbackValue(TransactionDTO(
-      id: '', type: '', amount: 0, fundId: '', date: DateTime.now(), syncStatus: ''
-    ));
+    registerFallbackValue(
+      TransactionDTO(
+        id: '',
+        name: '',
+        type: '',
+        amount: 0,
+        fundId: '',
+        date: DateTime.now(),
+        syncStatus: '',
+      ),
+    );
   });
 
   setUp(() async {
@@ -33,7 +42,7 @@ void main() {
     transactionDao = TransactionDao(database);
     userDao = UserDao(database);
     mockApiService = MockTransactionApiService();
-    
+
     repository = TransactionRepositoryImpl(
       transactionDao: transactionDao,
       userDao: userDao,
@@ -48,6 +57,7 @@ void main() {
   group('TransactionRepositoryImpl (with in-memory DB)', () {
     final tTransaction = Transaction(
       id: '1',
+      name: 'Fund 1',
       type: TransactionType.subscription,
       amount: 100.0,
       fundId: 'fund_1',
@@ -56,56 +66,81 @@ void main() {
     );
 
     const tResponse = TransactionResponse(status: 'success', message: 'Done');
-    const tResponseDto = TransactionResponseDTO(status: 'success', message: 'Done');
+    const tResponseDto = TransactionResponseDTO(
+      status: 'success',
+      message: 'Done',
+    );
 
-    test('subscribeFund should return Right(TransactionResponse) when everything succeeds', () async {
-      // arrange
-      // Initial balance is 500,000 from migration
-      when(() => mockApiService.createTransaction(any())).thenAnswer((_) async => tResponseDto);
+    test(
+      'subscribeFund should return Right(TransactionResponse) when everything succeeds',
+      () async {
+        // arrange
+        when(
+          () => mockApiService.createTransaction(any()),
+        ).thenAnswer((_) async => tResponseDto);
 
-      // act
-      final result = await repository.subscribeFund(transaction: tTransaction);
+        // act
+        final result = await repository.subscribeFund(
+          transaction: tTransaction,
+        );
 
-      // assert
-      expect(result, equals(const Right(tResponse)));
-      
-      final balance = await userDao.getBalance();
-      expect(balance, 500000.0 - 100.0);
-      
-      final transactions = await database.select(database.transactionsTable).get();
-      expect(transactions.length, 1);
-      expect(transactions.first.syncStatus, SyncStatus.synced.name);
-    });
+        // assert
+        expect(result, equals(const Right(tResponse)));
 
-    test('subscribeFund should return Left(Failure) when balance is insufficient', () async {
-      // arrange
-      await userDao.updateBalance(50.0);
+        final balance = await userDao.watchBalance().first;
+        expect(balance, 500000.0 - 100.0);
 
-      // act
-      final result = await repository.subscribeFund(transaction: tTransaction);
+        final transactions = await database
+            .select(database.transactionsTable)
+            .get();
+        expect(transactions.length, 1);
+        expect(transactions.first.syncStatus, SyncStatus.synced.name);
+      },
+    );
 
-      // assert
-      expect(result.isLeft(), true);
-      
-      final balance = await userDao.getBalance();
-      expect(balance, 50.0); // No change
-    });
+    test(
+      'subscribeFund should return Left(Failure) when balance is insufficient',
+      () async {
+        // arrange
+        await userDao.updateBalance(50.0);
 
-    test('subscribeFund should return Left(Failure) when API call fails', () async {
-      // arrange
-      when(() => mockApiService.createTransaction(any())).thenThrow(Exception('API_ERROR'));
+        // act
+        final result = await repository.subscribeFund(
+          transaction: tTransaction,
+        );
 
-      // act
-      final result = await repository.subscribeFund(transaction: tTransaction);
+        // assert
+        expect(result.isLeft(), true);
 
-      // assert
-      expect(result.isLeft(), true);
-      
-      // Transaction should be in DB but still pending or at least inserted
-      final transactions = await database.select(database.transactionsTable).get();
-      expect(transactions.length, 1);
-      // It should NOT be synced if API failed
-      expect(transactions.first.syncStatus, SyncStatus.pending.name);
-    });
+        final balance = await userDao.watchBalance().first;
+        expect(balance, 50.0);
+      },
+    );
+
+    test(
+      'subscribeFund should return Left(Failure) when API call fails',
+      () async {
+        // arrange
+        when(
+          () => mockApiService.createTransaction(any()),
+        ).thenThrow(Exception('API_ERROR'));
+
+        // act
+        final result = await repository.subscribeFund(
+          transaction: tTransaction,
+        );
+
+        // assert
+        expect(result.isLeft(), true);
+
+        // Transaction should be in DB but still pending or at least inserted
+        final transactions = await database
+            .select(database.transactionsTable)
+            .get();
+        expect(transactions.length, 1);
+        // It should NOT be synced if API failed
+        expect(transactions.first.syncStatus, SyncStatus.pending.name);
+      },
+    );
   });
 }

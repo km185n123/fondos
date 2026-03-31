@@ -1,10 +1,12 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fondos/core/enum/notification_method.dart';
+import 'package:fondos/core/enum/subscription_status.dart';
+import 'package:fondos/core/errors/error_messages.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:fondos/core/errors/failures.dart';
 import 'package:fondos/features/funds/domain/entities/fund.dart';
-import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
 import 'package:fondos/features/transactions/domain/entitie/transaction_response.dart';
 import 'package:fondos/features/transactions/domain/usecases/subscribe_fund_usecase.dart';
 import 'package:fondos/features/transactions/presentation/bloc/subscription_bloc.dart';
@@ -15,23 +17,23 @@ class MockSubscribeFundUseCase extends Mock implements SubscribeFundUseCase {}
 
 void main() {
   late SubscriptionBloc bloc;
-  late MockSubscribeFundUseCase mockUseCase;
+  late MockSubscribeFundUseCase mockSubscribeUseCase;
 
   setUpAll(() {
     registerFallbackValue(
       const Fund(
         id: '1',
-        nombre: 'Fondo 1',
-        montoMinimo: 100.0,
-        categoria: 'Acciones',
+        name: 'Fondo 1',
+        minimumAmount: 100.0,
+        category: 'Acciones',
       ),
     );
     registerFallbackValue(NotificationMethod.email);
   });
 
   setUp(() {
-    mockUseCase = MockSubscribeFundUseCase();
-    bloc = SubscriptionBloc(subscribeFundUseCase: mockUseCase);
+    mockSubscribeUseCase = MockSubscribeFundUseCase();
+    bloc = SubscriptionBloc(subscribeFundUseCase: mockSubscribeUseCase);
   });
 
   tearDown(() {
@@ -40,9 +42,9 @@ void main() {
 
   const tFund = Fund(
     id: 'fund_1',
-    nombre: 'Fondo 1',
-    montoMinimo: 100.0,
-    categoria: 'Acciones',
+    name: 'Fondo 1',
+    minimumAmount: 100.0,
+    category: 'Acciones',
   );
 
   group('SubscriptionBloc', () {
@@ -99,9 +101,10 @@ void main() {
         build: () => bloc,
         act: (bloc) => bloc.add(const SubscriptionEvent.confirm()),
         expect: () => [
+          const SubscriptionState(status: SubscriptionStatus.loading),
           const SubscriptionState(
             status: SubscriptionStatus.error,
-            errorMessage: 'Por favor selecciona un fondo',
+            errorMessage: ErrorMessages.selectFundError,
           ),
         ],
       );
@@ -120,8 +123,14 @@ void main() {
             selectedFund: tFund,
             amount: 50.0,
             notificationMethod: NotificationMethod.email,
+            status: SubscriptionStatus.loading,
+          ),
+          const SubscriptionState(
+            selectedFund: tFund,
+            amount: 50.0,
+            notificationMethod: NotificationMethod.email,
             status: SubscriptionStatus.error,
-            errorMessage: 'El monto debe ser al menos COP 100.0',
+            errorMessage: ErrorMessages.errorMinAmount,
           ),
         ],
       );
@@ -135,7 +144,7 @@ void main() {
         ),
         build: () {
           when(
-            () => mockUseCase.call(
+            () => mockSubscribeUseCase.call(
               fund: any(named: 'fund'),
               amount: any(named: 'amount'),
               notificationMethod: any(named: 'notificationMethod'),
@@ -172,7 +181,7 @@ void main() {
         ),
         build: () {
           when(
-            () => mockUseCase.call(
+            () => mockSubscribeUseCase.call(
               fund: any(named: 'fund'),
               amount: any(named: 'amount'),
               notificationMethod: any(named: 'notificationMethod'),
@@ -208,8 +217,13 @@ void main() {
           const SubscriptionState(
             selectedFund: tFund,
             amount: 200.0,
+            status: SubscriptionStatus.loading,
+          ),
+          const SubscriptionState(
+            selectedFund: tFund,
+            amount: 200.0,
             status: SubscriptionStatus.error,
-            errorMessage: 'Debe elegir email o SMS',
+            errorMessage: ErrorMessages.errorNotificationMethod,
           ),
         ],
       );

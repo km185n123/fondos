@@ -5,9 +5,9 @@ extension FundDbMapper on FundDb {
   Fund toDomain() {
     return Fund(
       id: id,
-      nombre: nombre,
-      montoMinimo: montoMinimo,
-      categoria: categoria,
+      name: name,
+      minimumAmount: minimumAmount,
+      category: category,
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fondos/core/enum/syncs_tatus.dart';
+import 'package:fondos/core/enum/transaction_type.dart';
 import 'package:fondos/features/transactions/data/models/mappers/transaction_mappers.dart';
 import 'package:fondos/features/transactions/data/models/transaction_response_dto.dart';
 import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
@@ -10,6 +11,7 @@ void main() {
     final tDate = DateTime(2026, 3, 29);
     final tTransaction = Transaction(
       id: '1',
+      name: 'Fund 1',
       type: TransactionType.subscription,
       amount: 100.0,
       fundId: 'fund_1',
@@ -46,12 +48,15 @@ void main() {
       message: 'Done',
     );
 
-    test('toEntity should map TransactionResponseDTO to TransactionResponse correctly', () {
-      final result = tResponseDto.toEntity();
+    test(
+      'toEntity should map TransactionResponseDTO to TransactionResponse correctly',
+      () {
+        final result = tResponseDto.toEntity();
 
-      expect(result.status, tResponseDto.status);
-      expect(result.message, tResponseDto.message);
-      expect(result, isA<TransactionResponse>());
-    });
+        expect(result.status, tResponseDto.status);
+        expect(result.message, tResponseDto.message);
+        expect(result, isA<TransactionResponse>());
+      },
+    );
   });
 }
