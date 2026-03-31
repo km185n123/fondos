@@ -3,6 +3,7 @@ import 'package:fondos/core/design_system/tokens/app_colors.dart';
 import 'package:fondos/core/design_system/tokens/app_radius.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
+import 'package:fondos/core/formatters/amount_input_formatter.dart';
 
 class AppInput extends StatelessWidget {
   final TextEditingController controller;
@@ -22,6 +23,8 @@ class AppInput extends StatelessWidget {
     this.error,
     this.trailing,
     this.prefixSymbol,
+    required TextInputType keyboardType,
+    required List<AmountInputFormatter> inputFormatters,
   });
 
   @override

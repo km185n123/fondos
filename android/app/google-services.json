@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "583381249381",
+    "project_id": "fondos-b4dd4",
+    "storage_bucket": "fondos-b4dd4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:583381249381:android:6cb28cad818bfa3590c58c",
+        "android_client_info": {
+          "package_name": "com.km185.fondos"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArHSbwzzOkkx5XqHiwgbQ1lABe8F1k9BI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

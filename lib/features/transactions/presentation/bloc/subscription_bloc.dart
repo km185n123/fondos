@@ -75,21 +75,21 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       return;
     }
 
-    if (state.notificationMethod == null) {
-      emit(
-        state.copyWith(
-          status: SubscriptionStatus.error,
-          errorMessage: ErrorMessages.errorNotificationMethod,
-        ),
-      );
-      return;
-    }
-
     if (state.amount < state.selectedFund!.minimumAmount) {
       emit(
         state.copyWith(
           status: SubscriptionStatus.error,
           errorMessage: ErrorMessages.errorMinAmount,
+        ),
+      );
+      return;
+    }
+
+    if (state.notificationMethod == null) {
+      emit(
+        state.copyWith(
+          status: SubscriptionStatus.error,
+          errorMessage: ErrorMessages.errorNotificationMethod,
         ),
       );
       return;
