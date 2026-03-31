@@ -1,65 +1,102 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fondos/core/design_system/components/app_button_primary.dart';
+import 'package:fondos/core/design_system/components/app_input.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
-import 'package:fondos/core/enum/notification_method.dart';
 import 'package:fondos/core/enum/subscription_status.dart';
+import 'package:fondos/core/formatters/amount_input_formatter.dart';
 import 'package:fondos/features/transactions/presentation/bloc/subscription_bloc.dart';
 import 'package:fondos/features/transactions/presentation/bloc/subscription_event.dart';
 import 'package:fondos/features/transactions/presentation/bloc/subscription_state.dart';
-import 'package:fondos/core/design_system/components/app_button_primary.dart';
-import 'package:fondos/core/design_system/components/app_input.dart';
 import 'package:fondos/features/transactions/presentation/widgets/fund_header_view.dart';
 import 'package:fondos/features/transactions/presentation/widgets/notification_selector_view.dart';
 import 'package:fondos/l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-class SubscriptionFormView extends StatefulWidget {
+class SubscriptionFormView extends StatelessWidget {
   const SubscriptionFormView({super.key});
 
   @override
-  State<SubscriptionFormView> createState() => _SubscriptionFormViewState();
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: BlocListener<SubscriptionBloc, SubscriptionState>(
+        listener: (context, state) {
+          final l10n = AppLocalizations.of(context)!;
+
+          if (state.status == SubscriptionStatus.success) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(l10n.subscription_success)));
+            context.pop(true);
+          } else if (state.status == SubscriptionStatus.error &&
+              state.errorMessage != null) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.errorMessage!)));
+          }
+        },
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: AppSpacing.lg,
+            right: AppSpacing.lg,
+            top: AppSpacing.lg,
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: const Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _Header(),
+              SizedBox(height: AppSpacing.lg),
+              _AmountInput(),
+              SizedBox(height: AppSpacing.lg),
+              _NotificationSelector(),
+              SizedBox(height: AppSpacing.lg),
+              _SubmitButton(),
+              SizedBox(height: AppSpacing.lg),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 
-class _SubscriptionFormViewState extends State<SubscriptionFormView> {
+class _Header extends StatelessWidget {
+  const _Header();
+
+  @override
+  Widget build(BuildContext context) {
+    final fund = context.select(
+      (SubscriptionBloc bloc) => bloc.state.selectedFund,
+    );
+
+    if (fund == null) return const SizedBox.shrink();
+
+    return FundHeaderView(fund: fund);
+  }
+}
+
+class _AmountInput extends StatefulWidget {
+  const _AmountInput();
+
+  @override
+  State<_AmountInput> createState() => _AmountInputState();
+}
+
+class _AmountInputState extends State<_AmountInput> {
   final _controller = TextEditingController();
-
   final _numberFormat = NumberFormat('#,##0', 'es_CO');
-
   final _currencyFormat = NumberFormat.currency(
     locale: 'es_CO',
     symbol: '\$',
     decimalDigits: 0,
   );
 
-  void _onAmountChanged(String raw) {
-    final digitsOnly = raw.replaceAll(RegExp(r'[^0-9]'), '');
-
-    if (digitsOnly.isEmpty) {
-      _controller.value = const TextEditingValue(
-        text: '',
-        selection: TextSelection.collapsed(offset: 0),
-      );
-      context.read<SubscriptionBloc>().add(
-        const SubscriptionEvent.changeAmount(0),
-      );
-      return;
-    }
-
-    final amount = double.parse(digitsOnly);
-    final formatted = _numberFormat.format(amount);
-
-    _controller.value = TextEditingValue(
-      text: formatted,
-      selection: TextSelection.collapsed(offset: formatted.length),
-    );
-
-    context.read<SubscriptionBloc>().add(
-      SubscriptionEvent.changeAmount(amount),
-    );
-  }
-
-  void _onConfirm() {
-    context.read<SubscriptionBloc>().add(const SubscriptionEvent.confirm());
+  double _parse(String value) {
+    final digits = value.replaceAll(RegExp(r'[^0-9]'), '');
+    return double.tryParse(digits) ?? 0;
   }
 
   @override
@@ -68,113 +105,71 @@ class _SubscriptionFormViewState extends State<SubscriptionFormView> {
     super.dispose();
   }
 
-  String? _translateError(String? key, SubscriptionState state) {
-    if (key == null) return null;
+  @override
+  Widget build(BuildContext context) {
+    final state = context.watch<SubscriptionBloc>().state;
     final l10n = AppLocalizations.of(context)!;
-    switch (key) {
-      case 'insufficient_balance':
-        return l10n.insufficient_balance;
-      case 'select_fund_error':
-        return l10n.select_fund_error;
-      case 'notification_method_error':
-        return l10n.notification_method_error;
-      case 'min_amount_error':
-        final minStr = _currencyFormat.format(
-          state.selectedFund?.minimumAmount ?? 0,
+
+    return AppInput(
+      controller: _controller,
+      label: l10n.amount_to_invest,
+      hint: '0',
+      prefixSymbol: '\$',
+      keyboardType: TextInputType.number,
+      inputFormatters: [AmountInputFormatter(_numberFormat)],
+      error: state.amountError,
+      onChanged: (value) {
+        context.read<SubscriptionBloc>().add(
+          SubscriptionEvent.changeAmount(_parse(value)),
         );
-        return l10n.min_amount_error(minStr);
-      default:
-        return key;
-    }
+      },
+      trailing: Text(
+        l10n.available(_currencyFormat.format(state.availableBalance)),
+      ),
+    );
   }
+}
+
+class _NotificationSelector extends StatelessWidget {
+  const _NotificationSelector();
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.only(
-          left: AppSpacing.lg,
-          right: AppSpacing.lg,
-          top: AppSpacing.lg,
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        child: BlocConsumer<SubscriptionBloc, SubscriptionState>(
-          listener: (context, state) {
-            final l10n = AppLocalizations.of(context)!;
-            if (state.status == SubscriptionStatus.success) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(l10n.subscription_success)),
+    final method = context.select(
+      (SubscriptionBloc bloc) => bloc.state.notificationMethod,
+    );
+
+    return NotificationSelectorView(
+      selected: method,
+      onChanged: (m) {
+        context.read<SubscriptionBloc>().add(
+          SubscriptionEvent.changeNotificationMethod(m),
+        );
+      },
+    );
+  }
+}
+
+class _SubmitButton extends StatelessWidget {
+  const _SubmitButton();
+
+  @override
+  Widget build(BuildContext context) {
+    final status = context.select((SubscriptionBloc bloc) => bloc.state.status);
+
+    final l10n = AppLocalizations.of(context)!;
+
+    return AppButtonPrimary(
+      text: status == SubscriptionStatus.loading
+          ? l10n.processing
+          : l10n.subscribe,
+      onPressed: status == SubscriptionStatus.loading
+          ? null
+          : () {
+              context.read<SubscriptionBloc>().add(
+                const SubscriptionEvent.confirm(),
               );
-              Navigator.of(context).pop();
-            } else if (state.status == SubscriptionStatus.error &&
-                state.errorMessage != null) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    _translateError(state.errorMessage!, state) ?? '',
-                  ),
-                ),
-              );
-            }
-          },
-          builder: (context, state) {
-            final l10n = AppLocalizations.of(context)!;
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Container(
-                    width: 40,
-                    height: 4,
-                    margin: const EdgeInsets.only(bottom: 16),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                  ),
-                ),
-                if (state.selectedFund != null)
-                  FundHeaderView(fund: state.selectedFund!),
-                const SizedBox(height: AppSpacing.lg),
-                AppInput(
-                  controller: _controller,
-                  label: l10n.amount_to_invest,
-                  hint: '0',
-                  prefixSymbol: '\$',
-                  error: _translateError(state.amountError, state),
-                  onChanged: _onAmountChanged,
-                  trailing: Text(
-                    l10n.available(
-                      _currencyFormat.format(state.availableBalance),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.lg),
-                NotificationSelectorView(
-                  selected:
-                      state.notificationMethod ?? NotificationMethod.email,
-                  onChanged: (NotificationMethod method) {
-                    context.read<SubscriptionBloc>().add(
-                      SubscriptionEvent.changeNotificationMethod(method),
-                    );
-                  },
-                ),
-                const SizedBox(height: AppSpacing.lg),
-                AppButtonPrimary(
-                  text: state.status == SubscriptionStatus.loading
-                      ? l10n.processing
-                      : l10n.subscribe,
-                  onPressed: state.status == SubscriptionStatus.loading
-                      ? () {}
-                      : _onConfirm,
-                ),
-                const SizedBox(height: AppSpacing.lg),
-              ],
-            );
-          },
-        ),
-      ),
+            },
     );
   }
 }
