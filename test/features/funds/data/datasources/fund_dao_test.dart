@@ -19,9 +19,9 @@ void main() {
   group('FundDao', () {
     const tFundDb = FundDb(
       id: '1',
-      nombre: 'Fondo Test DB',
-      montoMinimo: 1500.0,
-      categoria: 'Mixto',
+      name: 'Fondo Test DB',
+      minimumAmount: 1500.0,
+      category: 'Mixto',
     );
 
     test('should return empty list when no funds exist', () async {
@@ -52,9 +52,9 @@ void main() {
         await dao.insertFund(
           const FundDb(
             id: 'old_1',
-            nombre: 'Old 1',
-            montoMinimo: 0.0,
-            categoria: 'C',
+            name: 'Old 1',
+            minimumAmount: 0.0,
+            category: 'C',
           ),
         );
 
@@ -62,9 +62,9 @@ void main() {
           tFundDb,
           const FundDb(
             id: '2',
-            nombre: 'Fondo Nuevo 2',
-            montoMinimo: 2000.0,
-            categoria: 'Fijo',
+            name: 'Fondo Nuevo 2',
+            minimumAmount: 2000.0,
+            category: 'Fijo',
           ),
         ];
 

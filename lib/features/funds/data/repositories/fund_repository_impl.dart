@@ -8,6 +8,7 @@ import 'package:fondos/features/funds/data/models/mappers/fund_db_mapper.dart';
 import 'package:fondos/features/funds/data/models/mappers/fund_dto_mapper.dart';
 import 'package:fondos/features/funds/domain/entities/fund.dart';
 import 'package:fondos/features/funds/domain/repositories/fund_repository.dart';
+import 'package:fondos/features/user/domain/repositories/user_repository.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 
@@ -15,8 +16,13 @@ import 'package:injectable/injectable.dart';
 class FundRepositoryImpl implements FundRepository {
   final FundApiService apiService;
   final FundDao fundDao;
+  final UserRepository userRepository;
 
-  FundRepositoryImpl({required this.apiService, required this.fundDao});
+  FundRepositoryImpl({
+    required this.apiService,
+    required this.fundDao,
+    required this.userRepository,
+  });
 
   @override
   Future<Either<Failure, List<Fund>>> getFunds() {
@@ -24,6 +30,11 @@ class FundRepositoryImpl implements FundRepository {
       tryBlock: _fetchRemoteAndCache,
       fallback: _fetchLocal,
     );
+  }
+
+  @override
+  Stream<Either<Failure, double>> watchCurrentBalance() {
+    return userRepository.watchBalance().map((balance) => Right(balance));
   }
 
   Future<List<Fund>> _fetchRemoteAndCache() async {
@@ -39,7 +50,7 @@ class FundRepositoryImpl implements FundRepository {
     final local = await fundDao.getFunds();
 
     if (local.isEmpty) {
-      throw CacheException(ErrorMessages.noCacheData); // importante
+      throw CacheException(ErrorMessages.noCacheData);
     }
 
     return local.map((e) => e.toDomain()).toList();

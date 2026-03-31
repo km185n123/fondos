@@ -8,14 +8,14 @@ part of 'fund_dto.dart';
 
 _FundDTO _$FundDTOFromJson(Map<String, dynamic> json) => _FundDTO(
   id: json['id'] as String,
-  nombre: json['nombre'] as String,
-  montoMinimo: (json['monto_minimo'] as num).toDouble(),
-  categoria: json['categoria'] as String,
+  name: json['name'] as String,
+  minimumAmount: (json['minimumAmount'] as num).toDouble(),
+  category: json['category'] as String,
 );
 
 Map<String, dynamic> _$FundDTOToJson(_FundDTO instance) => <String, dynamic>{
   'id': instance.id,
-  'nombre': instance.nombre,
-  'monto_minimo': instance.montoMinimo,
-  'categoria': instance.categoria,
+  'name': instance.name,
+  'minimumAmount': instance.minimumAmount,
+  'category': instance.category,
 };

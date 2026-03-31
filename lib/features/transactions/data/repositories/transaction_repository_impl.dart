@@ -30,7 +30,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
     return SafeCall.execute<TransactionResponse>(
       tryBlock: () async {
         await transactionDao.runInTransaction(() async {
-          final balance = await userDao.getBalance();
+          final balance = await userDao.watchBalance().first;
 
           if (balance < transaction.amount) {
             throw Exception('INSUFFICIENT_BALANCE');
@@ -44,8 +44,6 @@ class TransactionRepositoryImpl implements TransactionRepository {
             transaction.toDb().copyWith(syncStatus: SyncStatus.pending.name),
           );
         });
-
-        // 2. SYNC (fuera de tx)
 
         final response = await _trySync(transaction);
 
@@ -63,5 +61,30 @@ class TransactionRepositoryImpl implements TransactionRepository {
     final dto = transaction.toDto();
     final responseDto = await apiService.createTransaction(dto);
     return responseDto.toEntity();
+  }
+
+  @override
+  Stream<List<Transaction>> watchInvestments() {
+    return transactionDao.watchInvestments().map(
+      (list) => list.map((e) => e.toEntity()).toList(),
+    );
+  }
+
+  @override
+  Future<Either<Failure, bool>> cancelInvestment(Transaction transaction) {
+    return SafeCall.execute<bool>(
+      tryBlock: () async {
+        await transactionDao.runInTransaction(() async {
+          final result = await transactionDao.removeTransaction(transaction.id);
+          if (result == 0) {
+            throw Exception('TRANSACTION_NOT_FOUND');
+          }
+          final balance = await userDao.watchBalance().first;
+          final newBalance = balance + transaction.amount;
+          await userDao.updateBalance(newBalance);
+        });
+        return true;
+      },
+    );
   }
 }

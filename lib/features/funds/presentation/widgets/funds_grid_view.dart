@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fondos/core/design_system/tokens/app_colors.dart';
 import 'package:fondos/core/design_system/layout/responsive.dart';
+import 'package:fondos/core/design_system/tokens/app_spacing.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
 import 'package:fondos/features/funds/presentation/widgets/fund_card_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +38,7 @@ class FundsGridView extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.md),
         BlocBuilder<FundBloc, FundState>(
           builder: (context, state) {
             return state.maybeWhen(
@@ -49,8 +50,8 @@ class FundsGridView extends StatelessWidget {
                 itemCount: funds.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: cols,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
+                  crossAxisSpacing: AppSpacing.md,
+                  mainAxisSpacing: AppSpacing.md,
                   mainAxisExtent: 160,
                 ),
                 itemBuilder: (_, i) => FundCardView(funds[i]),

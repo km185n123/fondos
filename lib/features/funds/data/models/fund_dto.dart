@@ -8,9 +8,9 @@ part 'fund_dto.g.dart';
 abstract class FundDTO with _$FundDTO {
   const factory FundDTO({
     required String id,
-    required String nombre,
-    @JsonKey(name: 'monto_minimo') required double montoMinimo,
-    required String categoria,
+    required String name,
+    required double minimumAmount,
+    required String category,
   }) = _FundDTO;
 
   factory FundDTO.fromJson(Map<String, dynamic> json) =>
@@ -21,9 +21,9 @@ abstract class FundDTO with _$FundDTO {
   Fund toDomain() {
     return Fund(
       id: id,
-      nombre: nombre,
-      montoMinimo: montoMinimo,
-      categoria: categoria,
+      name: name,
+      minimumAmount: minimumAmount,
+      category: category,
     );
   }
 }

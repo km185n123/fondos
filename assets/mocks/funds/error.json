@@ -1,0 +1,5 @@
+{
+  "__mock__": { "statusCode": 500 },
+  "status": "transaction fail",
+  "message": "Ocurrió un error al procesar la transacción o no hay conexión."
+}

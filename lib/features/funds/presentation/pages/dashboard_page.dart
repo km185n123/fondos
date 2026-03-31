@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fondos/core/di/injection.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
-import 'package:fondos/features/funds/presentation/bloc/fund_bloc.dart';
-import 'package:fondos/features/funds/presentation/bloc/fund_event.dart';
-import 'package:fondos/features/funds/presentation/widgets/navigation_bottom_view.dart';
 import 'package:fondos/core/design_system/components/app_fab.dart';
 import 'package:fondos/features/funds/presentation/widgets/funds_grid_view.dart';
 import 'package:fondos/features/funds/presentation/widgets/hero_balance_view.dart';
@@ -18,23 +13,19 @@ class DashboardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const TopBar(),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(AppSpacing.lg),
+      body: const SingleChildScrollView(
+        padding: EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const HeroBalanceView(),
-            const SizedBox(height: 32),
-            BlocProvider(
-              create: (_) => getIt<FundBloc>()..add(const FundEvent.getFunds()),
-              child: const FundsGridView(),
-            ),
-            const SizedBox(height: 40),
-            const SecurityBannerView(),
+            HeroBalanceView(),
+            SizedBox(height: AppSpacing.lg),
+            FundsGridView(),
+            SizedBox(height: AppSpacing.xl),
+            SecurityBannerView(),
           ],
         ),
       ),
-      bottomNavigationBar: const NavigationBottomView(),
       floatingActionButton: AppFab(onPressed: () {}, icon: Icons.add_card),
     );
   }

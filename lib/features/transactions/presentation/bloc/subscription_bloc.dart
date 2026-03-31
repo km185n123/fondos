@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fondos/core/enum/notification_method.dart';
+import 'package:fondos/core/enum/subscription_status.dart';
+import 'package:fondos/core/errors/error_messages.dart';
 import 'package:fondos/features/funds/domain/entities/fund.dart';
-import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
 import 'package:fondos/features/transactions/domain/usecases/subscribe_fund_usecase.dart';
 import 'package:fondos/features/transactions/presentation/bloc/subscription_event.dart';
 import 'package:fondos/features/transactions/presentation/bloc/subscription_state.dart';
@@ -11,7 +13,7 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
   final SubscribeFundUseCase subscribeFundUseCase;
 
   SubscriptionBloc({required this.subscribeFundUseCase})
-      : super(const SubscriptionState()) {
+    : super(const SubscriptionState()) {
     on<SubscriptionEvent>((event, emit) async {
       await event.when(
         selectFund: (fund) async => _onSelectFund(fund, emit),
@@ -35,7 +37,7 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
 
   void _onChangeAmount(double amount, Emitter<SubscriptionState> emit) {
     final String? amountError = amount > state.availableBalance
-        ? 'Saldo insuficiente'
+        ? ErrorMessages.insufficientBalance
         : null;
 
     emit(
@@ -62,12 +64,12 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
   }
 
   Future<void> _onConfirm(Emitter<SubscriptionState> emit) async {
-    // 1. Form Validations before calling the Use Case
+    emit(state.copyWith(status: SubscriptionStatus.loading));
     if (state.selectedFund == null) {
       emit(
         state.copyWith(
           status: SubscriptionStatus.error,
-          errorMessage: 'Por favor selecciona un fondo',
+          errorMessage: ErrorMessages.selectFundError,
         ),
       );
       return;
@@ -77,36 +79,32 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       emit(
         state.copyWith(
           status: SubscriptionStatus.error,
-          errorMessage: 'Debe elegir email o SMS',
+          errorMessage: ErrorMessages.errorNotificationMethod,
         ),
       );
       return;
     }
 
-    if (state.amount < state.selectedFund!.montoMinimo) {
+    if (state.amount < state.selectedFund!.minimumAmount) {
       emit(
         state.copyWith(
           status: SubscriptionStatus.error,
-          errorMessage:
-              'El monto debe ser al menos COP ${state.selectedFund!.montoMinimo}',
+          errorMessage: ErrorMessages.errorMinAmount,
         ),
       );
       return;
     }
 
-    // 2. Set Loading State
     emit(
       state.copyWith(status: SubscriptionStatus.loading, errorMessage: null),
     );
 
-    // 3. Execute Use Case
     final result = await subscribeFundUseCase.call(
       fund: state.selectedFund!,
       amount: state.amount,
       notificationMethod: state.notificationMethod!,
     );
 
-    // 4. Handle Result
     result.fold(
       (failure) {
         emit(

@@ -4,4 +4,5 @@ import 'package:fpdart/fpdart.dart';
 
 abstract class FundRepository {
   Future<Either<Failure, List<Fund>>> getFunds();
+  Stream<Either<Failure, double>> watchCurrentBalance();
 }

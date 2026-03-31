@@ -128,12 +128,12 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<Fund> funds,  double saldoActual)?  success,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<Fund> funds,  double currentBalance)?  success,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading();case _Success() when success != null:
-return success(_that.funds,_that.saldoActual);case _Error() when error != null:
+return success(_that.funds,_that.currentBalance);case _Error() when error != null:
 return error(_that.message);case _:
   return orElse();
 
@@ -152,12 +152,12 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<Fund> funds,  double saldoActual)  success,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<Fund> funds,  double currentBalance)  success,required TResult Function( String message)  error,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Loading():
 return loading();case _Success():
-return success(_that.funds,_that.saldoActual);case _Error():
+return success(_that.funds,_that.currentBalance);case _Error():
 return error(_that.message);case _:
   throw StateError('Unexpected subclass');
 
@@ -175,12 +175,12 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<Fund> funds,  double saldoActual)?  success,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<Fund> funds,  double currentBalance)?  success,TResult? Function( String message)?  error,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading();case _Success() when success != null:
-return success(_that.funds,_that.saldoActual);case _Error() when error != null:
+return success(_that.funds,_that.currentBalance);case _Error() when error != null:
 return error(_that.message);case _:
   return null;
 
@@ -257,7 +257,7 @@ String toString() {
 
 
 class _Success implements FundState {
-  const _Success({required final  List<Fund> funds, this.saldoActual = 500000.0}): _funds = funds;
+  const _Success({required final  List<Fund> funds, this.currentBalance = 500000.0}): _funds = funds;
   
 
  final  List<Fund> _funds;
@@ -267,7 +267,7 @@ class _Success implements FundState {
   return EqualUnmodifiableListView(_funds);
 }
 
-@JsonKey() final  double saldoActual;
+@JsonKey() final  double currentBalance;
 
 /// Create a copy of FundState
 /// with the given fields replaced by the non-null parameter values.
@@ -279,16 +279,16 @@ _$SuccessCopyWith<_Success> get copyWith => __$SuccessCopyWithImpl<_Success>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Success&&const DeepCollectionEquality().equals(other._funds, _funds)&&(identical(other.saldoActual, saldoActual) || other.saldoActual == saldoActual));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Success&&const DeepCollectionEquality().equals(other._funds, _funds)&&(identical(other.currentBalance, currentBalance) || other.currentBalance == currentBalance));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_funds),saldoActual);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_funds),currentBalance);
 
 @override
 String toString() {
-  return 'FundState.success(funds: $funds, saldoActual: $saldoActual)';
+  return 'FundState.success(funds: $funds, currentBalance: $currentBalance)';
 }
 
 
@@ -299,7 +299,7 @@ abstract mixin class _$SuccessCopyWith<$Res> implements $FundStateCopyWith<$Res>
   factory _$SuccessCopyWith(_Success value, $Res Function(_Success) _then) = __$SuccessCopyWithImpl;
 @useResult
 $Res call({
- List<Fund> funds, double saldoActual
+ List<Fund> funds, double currentBalance
 });
 
 
@@ -316,10 +316,10 @@ class __$SuccessCopyWithImpl<$Res>
 
 /// Create a copy of FundState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? funds = null,Object? saldoActual = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? funds = null,Object? currentBalance = null,}) {
   return _then(_Success(
 funds: null == funds ? _self._funds : funds // ignore: cast_nullable_to_non_nullable
-as List<Fund>,saldoActual: null == saldoActual ? _self.saldoActual : saldoActual // ignore: cast_nullable_to_non_nullable
+as List<Fund>,currentBalance: null == currentBalance ? _self.currentBalance : currentBalance // ignore: cast_nullable_to_non_nullable
 as double,
   ));
 }

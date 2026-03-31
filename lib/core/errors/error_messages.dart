@@ -15,6 +15,10 @@ class ErrorMessages {
   // Business Errors
   static const String businessError =
       'Ha ocurrido un error de lógica de negocio.';
+  static const String selectFundError = 'Por favor selecciona un fondo';
+  static const String errorNotificationMethod = 'Debe elegir email o SMS';
+  static const String errorMinAmount = 'El monto debe ser al menos COP 100.0';
+  static const String insufficientBalance = 'Saldo insuficiente';
 
   // Unknown
   static const String unexpectedError = 'Ocurrió un error inesperado.';

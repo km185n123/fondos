@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TransactionDTO {
 
- String get id; String get type; double get amount;@JsonKey(name: 'fund_id') String get fundId; DateTime get date;@JsonKey(name: 'sync_status') String get syncStatus;
+ String get id; String get name; String get type; double get amount;@JsonKey(name: 'fund_id') String get fundId; DateTime get date;@JsonKey(name: 'sync_status') String get syncStatus;
 /// Create a copy of TransactionDTO
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $TransactionDTOCopyWith<TransactionDTO> get copyWith => _$TransactionDTOCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransactionDTO&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.fundId, fundId) || other.fundId == fundId)&&(identical(other.date, date) || other.date == date)&&(identical(other.syncStatus, syncStatus) || other.syncStatus == syncStatus));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransactionDTO&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.type, type) || other.type == type)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.fundId, fundId) || other.fundId == fundId)&&(identical(other.date, date) || other.date == date)&&(identical(other.syncStatus, syncStatus) || other.syncStatus == syncStatus));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,amount,fundId,date,syncStatus);
+int get hashCode => Object.hash(runtimeType,id,name,type,amount,fundId,date,syncStatus);
 
 @override
 String toString() {
-  return 'TransactionDTO(id: $id, type: $type, amount: $amount, fundId: $fundId, date: $date, syncStatus: $syncStatus)';
+  return 'TransactionDTO(id: $id, name: $name, type: $type, amount: $amount, fundId: $fundId, date: $date, syncStatus: $syncStatus)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $TransactionDTOCopyWith<$Res>  {
   factory $TransactionDTOCopyWith(TransactionDTO value, $Res Function(TransactionDTO) _then) = _$TransactionDTOCopyWithImpl;
 @useResult
 $Res call({
- String id, String type, double amount,@JsonKey(name: 'fund_id') String fundId, DateTime date,@JsonKey(name: 'sync_status') String syncStatus
+ String id, String name, String type, double amount,@JsonKey(name: 'fund_id') String fundId, DateTime date,@JsonKey(name: 'sync_status') String syncStatus
 });
 
 
@@ -65,9 +65,10 @@ class _$TransactionDTOCopyWithImpl<$Res>
 
 /// Create a copy of TransactionDTO
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? type = null,Object? amount = null,Object? fundId = null,Object? date = null,Object? syncStatus = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? type = null,Object? amount = null,Object? fundId = null,Object? date = null,Object? syncStatus = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as String,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
 as double,fundId: null == fundId ? _self.fundId : fundId // ignore: cast_nullable_to_non_nullable
@@ -158,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String type,  double amount, @JsonKey(name: 'fund_id')  String fundId,  DateTime date, @JsonKey(name: 'sync_status')  String syncStatus)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String type,  double amount, @JsonKey(name: 'fund_id')  String fundId,  DateTime date, @JsonKey(name: 'sync_status')  String syncStatus)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TransactionDTO() when $default != null:
-return $default(_that.id,_that.type,_that.amount,_that.fundId,_that.date,_that.syncStatus);case _:
+return $default(_that.id,_that.name,_that.type,_that.amount,_that.fundId,_that.date,_that.syncStatus);case _:
   return orElse();
 
 }
@@ -179,10 +180,10 @@ return $default(_that.id,_that.type,_that.amount,_that.fundId,_that.date,_that.s
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String type,  double amount, @JsonKey(name: 'fund_id')  String fundId,  DateTime date, @JsonKey(name: 'sync_status')  String syncStatus)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String type,  double amount, @JsonKey(name: 'fund_id')  String fundId,  DateTime date, @JsonKey(name: 'sync_status')  String syncStatus)  $default,) {final _that = this;
 switch (_that) {
 case _TransactionDTO():
-return $default(_that.id,_that.type,_that.amount,_that.fundId,_that.date,_that.syncStatus);case _:
+return $default(_that.id,_that.name,_that.type,_that.amount,_that.fundId,_that.date,_that.syncStatus);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -199,10 +200,10 @@ return $default(_that.id,_that.type,_that.amount,_that.fundId,_that.date,_that.s
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String type,  double amount, @JsonKey(name: 'fund_id')  String fundId,  DateTime date, @JsonKey(name: 'sync_status')  String syncStatus)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String type,  double amount, @JsonKey(name: 'fund_id')  String fundId,  DateTime date, @JsonKey(name: 'sync_status')  String syncStatus)?  $default,) {final _that = this;
 switch (_that) {
 case _TransactionDTO() when $default != null:
-return $default(_that.id,_that.type,_that.amount,_that.fundId,_that.date,_that.syncStatus);case _:
+return $default(_that.id,_that.name,_that.type,_that.amount,_that.fundId,_that.date,_that.syncStatus);case _:
   return null;
 
 }
@@ -214,10 +215,11 @@ return $default(_that.id,_that.type,_that.amount,_that.fundId,_that.date,_that.s
 @JsonSerializable()
 
 class _TransactionDTO extends TransactionDTO {
-  const _TransactionDTO({required this.id, required this.type, required this.amount, @JsonKey(name: 'fund_id') required this.fundId, required this.date, @JsonKey(name: 'sync_status') required this.syncStatus}): super._();
+  const _TransactionDTO({required this.id, required this.name, required this.type, required this.amount, @JsonKey(name: 'fund_id') required this.fundId, required this.date, @JsonKey(name: 'sync_status') required this.syncStatus}): super._();
   factory _TransactionDTO.fromJson(Map<String, dynamic> json) => _$TransactionDTOFromJson(json);
 
 @override final  String id;
+@override final  String name;
 @override final  String type;
 @override final  double amount;
 @override@JsonKey(name: 'fund_id') final  String fundId;
@@ -237,16 +239,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TransactionDTO&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.fundId, fundId) || other.fundId == fundId)&&(identical(other.date, date) || other.date == date)&&(identical(other.syncStatus, syncStatus) || other.syncStatus == syncStatus));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TransactionDTO&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.type, type) || other.type == type)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.fundId, fundId) || other.fundId == fundId)&&(identical(other.date, date) || other.date == date)&&(identical(other.syncStatus, syncStatus) || other.syncStatus == syncStatus));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,amount,fundId,date,syncStatus);
+int get hashCode => Object.hash(runtimeType,id,name,type,amount,fundId,date,syncStatus);
 
 @override
 String toString() {
-  return 'TransactionDTO(id: $id, type: $type, amount: $amount, fundId: $fundId, date: $date, syncStatus: $syncStatus)';
+  return 'TransactionDTO(id: $id, name: $name, type: $type, amount: $amount, fundId: $fundId, date: $date, syncStatus: $syncStatus)';
 }
 
 
@@ -257,7 +259,7 @@ abstract mixin class _$TransactionDTOCopyWith<$Res> implements $TransactionDTOCo
   factory _$TransactionDTOCopyWith(_TransactionDTO value, $Res Function(_TransactionDTO) _then) = __$TransactionDTOCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String type, double amount,@JsonKey(name: 'fund_id') String fundId, DateTime date,@JsonKey(name: 'sync_status') String syncStatus
+ String id, String name, String type, double amount,@JsonKey(name: 'fund_id') String fundId, DateTime date,@JsonKey(name: 'sync_status') String syncStatus
 });
 
 
@@ -274,9 +276,10 @@ class __$TransactionDTOCopyWithImpl<$Res>
 
 /// Create a copy of TransactionDTO
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? type = null,Object? amount = null,Object? fundId = null,Object? date = null,Object? syncStatus = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? type = null,Object? amount = null,Object? fundId = null,Object? date = null,Object? syncStatus = null,}) {
   return _then(_TransactionDTO(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as String,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
 as double,fundId: null == fundId ? _self.fundId : fundId // ignore: cast_nullable_to_non_nullable

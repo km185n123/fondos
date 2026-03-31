@@ -1,0 +1,48 @@
+{
+  "__mock__": {
+    "statusCode": 200
+  },
+  "data": [
+    {
+      "id": "1",
+      "name": "Fondo Inmobiliario Global",
+      "minimumAmount": 75000.0,
+      "category": "FPV",
+      "invested": null,
+      "returnPct": "+12.4%"
+    },
+    {
+      "id": "2",
+      "name": "FPV_BTG_PACTUAL_ECOPETROL",
+      "minimumAmount": 125000.0,
+      "category": "FPV",
+      "invested": null,
+      "returnPct": "+3.0%"
+    },
+    {
+      "id": "3",
+      "name": "DEUDAPRIVADA",
+      "minimumAmount": 50000.0,
+      "category": "FIC",
+      "invested": null,
+      "currentValue": "COP 2.050.000",
+      "returnPct": "+2.5%"
+    },
+    {
+      "id": "4",
+      "name": "FDO-ACCIONES",
+      "minimumAmount": 250000.0,
+      "category": "FIC",
+      "invested": null,
+      "returnPct": "-5.0%"
+    },
+    {
+      "id": "5",
+      "name": "FPV_BTG_PACTUAL_DINAMICA",
+      "minimumAmount": 100000.0,
+      "category": "FPV",
+      "invested": null,
+      "returnPct": "+8.0%"
+    }
+  ]
+}

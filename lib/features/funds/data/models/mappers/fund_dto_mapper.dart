@@ -5,9 +5,9 @@ extension FundDtoMapper on FundDTO {
   FundDb toDb() {
     return FundDb(
       id: id,
-      nombre: nombre,
-      montoMinimo: montoMinimo,
-      categoria: categoria,
+      name: name,
+      minimumAmount: minimumAmount,
+      category: category,
     );
   }
 }

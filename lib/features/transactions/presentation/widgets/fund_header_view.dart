@@ -1,9 +1,10 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:fondos/core/design_system/tokens/app_colors.dart';
 import 'package:fondos/core/design_system/tokens/app_radius.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
 import 'package:fondos/features/funds/domain/entities/fund.dart';
+import 'package:fondos/l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 class FundHeaderView extends StatelessWidget {
@@ -14,7 +15,7 @@ class FundHeaderView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currency = NumberFormat.currency(
-      locale: 'es_CO',
+      locale: Localizations.localeOf(context).toString(),
       symbol: '\$',
       decimalDigits: 0,
     );
@@ -28,16 +29,21 @@ class FundHeaderView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Fondo seleccionado', style: AppTypography.label),
+          Text(
+            AppLocalizations.of(context)!.selected_fund,
+            style: AppTypography.label,
+          ),
           const SizedBox(height: AppSpacing.xs),
-          Text(fund.nombre, style: AppTypography.headlineMedium),
+          Text(fund.name, style: AppTypography.headlineMedium),
           const SizedBox(height: AppSpacing.xs),
           Text(
-            'Categoría: ${fund.categoria}',
+            AppLocalizations.of(context)!.category(fund.category),
             style: AppTypography.body.copyWith(color: AppColors.textSecondary),
           ),
           Text(
-            'Monto mínimo: ${currency.format(fund.montoMinimo)}',
+            AppLocalizations.of(
+              context,
+            )!.min_amount(currency.format(fund.minimumAmount)),
             style: AppTypography.body.copyWith(color: AppColors.textSecondary),
           ),
         ],

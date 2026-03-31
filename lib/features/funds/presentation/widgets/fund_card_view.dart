@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:fondos/core/design_system/components/app_card.dart';
 import 'package:fondos/core/design_system/components/app_chip.dart';
 import 'package:fondos/core/design_system/tokens/app_colors.dart';
+import 'package:fondos/core/design_system/tokens/app_spacing.dart';
 import 'package:fondos/core/design_system/tokens/app_typography.dart';
 import 'package:fondos/features/funds/domain/entities/fund.dart';
-import 'package:go_router/go_router.dart';
+import 'package:fondos/features/transactions/presentation/botton_sheet/subscription_bottom_sheet.dart';
+import 'package:fondos/l10n/app_localizations.dart';
 
 class FundCardView extends StatelessWidget {
   final Fund fund;
@@ -33,9 +35,9 @@ class FundCardView extends StatelessWidget {
                         fontSize: 10,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.xs),
                     Text(
-                      fund.nombre,
+                      fund.name,
                       style: AppTypography.headlineMedium.copyWith(
                         fontSize: 16,
                         color: AppColors.textPrimary,
@@ -45,8 +47,8 @@ class FundCardView extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 8),
-              AppChip(label: fund.categoria.toUpperCase()),
+              const SizedBox(width: AppSpacing.sm),
+              AppChip(label: fund.category.toUpperCase()),
             ],
           ),
           const Spacer(),
@@ -59,7 +61,7 @@ class FundCardView extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Minimum Investment',
+                    AppLocalizations.of(context)!.minimum_investment,
                     style: AppTypography.label.copyWith(
                       color: AppColors.textSecondary.withValues(alpha: 0.5),
                       fontSize: 10,
@@ -67,7 +69,7 @@ class FundCardView extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'COP ${fund.montoMinimo.toStringAsFixed(0)}',
+                    'COP ${fund.minimumAmount.toStringAsFixed(0)}',
                     style: AppTypography.headlineMedium.copyWith(
                       fontSize: 14,
                       color: AppColors.textPrimary,
@@ -77,7 +79,7 @@ class FundCardView extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  context.go('/subscription', extra: fund);
+                  showSubscriptionBottomSheet(context, fund);
                 },
                 icon: const Icon(Icons.add, color: Colors.white),
                 style: IconButton.styleFrom(
