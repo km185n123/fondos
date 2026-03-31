@@ -5,7 +5,7 @@ import 'package:fondos/features/funds/data/models/mappers/fund_dto_mapper.dart';
 void main() {
   group('FundDtoMapper', () {
     test('toDb should convert FundDTO to FundDb correctly', () {
-      final dto = FundDTO(
+      final dto = const FundDTO(
         id: '1',
         name: 'Fund 1',
         minimumAmount: 1000.0,

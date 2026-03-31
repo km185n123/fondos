@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SubscriptionState {
 
- SubscriptionStatus get status; Fund? get selectedFund; double get amount; double get availableBalance; NotificationMethod get notificationMethod; String? get errorMessage; String? get amountError;
+ SubscriptionStatus get status; Fund? get selectedFund; double get amount; double get availableBalance; NotificationMethod? get notificationMethod; String? get errorMessage; String? get amountError;
 /// Create a copy of SubscriptionState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $SubscriptionStateCopyWith<$Res>  {
   factory $SubscriptionStateCopyWith(SubscriptionState value, $Res Function(SubscriptionState) _then) = _$SubscriptionStateCopyWithImpl;
 @useResult
 $Res call({
- SubscriptionStatus status, Fund? selectedFund, double amount, double availableBalance, NotificationMethod notificationMethod, String? errorMessage, String? amountError
+ SubscriptionStatus status, Fund? selectedFund, double amount, double availableBalance, NotificationMethod? notificationMethod, String? errorMessage, String? amountError
 });
 
 
@@ -62,14 +62,14 @@ class _$SubscriptionStateCopyWithImpl<$Res>
 
 /// Create a copy of SubscriptionState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? selectedFund = freezed,Object? amount = null,Object? availableBalance = null,Object? notificationMethod = null,Object? errorMessage = freezed,Object? amountError = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? selectedFund = freezed,Object? amount = null,Object? availableBalance = null,Object? notificationMethod = freezed,Object? errorMessage = freezed,Object? amountError = freezed,}) {
   return _then(_self.copyWith(
 status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as SubscriptionStatus,selectedFund: freezed == selectedFund ? _self.selectedFund : selectedFund // ignore: cast_nullable_to_non_nullable
 as Fund?,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
 as double,availableBalance: null == availableBalance ? _self.availableBalance : availableBalance // ignore: cast_nullable_to_non_nullable
-as double,notificationMethod: null == notificationMethod ? _self.notificationMethod : notificationMethod // ignore: cast_nullable_to_non_nullable
-as NotificationMethod,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as double,notificationMethod: freezed == notificationMethod ? _self.notificationMethod : notificationMethod // ignore: cast_nullable_to_non_nullable
+as NotificationMethod?,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String?,amountError: freezed == amountError ? _self.amountError : amountError // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -168,7 +168,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( SubscriptionStatus status,  Fund? selectedFund,  double amount,  double availableBalance,  NotificationMethod notificationMethod,  String? errorMessage,  String? amountError)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( SubscriptionStatus status,  Fund? selectedFund,  double amount,  double availableBalance,  NotificationMethod? notificationMethod,  String? errorMessage,  String? amountError)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SubscriptionState() when $default != null:
 return $default(_that.status,_that.selectedFund,_that.amount,_that.availableBalance,_that.notificationMethod,_that.errorMessage,_that.amountError);case _:
@@ -189,7 +189,7 @@ return $default(_that.status,_that.selectedFund,_that.amount,_that.availableBala
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( SubscriptionStatus status,  Fund? selectedFund,  double amount,  double availableBalance,  NotificationMethod notificationMethod,  String? errorMessage,  String? amountError)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( SubscriptionStatus status,  Fund? selectedFund,  double amount,  double availableBalance,  NotificationMethod? notificationMethod,  String? errorMessage,  String? amountError)  $default,) {final _that = this;
 switch (_that) {
 case _SubscriptionState():
 return $default(_that.status,_that.selectedFund,_that.amount,_that.availableBalance,_that.notificationMethod,_that.errorMessage,_that.amountError);case _:
@@ -209,7 +209,7 @@ return $default(_that.status,_that.selectedFund,_that.amount,_that.availableBala
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( SubscriptionStatus status,  Fund? selectedFund,  double amount,  double availableBalance,  NotificationMethod notificationMethod,  String? errorMessage,  String? amountError)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( SubscriptionStatus status,  Fund? selectedFund,  double amount,  double availableBalance,  NotificationMethod? notificationMethod,  String? errorMessage,  String? amountError)?  $default,) {final _that = this;
 switch (_that) {
 case _SubscriptionState() when $default != null:
 return $default(_that.status,_that.selectedFund,_that.amount,_that.availableBalance,_that.notificationMethod,_that.errorMessage,_that.amountError);case _:
@@ -224,14 +224,14 @@ return $default(_that.status,_that.selectedFund,_that.amount,_that.availableBala
 
 
 class _SubscriptionState implements SubscriptionState {
-  const _SubscriptionState({this.status = SubscriptionStatus.initial, this.selectedFund, this.amount = 0.0, this.availableBalance = 12450000.0, this.notificationMethod = NotificationMethod.email, this.errorMessage, this.amountError});
+  const _SubscriptionState({this.status = SubscriptionStatus.initial, this.selectedFund, this.amount = 0.0, this.availableBalance = 12450000.0, this.notificationMethod, this.errorMessage, this.amountError});
   
 
 @override@JsonKey() final  SubscriptionStatus status;
 @override final  Fund? selectedFund;
 @override@JsonKey() final  double amount;
 @override@JsonKey() final  double availableBalance;
-@override@JsonKey() final  NotificationMethod notificationMethod;
+@override final  NotificationMethod? notificationMethod;
 @override final  String? errorMessage;
 @override final  String? amountError;
 
@@ -265,7 +265,7 @@ abstract mixin class _$SubscriptionStateCopyWith<$Res> implements $SubscriptionS
   factory _$SubscriptionStateCopyWith(_SubscriptionState value, $Res Function(_SubscriptionState) _then) = __$SubscriptionStateCopyWithImpl;
 @override @useResult
 $Res call({
- SubscriptionStatus status, Fund? selectedFund, double amount, double availableBalance, NotificationMethod notificationMethod, String? errorMessage, String? amountError
+ SubscriptionStatus status, Fund? selectedFund, double amount, double availableBalance, NotificationMethod? notificationMethod, String? errorMessage, String? amountError
 });
 
 
@@ -282,14 +282,14 @@ class __$SubscriptionStateCopyWithImpl<$Res>
 
 /// Create a copy of SubscriptionState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? selectedFund = freezed,Object? amount = null,Object? availableBalance = null,Object? notificationMethod = null,Object? errorMessage = freezed,Object? amountError = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? selectedFund = freezed,Object? amount = null,Object? availableBalance = null,Object? notificationMethod = freezed,Object? errorMessage = freezed,Object? amountError = freezed,}) {
   return _then(_SubscriptionState(
 status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as SubscriptionStatus,selectedFund: freezed == selectedFund ? _self.selectedFund : selectedFund // ignore: cast_nullable_to_non_nullable
 as Fund?,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
 as double,availableBalance: null == availableBalance ? _self.availableBalance : availableBalance // ignore: cast_nullable_to_non_nullable
-as double,notificationMethod: null == notificationMethod ? _self.notificationMethod : notificationMethod // ignore: cast_nullable_to_non_nullable
-as NotificationMethod,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as double,notificationMethod: freezed == notificationMethod ? _self.notificationMethod : notificationMethod // ignore: cast_nullable_to_non_nullable
+as NotificationMethod?,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String?,amountError: freezed == amountError ? _self.amountError : amountError // ignore: cast_nullable_to_non_nullable
 as String?,
   ));

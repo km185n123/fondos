@@ -85,6 +85,16 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       return;
     }
 
+    if (state.notificationMethod == null) {
+      emit(
+        state.copyWith(
+          status: SubscriptionStatus.error,
+          errorMessage: ErrorMessages.errorNotificationMethod,
+        ),
+      );
+      return;
+    }
+
     emit(
       state.copyWith(status: SubscriptionStatus.loading, errorMessage: null),
     );
@@ -92,7 +102,7 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
     final result = await subscribeFundUseCase.call(
       fund: state.selectedFund!,
       amount: state.amount,
-      notificationMethod: state.notificationMethod,
+      notificationMethod: state.notificationMethod!,
     );
 
     result.fold(

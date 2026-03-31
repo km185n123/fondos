@@ -6,7 +6,7 @@ import 'package:fondos/features/funds/domain/entities/fund.dart';
 void main() {
   group('FundDbMapper', () {
     test('toDomain should convert FundDb to Fund correctly', () {
-      final db = FundDb(
+      final db = const FundDb(
         id: '1',
         name: 'Fund 1',
         minimumAmount: 1000.0,
@@ -15,12 +15,15 @@ void main() {
 
       final domain = db.toDomain();
 
-      expect(domain, const Fund(
-        id: '1',
-        name: 'Fund 1',
-        minimumAmount: 1000.0,
-        category: 'Category 1',
-      ));
+      expect(
+        domain,
+        const Fund(
+          id: '1',
+          name: 'Fund 1',
+          minimumAmount: 1000.0,
+          category: 'Category 1',
+        ),
+      );
     });
   });
 }

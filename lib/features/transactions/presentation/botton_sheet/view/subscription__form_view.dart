@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fondos/core/design_system/components/app_button_primary.dart';
 import 'package:fondos/core/design_system/components/app_input.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
+import 'package:fondos/core/enum/notification_method.dart';
 import 'package:fondos/core/enum/subscription_status.dart';
 import 'package:fondos/core/formatters/amount_input_formatter.dart';
 import 'package:fondos/features/transactions/presentation/bloc/subscription_bloc.dart';
@@ -135,7 +136,7 @@ class _NotificationSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final method = context.select(
+    final NotificationMethod? method = context.select(
       (SubscriptionBloc bloc) => bloc.state.notificationMethod,
     );
 

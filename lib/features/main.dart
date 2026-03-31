@@ -4,11 +4,15 @@ import 'package:fondos/core/design_system/theme/app_theme.dart';
 import 'package:fondos/core/router/app_router.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fondos/l10n/app_localizations.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:fondos/features/config/data/services/remote_config_service_impl.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Firebase.initializeApp();
   await configureDependencies();
+  await getIt<RemoteConfigService>().initialize();
   runApp(const MyApp());
 }
 

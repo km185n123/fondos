@@ -9,23 +9,30 @@ import 'package:fondos/features/funds/domain/usecases/watch_current_balance_usec
 import 'package:fondos/features/funds/presentation/bloc/fund_bloc.dart';
 import 'package:fondos/features/funds/presentation/bloc/fund_event.dart';
 import 'package:fondos/features/funds/presentation/bloc/fund_state.dart';
+import 'package:fondos/features/config/data/services/remote_config_service_impl.dart';
+
 
 class MockGetFundsUseCase extends Mock implements GetFundsUseCase {}
 
 class MockWatchCurrentBalance extends Mock
     implements WatchCurrentBalanceUseCase {}
 
+class MockRemoteConfigService extends Mock implements RemoteConfigService {}
+
 void main() {
   late FundBloc bloc;
   late MockGetFundsUseCase mockGetFundsUseCase;
   late MockWatchCurrentBalance mockWatchCurrentBalance;
+  late MockRemoteConfigService mockRemoteConfigService;
 
   setUp(() {
     mockGetFundsUseCase = MockGetFundsUseCase();
     mockWatchCurrentBalance = MockWatchCurrentBalance();
+    mockRemoteConfigService = MockRemoteConfigService();
     bloc = FundBloc(
       getFundsUseCase: mockGetFundsUseCase,
       watchCurrentBalance: mockWatchCurrentBalance,
+      remoteConfigService: mockRemoteConfigService,
     );
   });
 
