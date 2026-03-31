@@ -6,12 +6,12 @@ import 'package:fondos/core/design_system/tokens/app_typography.dart';
 import 'package:fondos/core/design_system/components/app_radio_card.dart';
 
 class NotificationSelectorView extends StatelessWidget {
-  final NotificationMethod selected;
+  final NotificationMethod? selected;
   final ValueChanged<NotificationMethod> onChanged;
 
   const NotificationSelectorView({
     super.key,
-    required this.selected,
+    this.selected,
     required this.onChanged,
   });
 

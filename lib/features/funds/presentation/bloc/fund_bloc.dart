@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fondos/features/config/data/services/remote_config_service_impl.dart';
 import 'package:injectable/injectable.dart';
 import 'package:fondos/features/funds/domain/usecases/get_funds_usecase.dart';
 import 'package:fondos/features/funds/presentation/bloc/fund_event.dart';
@@ -12,9 +13,13 @@ import 'package:fondos/features/funds/domain/usecases/watch_current_balance_usec
 class FundBloc extends Bloc<FundEvent, FundState> {
   final GetFundsUseCase getFundsUseCase;
   final WatchCurrentBalanceUseCase watchCurrentBalance;
+  final RemoteConfigService remoteConfigService;
 
-  FundBloc({required this.getFundsUseCase, required this.watchCurrentBalance})
-    : super(const FundState.initial()) {
+  FundBloc({
+    required this.getFundsUseCase,
+    required this.watchCurrentBalance,
+    required this.remoteConfigService,
+  }) : super(const FundState.initial()) {
     on<FundEvent>((event, emit) async {
       await event.when(
         getFunds: () => _onGetFunds(emit),

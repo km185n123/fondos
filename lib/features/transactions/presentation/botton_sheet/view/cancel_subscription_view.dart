@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fondos/core/design_system/tokens/app_colors.dart';
 import 'package:fondos/core/design_system/tokens/app_spacing.dart';
 import 'package:fondos/features/transactions/domain/entitie/transaction.dart';
 import 'package:fondos/features/transactions/presentation/bloc/investments_bloc.dart';
 import 'package:fondos/features/transactions/presentation/bloc/investments_event.dart';
 import 'package:fondos/l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 class CancelSubscriptionView extends StatelessWidget {
   final Transaction transaction;
@@ -20,7 +22,7 @@ class CancelSubscriptionView extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.warning, size: 48, color: Colors.red),
+          const Icon(Icons.warning, size: 48, color: AppColors.error),
           const SizedBox(height: AppSpacing.lg),
 
           Text(AppLocalizations.of(context)!.confirm_cancellation),
@@ -35,7 +37,7 @@ class CancelSubscriptionView extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () {
                 bloc.add(InvestmentsEvent.cancel(transaction));
-                Navigator.pop(context);
+                context.pop(true);
               },
               child: Text(AppLocalizations.of(context)!.yes_cancel),
             ),
@@ -46,7 +48,7 @@ class CancelSubscriptionView extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: OutlinedButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => context.pop(false),
               child: Text(AppLocalizations.of(context)!.keep_investment),
             ),
           ),

@@ -14,6 +14,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../features/config/data/services/remote_config_service_impl.dart'
+    as _i1057;
 import '../../features/funds/data/datasources/fund_api_service.dart' as _i890;
 import '../../features/funds/data/datasources/fund_dao.dart' as _i481;
 import '../../features/funds/data/repositories/fund_repository_impl.dart'
@@ -22,6 +24,7 @@ import '../../features/funds/domain/repositories/fund_repository.dart' as _i650;
 import '../../features/funds/domain/usecases/get_funds_usecase.dart' as _i98;
 import '../../features/funds/domain/usecases/watch_current_balance_usecase.dart'
     as _i270;
+import '../../features/funds/presentation/bloc/config_cubit.dart' as _i644;
 import '../../features/funds/presentation/bloc/fund_bloc.dart' as _i979;
 import '../../features/history/data/datasource/history_dao.dart' as _i238;
 import '../../features/history/data/repositories/history_respository_impl.dart'
@@ -79,6 +82,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i320.EncryptionService>(
       () => appModule.encryptionService(gh<_i558.FlutterSecureStorage>()),
     );
+    gh.lazySingleton<_i1057.RemoteConfigService>(
+      () => _i1057.RemoteConfigServiceImpl(),
+    );
     gh.lazySingleton<_i1026.DatabaseBuilder>(
       () => _i1026.DatabaseBuilder(
         gh<_i320.EncryptionService>(),
@@ -99,6 +105,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i21.TransactionApiService>(
       () => _i21.TransactionApiService(gh<_i361.Dio>()),
+    );
+    gh.factory<_i644.ConfigCubit>(
+      () => _i644.ConfigCubit(gh<_i1057.RemoteConfigService>()),
     );
     gh.factory<_i238.HistoryDao>(
       () => _i238.HistoryDao(gh<_i982.AppDatabase>()),
@@ -178,6 +187,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i979.FundBloc(
         getFundsUseCase: gh<_i98.GetFundsUseCase>(),
         watchCurrentBalance: gh<_i270.WatchCurrentBalanceUseCase>(),
+        remoteConfigService: gh<_i1057.RemoteConfigService>(),
       ),
     );
     return this;
